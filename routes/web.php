@@ -16,7 +16,7 @@ use App\Http\Controllers\AdminController;
 //All
 Route::get('/dang-nhap',[HomeController::class, 'login'])->name('login');
 
-//Users
+//User
 Route::get('/',[HomeController::class, 'index'])->name('home');
 Route::get('/trang-chu',[HomeController::class, 'index'])->name('home');
 
