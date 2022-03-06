@@ -4,6 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link type="image/png" rel="shortcut icon" href="<?php echo url('/'); ?>/images_user/logo.jpg"/>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{{asset('/login/fonts/icomoon/style.css')}}">
@@ -16,7 +17,7 @@
     <!-- Style -->
     <link rel="stylesheet" href="{{asset('/login/css/style.css')}}">
 
-    <title>Login #7</title>
+    <title>Đăng nhập</title>
   </head>
   <body>
   
@@ -33,16 +34,25 @@
             <div class="col-md-8">
               <div class="mb-4">
               <h3>Đăng nhập</h3>
+              <?php
+                // $message = Session::get('message');
+                // if($message)
+                // {
+                //   echo '<center style="color:red>'.$message.'</center>';
+                //   Session::put('message',null);
+                // }
+              ?>
             </div>
-            <form action="#" method="post">
+            <form action="{{URL::to('/')}}" method="post">
+              {{ csrf_field() }}
               <div class="form-group first">
                 <label for="username">Tên đăng nhập</label>
-                <input type="text" class="form-control" id="username">
+                <input type="email" class="form-control" id="email" name="email" Required>
 
               </div>
               <div class="form-group last mb-4">
                 <label for="password">Mật khẩu</label>
-                <input type="password" class="form-control" id="password">
+                <input type="password" class="form-control" id="password" name="password" Required>
                 
               </div>
               
@@ -54,7 +64,7 @@
                 <span class="ml-auto"><a href="#" class="forgot-pass">Quên mật khẩu</a></span> 
               </div>
 
-              <input type="submit" value="Log In" class="btn btn-block btn-primary">
+              <input type="submit" name="login "value="Đăng nhập" class="btn btn-block btn-primary">
 
               <span class="d-block text-left my-4 text-muted">&mdash; Bạn có thể đăng nhập với &mdash;</span>
               
@@ -69,6 +79,7 @@
                   <span class="icon-google mr-3"></span> 
                 </a>
               </div>
+              <center><span class="ml-auto"><a href="{{URL::to('dang-ky')}}" class="forgot-pass">Tạo tài khoản ngay</a></span></center>
             </form>
             </div>
           </div>
