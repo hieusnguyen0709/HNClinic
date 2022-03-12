@@ -62,17 +62,14 @@ class Homecontroller extends Controller
     	$data['first_name'] = $request->first_name;
     	$data['last_name'] = $request->last_name;
         $data['address'] = $request->address;
-        $data['national_id'] = '0';
         $data['picture'] = '0';
         $data['birth_date'] = $request->birth_date;
         $data['gender'] = '0';
         $data['phone'] = '0';
-        $data['mobile'] = '0';
         $data['emergency'] = '0';
         $data['type'] = '0';
         $data['medical_degree'] = '0';
         $data['specialist'] = '0';
-        $data['biography'] = '0';
         $data['educational_qualification'] = '0';
         $data['blood_group'] = '0';
 
