@@ -17,6 +17,11 @@ class Homecontroller extends Controller
         return view('user.index');
     }
 
+    public function info()
+    {
+        return view('user.info');
+    }
+
     public function login()
     {
         return view('login');
@@ -68,14 +73,12 @@ class Homecontroller extends Controller
         $data['phone'] = '0';
         $data['emergency'] = '0';
         $data['type'] = '0';
-        $data['medical_degree'] = '0';
         $data['specialist'] = '0';
-        $data['educational_qualification'] = '0';
         $data['blood_group'] = '0';
 
     	DB::table('users')->insert($data);
     	Session::put('message','Đăng ký tài khoản thành công');
-    	return Redirect::to('/dang-nhap');
+    	return Redirect::to('/dang-ky');
     }
 
     public function logout()

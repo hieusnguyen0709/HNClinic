@@ -37,6 +37,14 @@
             </div>
             <form action="{{URL::to('/kt-dang-ky')}}" method="post">
               {{ csrf_field() }}
+              <?php
+                         $message = Session::get('message');
+                         if($message)
+                         {
+                             echo '<center><span class="text-success">'.$message.'</span></center>';
+                             Session::put('message',null);
+                         }
+                      ?>
               <div class="form-group last mb-4">
                 <label for="username">Tên đăng nhập</label>
                 <input type="email" class="form-control" id="email" name="email" Required>

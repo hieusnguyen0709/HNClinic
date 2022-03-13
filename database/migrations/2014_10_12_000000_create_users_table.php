@@ -17,7 +17,6 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('national_id')->nullable();
             $table->string('email');
             $table->string('password')->nullable();
             $table->string('address')->nullable();
@@ -25,14 +24,10 @@ class CreateUsersTable extends Migration
             $table->date('birth_date')->nullable();
             $table->enum('gender',['male','female'])->nullable();
             $table->bigInteger('phone')->nullable();
-            $table->bigInteger('mobile')->nullable();
             $table->bigInteger('emergency')->nullable();
             $table->string('type')->default(0);
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('medical_degree')->nullable();
             $table->string('specialist')->nullable();
-            $table->string('biography')->nullable();
-            $table->string('educational_qualification')->nullable();
             $table->string('blood_group')->nullable();
             $table->rememberToken();
             $table->timestamps();

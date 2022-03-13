@@ -29,9 +29,7 @@ class User extends Authenticatable
         'phone',
         'emergency',
         'type',
-        'medical_degree',
         'specialist',
-        'educational_qualification',
         'blood_group'
     ];
 
