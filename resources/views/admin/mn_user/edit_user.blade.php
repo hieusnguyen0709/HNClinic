@@ -69,7 +69,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Ngày sinh</label>
                           <div class="col-sm-9">
-                            <input type="date" class="form-control" placeholder="dd/mm/yyyy" name="birthdate" value="{{ $edit_value->birth_date }}"/>
+                            <input type="date" class="form-control" placeholder="dd/mm/yyyy" name="birth_date" value="{{ $edit_value->birth_date }}"/>
                           </div>
                         </div>
                       </div>
