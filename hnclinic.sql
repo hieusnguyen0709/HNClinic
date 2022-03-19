@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1:3306
--- Thời gian đã tạo: Th3 11, 2022 lúc 03:45 PM
+-- Thời gian đã tạo: Th3 19, 2022 lúc 09:10 AM
 -- Phiên bản máy phục vụ: 5.7.31
 -- Phiên bản PHP: 7.3.21
 
@@ -325,33 +325,29 @@ CREATE TABLE IF NOT EXISTS `users` (
   `address` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `picture` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `birth_date` date DEFAULT NULL,
-  `gender` enum('male','female') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `phone` bigint(20) DEFAULT NULL,
+  `gender` int(11) DEFAULT NULL,
+  `phone` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `emergency` bigint(20) DEFAULT NULL,
-  `type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
+  `type` int(11) NOT NULL DEFAULT '0',
   `email_verified_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `medical_degree` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `specialist` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `educational_qualification` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `blood_group` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `users`
 --
 
-INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `address`, `picture`, `birth_date`, `gender`, `phone`, `emergency`, `type`, `email_verified_at`, `medical_degree`, `specialist`, `educational_qualification`, `blood_group`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Quản Trị', 'Viên', 'admin@gmail.com', '123456', 'Nhà ', 'no', '1999-09-07', 'male', 365549764, 1, '1', NULL, 'No', 'no', 'no', 'A', NULL, NULL, NULL),
-(2, 'Nguyễn', 'Minh Hiếu', 'hieusnguyen0709@gmail.com', 'hieu0365549764', 'Đường số 9', 'No', '1999-09-07', 'male', 365549764, 1, '0', NULL, 'no', 'no', 'no', 'B', NULL, NULL, NULL),
-(3, 'Nguyễn', 'Hiếu', 'hieuhieu@gmail.com', '123456', '108/08 đường số 5, P17, Q. Gò Vấp', '0', NULL, '', 0, NULL, '0', NULL, '0', '0', '0', '0', NULL, NULL, NULL),
-(4, 'Hiếu', 'Nguyễn', 'hieuhamho999x@gmail.com', '312321', '108/08 duong so 5, quan go vap', '0', NULL, '', 0, 0, '0', NULL, '0', '0', '0', '0', NULL, NULL, NULL),
-(5, '1234', 'hieunguyen999', '1234@gmail.com', '1234', '108/08 duong so 5', '0', NULL, '', 0, 0, '0', NULL, '0', '0', '0', '0', NULL, NULL, NULL),
-(6, '123456', 'hieurose99', 'hieudemo@gmail.com', '123456', '108/08 duong so 5', '0', NULL, '', 0, 0, '0', NULL, '0', '0', '0', '0', NULL, NULL, NULL),
-(7, 'Nguyễn', 'Hiếu', 'hieuhieu@gmail.com', '321321', '108/08 đường số 5, P17, Q. Gò Vấp', '0', NULL, '', 0, 0, '0', '2022-03-11 15:21:49', '0', '0', '0', '0', NULL, '2022-03-11 15:21:49', '2022-03-11 15:21:49');
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `address`, `picture`, `birth_date`, `gender`, `phone`, `emergency`, `type`, `email_verified_at`, `specialist`, `blood_group`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Quản Trị', 'Viên', 'admin@gmail.com', '123456', 'Nhà', 'admin51.jpg', '1999-09-07', 0, '0365549764', 1, 1, NULL, '0', '0', NULL, NULL, NULL),
+(2, 'Nguyễn', 'Minh Hiếu', 'hieusnguyen0709@gmail.com', 'hieu0365549764', 'Đường số 9', 'Ảnh thẻ35.PNG', '1999-09-07', 0, '0365549764', 1, 0, NULL, '0', '0', NULL, NULL, NULL),
+(17, 'Hiếu', 'demo', 'hieusss@gmail.com', '123456', '108/08 đường số 5, P17, Q. Gò Vấp HCM', 'Bor5pNl80.jpg', '2022-03-19', 0, '0985972446', 1, 3, '2022-03-19 04:12:52', '1', '1', NULL, '2022-03-19 04:12:52', '2022-03-19 04:12:52'),
+(13, 'Hiếu', 'Rose', 'hieuhamho999x@gmail.com', '123456', '108/08 duong so 5, quan go vap', '269063316_930389617679563_5398068098782128691_n66.jpg', NULL, 0, '365549764', 123, 4, '2022-03-13 06:49:30', '0', '2', NULL, '2022-03-13 06:49:30', '2022-03-13 06:49:30'),
+(15, 'Nguyễn', 'MInh Hiếu', 'hieuhieu1111@gmail.com', '123456', '108/08 đường số 5, P17, Q. Gò Vấp, SG', 'apple-iphone-xr-64-gb-chinh-hang-vn_3_15.jpg', '2022-03-02', 0, '0365549764', 12356, 3, '2022-03-13 07:49:17', '0', '0', NULL, '2022-03-13 07:49:17', '2022-03-13 07:49:17');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

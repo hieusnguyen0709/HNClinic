@@ -14,7 +14,7 @@ class Homecontroller extends Controller
 {
     public function index()
     {
-        return view('user.index');
+        return view('user.include.content');
     }
 
     public function info()
@@ -86,6 +86,6 @@ class Homecontroller extends Controller
         Session::put('email',null);
         Session::put('id',null);
         Session::put('last_name',null);
-        return Redirect::to('/trang-chu');
+        return Redirect::to('/dang-nhap');
     }
 }

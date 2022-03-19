@@ -32,5 +32,6 @@ Route::post('/admin/kt-them-nguoi-dung',[AdminController::class, 'check_add_user
 Route::get('/admin/danh-sach-nguoi-dung',[AdminController::class, 'show_list_user'])->name('show_list_user');
 Route::get('/admin/chi-tiet-nguoi-dung/{id}',[AdminController::class, 'detail_user'])->name('detail_user');
 Route::get('/admin/sua-nguoi-dung/{id}',[AdminController::class, 'edit_user'])->name('edit_user');
+Route::post('/admin/kt-sua-nguoi-dung/{id}',[AdminController::class, 'check_edit_user'])->name('check_edit_user');
 Route::get('/admin/xoa-nguoi-dung/{id}',[AdminController::class, 'delete_user'])->name('delete_user');
 

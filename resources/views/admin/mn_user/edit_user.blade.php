@@ -5,7 +5,7 @@
                 <div class="card-body">
                   <h4 class="card-title">Sửa thông tin người dùng</h4>
                   @foreach($edit_user as $key => $edit_value)
-                  <form method="post" role="form" action="{{URL::to('/admin/sua-thong-tin-nguoi-dung/.$edit_value->id')}}" enctype="multipart/form-data" class="form-sample">
+                  <form method="post" role="form" action="{{URL::to('/admin/kt-sua-nguoi-dung/'.$edit_value->id)}}" enctype="multipart/form-data" class="form-sample">
                   {{ csrf_field() }}
                     <p class="card-description">
                       <?php
@@ -69,7 +69,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Ngày sinh</label>
                           <div class="col-sm-9">
-                            <input type="date" class="form-control" placeholder="dd/mm/yyyy" name="birth_date" value="{{ $edit_value->birth_date }}"/>
+                            <input type="date" class="form-control" name="birth_date" value="{{ $edit_value->birth_date }}"/>
                           </div>
                         </div>
                       </div>
@@ -268,7 +268,7 @@
                         </div>
                       </div>
                     </div>
-                    <center><button type="submit" name="submit" class="btn btn-primary me-2">Thêm người dùng</button></center>
+                    <center><button type="submit" name="submit" class="btn btn-primary me-2">Sửa người dùng</button></center>
                   </form>
                   @endforeach
                 </div>

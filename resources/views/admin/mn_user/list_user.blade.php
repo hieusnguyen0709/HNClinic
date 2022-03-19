@@ -90,8 +90,8 @@
                           </td>
                           <td>
                             <a href="{{URL::to('/admin/chi-tiet-nguoi-dung/'.$user->id)}}">Xem</a> |
-                            <a href="{{URL::to('admin/sua-nguoi-dung/'.$user->id)}}">Sửa</a> |
-                            <a href="{{URL::to('admin/xoa-nguoi-dung/'.$user->id)}}">Xóa</a>
+                            <a href="{{URL::to('/admin/sua-nguoi-dung/'.$user->id)}}">Sửa</a> |
+                            <a href="{{URL::to('/admin/xoa-nguoi-dung/'.$user->id)}}">Xóa</a>
                           </td>
                         </tr>
                         @endforeach
