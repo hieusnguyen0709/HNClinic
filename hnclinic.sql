@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1:3306
--- Thời gian đã tạo: Th3 19, 2022 lúc 09:10 AM
+-- Thời gian đã tạo: Th3 26, 2022 lúc 09:56 AM
 -- Phiên bản máy phục vụ: 5.7.31
 -- Phiên bản PHP: 7.3.21
 
@@ -152,33 +152,21 @@ DROP TABLE IF EXISTS `medicines`;
 CREATE TABLE IF NOT EXISTS `medicines` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `instruction` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `category_id` int(11) NOT NULL,
-  `purchase_price` double(8,2) NOT NULL,
-  `sale_price` double(8,2) NOT NULL,
+  `instruction` text COLLATE utf8mb4_unicode_ci,
+  `unit` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `quantity` int(11) NOT NULL,
-  `company` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `expire_date` date NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
+  `category` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Cấu trúc bảng cho bảng `medicine_categories`
+-- Đang đổ dữ liệu cho bảng `medicines`
 --
 
-DROP TABLE IF EXISTS `medicine_categories`;
-CREATE TABLE IF NOT EXISTS `medicine_categories` (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+INSERT INTO `medicines` (`id`, `name`, `instruction`, `unit`, `quantity`, `category`, `created_at`, `updated_at`) VALUES
+(2, 'Decumar', 'Bôi 1 ngày 2 lần, sáng và tối', 'Ống bôi', 1, 'Bôi', '2022-03-26 08:23:05', '2022-03-26 08:23:05');
 
 -- --------------------------------------------------------
 
@@ -276,10 +264,9 @@ CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
 DROP TABLE IF EXISTS `prescriptions`;
 CREATE TABLE IF NOT EXISTS `prescriptions` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `medicine_id` int(11) NOT NULL,
   `doctor_id` int(11) NOT NULL,
   `patient_id` int(11) NOT NULL,
-  `blood_pressure` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `diabetes` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `symptoms` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `diagnosis` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `advice` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -297,17 +284,23 @@ CREATE TABLE IF NOT EXISTS `prescriptions` (
 
 DROP TABLE IF EXISTS `time_schedules`;
 CREATE TABLE IF NOT EXISTS `time_schedules` (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `week_day` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `week_num` int(11) NOT NULL,
+  `id_time` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `date` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `start_time` time NOT NULL,
   `end_time` time NOT NULL,
   `duration` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `user_id` int(11) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `user_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_time`)
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `time_schedules`
+--
+
+INSERT INTO `time_schedules` (`id_time`, `date`, `start_time`, `end_time`, `duration`, `user_id`, `created_at`, `updated_at`) VALUES
+(11, '2022-03-09', '11:11:00', '14:22:00', '30m', 19, '2022-03-26 07:44:23', NULL);
 
 -- --------------------------------------------------------
 
@@ -336,18 +329,20 @@ CREATE TABLE IF NOT EXISTS `users` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `users`
 --
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `address`, `picture`, `birth_date`, `gender`, `phone`, `emergency`, `type`, `email_verified_at`, `specialist`, `blood_group`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Quản Trị', 'Viên', 'admin@gmail.com', '123456', 'Nhà', 'admin51.jpg', '1999-09-07', 0, '0365549764', 1, 1, NULL, '0', '0', NULL, NULL, NULL),
-(2, 'Nguyễn', 'Minh Hiếu', 'hieusnguyen0709@gmail.com', 'hieu0365549764', 'Đường số 9', 'Ảnh thẻ35.PNG', '1999-09-07', 0, '0365549764', 1, 0, NULL, '0', '0', NULL, NULL, NULL),
-(17, 'Hiếu', 'demo', 'hieusss@gmail.com', '123456', '108/08 đường số 5, P17, Q. Gò Vấp HCM', 'Bor5pNl80.jpg', '2022-03-19', 0, '0985972446', 1, 3, '2022-03-19 04:12:52', '1', '1', NULL, '2022-03-19 04:12:52', '2022-03-19 04:12:52'),
-(13, 'Hiếu', 'Rose', 'hieuhamho999x@gmail.com', '123456', '108/08 duong so 5, quan go vap', '269063316_930389617679563_5398068098782128691_n66.jpg', NULL, 0, '365549764', 123, 4, '2022-03-13 06:49:30', '0', '2', NULL, '2022-03-13 06:49:30', '2022-03-13 06:49:30'),
-(15, 'Nguyễn', 'MInh Hiếu', 'hieuhieu1111@gmail.com', '123456', '108/08 đường số 5, P17, Q. Gò Vấp, SG', 'apple-iphone-xr-64-gb-chinh-hang-vn_3_15.jpg', '2022-03-02', 0, '0365549764', 12356, 3, '2022-03-13 07:49:17', '0', '0', NULL, '2022-03-13 07:49:17', '2022-03-13 07:49:17');
+(1, 'Quản Trị Viên', 'Hiếu', 'admin@gmail.com', '123456', 'Nhà', 'admin51.jpg', '1999-09-07', 0, '0365549764', 1, 1, NULL, '0', '0', NULL, NULL, NULL),
+(2, 'KH', 'Hiếu', 'hieusnguyen0709@gmail.com', 'hieu0365549764', 'Đường số 9', 'Ảnh thẻ35.PNG', '1999-09-07', 0, '0365549764', 1, 0, NULL, '0', '0', NULL, NULL, NULL),
+(17, 'NV Xét Nghiệm', 'Hiếu', 'test_doctor@gmail.com', '123456', '108/08 đường số 5, P17, Q. Gò Vấp HCM', 'Bor5pNl80.jpg', '2022-03-19', 0, '0985972446', 1, 3, '2022-03-19 04:12:52', '1', '1', NULL, '2022-03-19 04:12:52', '2022-03-19 04:12:52'),
+(18, 'Dược Sĩ', 'Hiếu', 'phamarcist@gmail.com', '123456', '108/08 đường số 5, P17, Q. Gò Vấp', '404-error20.jpg', '2022-03-20', 0, '0365549764', 1, 5, '2022-03-20 07:10:38', '0', '0', NULL, '2022-03-20 07:10:38', '2022-03-20 07:10:38'),
+(13, 'NV Y Tế', 'Hiếu', 'receptionist@gmail.com', '123456', '108/08 duong so 5, quan go vap', '269063316_930389617679563_5398068098782128691_n66.jpg', NULL, 0, '365549764', 123, 2, '2022-03-13 06:49:30', '0', '2', NULL, '2022-03-13 06:49:30', '2022-03-13 06:49:30'),
+(19, 'BS', 'Hiếu', 'doctor@gmail.com', '123456', '108/08 đường số 5, P17, Q. Gò Vấp', 'Dien Thoai IPhone85.jpg', '2022-03-20', 0, '0365549764', 1, 4, '2022-03-20 07:22:04', '0', '0', NULL, '2022-03-20 07:22:04', '2022-03-20 07:22:04'),
+(20, 'BS demo', '2', 'BS2', '123456', '108/08 duong so 5', 'Bor5pNl39.jpg', NULL, 0, '0365549764', 1, 4, '2022-03-26 07:35:45', '0', '0', NULL, '2022-03-26 07:35:45', '2022-03-26 07:35:45');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
