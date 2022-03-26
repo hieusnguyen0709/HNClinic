@@ -45,7 +45,23 @@ class Homecontroller extends Controller
             else if($type == '1')
             {
                 return Redirect::to('/admin');
-            }       
+            }      
+            else if($type == '2')
+            {
+                return Redirect::to('/nhan-vien-y-te');
+            }   
+            else if($type == '3')
+            {
+                return Redirect::to('/nhan-vien-xet-nghiem');
+            }   
+            else if($type == '4')
+            {
+                return Redirect::to('/bac-si');
+            }   
+            else if($type == '5')
+            {
+                return Redirect::to('/duoc-si');
+            }     
         }
         else
         {

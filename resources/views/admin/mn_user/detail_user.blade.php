@@ -87,6 +87,10 @@
                           {
                             echo'Bác sĩ';
                           }
+                          else if($detail_value->type == 5) 
+                          {
+                            echo'Dược sĩ';
+                          }
                         ?>" readonly>
                       </div>
                     </div>

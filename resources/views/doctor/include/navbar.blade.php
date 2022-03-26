@@ -18,7 +18,7 @@
       <div class="navbar-menu-wrapper d-flex align-items-top"> 
         <ul class="navbar-nav">
           <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
-            <h1 class="welcome-text">Xin chào <span class="text-black fw-bold">Quản trị viên</span></h1>
+            <h1 class="welcome-text">Xin chào <span class="text-black fw-bold">Bác sĩ</span></h1>
           </li>
         </ul>
         <ul class="navbar-nav ms-auto">

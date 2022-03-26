@@ -16,12 +16,12 @@
 
           <!-- Quản lý người dùng -->
           <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
+            <a class="nav-link" data-bs-toggle="" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
               <i class="menu-icon mdi mdi-card-text-outline"></i>
               <span class="menu-title">Quản lý người dùng</span>
               <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="form-elements">
+            <div class="" id="form-elements">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"><a class="nav-link" href="{{URL::to('/admin/them-nguoi-dung')}}">Thêm người dùng</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{URL::to('/admin/danh-sach-nguoi-dung')}}">Danh sách người dùng</a></li>
@@ -88,7 +88,7 @@
           <!-- Quản lý bệnh nhân -->
 
            <!-- Quản lý nhân sự -->
-           <li class="nav-item">
+           <!-- <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
               <i class="menu-icon mdi mdi-card-text-outline"></i>
               <span class="menu-title">Quản lý nhân sự</span>
@@ -118,7 +118,7 @@
                 </li>
               </ul>
             </div>
-          </li>
+          </li> -->
           <!-- Quản lý nhân sự -->
 
 
@@ -163,28 +163,28 @@
             </a>
             <div class="collapse" id="form-elements">
               <ul class="nav flex-column sub-menu">
-              <li class="nav-item">
-                  <a class="nav-link" href="../pages/forms/basic_elements.html">Lịch làm</a>
-                  <div class="collapse" id="form-elements">
-                    <ul class="nav flex-column sub-menu">
-                      <li><a class="nav-link" href="../pages/forms/basic_elements.html"> - Thêm lịch làm</a></li>
-                      <li><a class="nav-link" href="../pages/forms/basic_elements.html"> - Danh sách lịch làm</a></li>
-                    </ul>
-                  </div>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="../pages/forms/basic_elements.html">Lịch nghỉ</a>
-                  <div class="collapse" id="form-elements">
-                    <ul class="nav flex-column sub-menu">
-                      <li><a class="nav-link" href="../pages/forms/basic_elements.html"> - Thêm lịch nghỉ</a></li>
-                      <li><a class="nav-link" href="../pages/forms/basic_elements.html"> - Danh sách lịch nghỉ</a></li>
-                    </ul>
-                  </div>
-                </li>
+                <li class="nav-item"><a class="nav-link" href="{{URL::to('/admin/them-lich-lam')}}">Thêm lịch làm</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{URL::to('/admin/danh-sach-lich-lam')}}">Danh sách lịch làm</a></li>
               </ul>
             </div>
           </li>
           <!-- Quản lý lịch làm -->
+
+          <!-- Quản lý khung giờ -->
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
+              <i class="menu-icon mdi mdi-card-text-outline"></i>
+              <span class="menu-title">Quản lý khung giờ</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="form-elements">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"><a class="nav-link" href="../pages/forms/basic_elements.html">Thêm khung giờ</a></li>
+                <li class="nav-item"><a class="nav-link" href="../pages/forms/basic_elements.html">Danh sách khung giờ</a></li>                
+              </ul>
+            </div>
+          </li>
+          <!-- Quản lý khung giờ -->
 
           <!-- Quản lý thuốc -->
           <li class="nav-item">
@@ -195,9 +195,9 @@
             </a>
             <div class="collapse" id="form-elements">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="../pages/forms/basic_elements.html">Thêm thuốc</a></li>
-                <li class="nav-item"><a class="nav-link" href="../pages/forms/basic_elements.html">Danh sách thuốc</a></li>
-                <li class="nav-item">
+                <li class="nav-item"><a class="nav-link" href="{{URL::to('admin/them-thuoc')}}">Thêm thuốc</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{URL::to('admin/danh-sach-thuoc')}}">Danh sách thuốc</a></li>
+                <!-- <li class="nav-item">
                   <a class="nav-link" href="../pages/forms/basic_elements.html">Loại thuốc</a>
                   <div class="collapse" id="form-elements">
                     <ul class="nav flex-column sub-menu">
@@ -205,7 +205,7 @@
                       <li><a class="nav-link" href="../pages/forms/basic_elements.html"> - Danh sách loại thuốc</a></li>
                     </ul>
                   </div>
-                </li>
+                </li> -->
               </ul>
             </div>
           </li>
@@ -220,8 +220,8 @@
             </a>
             <div class="collapse" id="form-elements">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="../pages/forms/basic_elements.html">Thêm đơn thuốc</a></li>
-                <li class="nav-item"><a class="nav-link" href="../pages/forms/basic_elements.html">Danh sách đơn thuốc</a></li>                
+                <li class="nav-item"><a class="nav-link" href="{{URL::to('admin/them-don-thuoc')}}">Thêm đơn thuốc</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{URL::to('admin/danh-sach-don-thuoc')}}">Danh sách đơn thuốc</a></li>                
               </ul>
             </div>
           </li>

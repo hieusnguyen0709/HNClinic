@@ -17,7 +17,6 @@
                          }
                       ?>
                     </p>
-
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
@@ -110,6 +109,7 @@
                                 if($edit_value->type == 0)
                                 {
                             ?>
+                            <option value="5">Dược sĩ</option>
                             <option value="4">Bác sĩ</option>
                             <option value="3">Nhân viên xét nghiệm</option>
                             <option value="2">Nhân  viên y tế</option>
@@ -120,6 +120,7 @@
                                 else if($edit_value->type == 1)
                                 {
                             ?>
+                            <option value="5">Dược sĩ</option>
                             <option value="4">Bác sĩ</option>
                             <option value="3">Nhân viên xét nghiệm</option>
                             <option value="2">Nhân  viên y tế</option>
@@ -130,6 +131,7 @@
                                 else if($edit_value->type == 2)
                                 {
                             ?>
+                            <option value="5">Dược sĩ</option>
                             <option value="4">Bác sĩ</option>
                             <option value="3">Nhân viên xét nghiệm</option>
                             <option selected value="2">Nhân  viên y tế</option>
@@ -140,6 +142,7 @@
                                 else if($edit_value->type == 3)
                                 {
                             ?>
+                            <option value="5">Dược sĩ</option>
                             <option value="4">Bác sĩ</option>
                             <option selected value="3">Nhân viên xét nghiệm</option>
                             <option value="2">Nhân  viên y tế</option>
@@ -150,7 +153,19 @@
                                 else if($edit_value->type == 4)
                                 {
                             ?>
+                            <option value="5">Dược sĩ</option>
                             <option selected value="4">Bác sĩ</option>
+                            <option value="3">Nhân viên xét nghiệm</option>
+                            <option value="2">Nhân  viên y tế</option>
+                            <option value="1" >Quản trị viên</option>
+                            <option value="0">Khách hàng</option>
+                            <?php
+                                }
+                                else if($edit_value->type == 5)
+                                {
+                            ?>
+                            <option selected value="5">Dược sĩ</option>
+                            <option value="4">Bác sĩ</option>
                             <option value="3">Nhân viên xét nghiệm</option>
                             <option value="2">Nhân  viên y tế</option>
                             <option value="1" >Quản trị viên</option>

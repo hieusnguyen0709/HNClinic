@@ -96,6 +96,7 @@
                               <option value="2">Nhân viên y tế</option>
                               <option value="3">Nhân viên xét nghiệm</option>
                               <option value="4">Bác sĩ</option>
+                              <option value="5">Dược sĩ</option>
                             </select>
                           </div>
                         </div>

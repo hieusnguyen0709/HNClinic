@@ -80,6 +80,10 @@
                                 {
                                   echo 'Bác sĩ';
                                 }
+                                else if($user->type==5)
+                                {
+                                  echo 'Dược sĩ';
+                                }
                               ?>
                           </td>
                           <td>
