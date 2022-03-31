@@ -5,7 +5,7 @@
                 <div class="card-body">
                   <h4 class="card-title">Sửa đơn thuốc</h4>
                   @foreach($edit_pres as $key => $pres)
-                  <form method="post" role="form" action="{{URL::to('/admin/kt-them-don-thuoc')}}" enctype="multipart/form-data" class="form-sample">
+                  <form method="post" role="form" action="{{URL::to('/admin/kt-sua-don-thuoc/'.$pres->id_pres)}}" enctype="multipart/form-data" class="form-sample">
                   {{ csrf_field() }}
                     <p class="card-description">
                     <?php
@@ -23,9 +23,11 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Bệnh nhân</label>
                           <div class="col-sm-9"> 
-                            <select class="form-control">
-                            <option selected value="{{$pres->patient_id}}">{{$pres->last_name}}</option>
-                            <option value="0">Nam</option>
+                            <select class="form-control" name="patient_id">
+                                <option value="{{$pres->id}}" >{{$pres->last_name}}</option>
+                              @foreach($patient as $key => $pt)
+                                <option value="{{$pt->id}}" >{{$pt->last_name}}</option>
+                              @endforeach
                             </select>
                           </div>
                         </div>
@@ -36,7 +38,9 @@
                           <div class="col-sm-9">
                           <select class="form-control" name="doctor_id">
                             <option selected value="{{$pres->doctor_id}}"> {{App\Models\User::where('id',$pres->doctor_id)->value('last_name')}}</option>
-                            <option value="0">Nam</option>
+                            @foreach($doctor as $key => $dt)
+                                <option value="{{$dt->id}}" >{{$dt->last_name}}</option>
+                            @endforeach
                             </select>
                           </div>
                         </div>
@@ -57,7 +61,10 @@
                           <label class="col-sm-3 col-form-label">Medicine</label>
                           <div class="col-sm-9">
                           <select class="form-control" name="medicine_id">
-                                <option value="{{$pres->medicine_id}}">{{$pres->name}}</option>
+                                <option value="{{$pres->id}}" >{{$pres->name}}</option>
+                              @foreach($medicine as $key => $md)
+                                <option value="{{$md->id}}" >{{$md->name}}</option>
+                              @endforeach
                             </select>
                           </div>
                         </div>

@@ -270,18 +270,32 @@ class Admincontroller extends Controller
 
     public function edit_pres($id_pres)
     {
+      $doctor = DB::table('users')->where('type','4')->orderby('id','desc')->get();
+      $patient = DB::table('users')->where('type','0')->orderby('id','desc')->get();
+      $medicine = DB::table('medicines')->orderby('id','desc')->get();
       $edit_pres = DB::table('prescriptions')
       ->join('medicines','medicines.id','=','prescriptions.medicine_id')
       ->join('users','users.id','=','prescriptions.patient_id')
       ->where('id_pres',$id_pres)->get();
-      $manager_edit_pres = view('admin.mn_prescription.edit_pres')->with('edit_pres',$edit_pres);
+      $manager_edit_pres = view('admin.mn_prescription.edit_pres')->with('edit_pres',$edit_pres)->with('doctor',$doctor)->with('patient',$patient)->with('medicine',$medicine);
       return view('admin.index')->with('admin.mn_prescription.edit_pres',$manager_edit_pres);
       // return view('admin.mn_prescription.edit_pres');
     }
 
-    public function check_edit_pres($id_pres)
+    public function check_edit_pres(Request $request, $id_pres)
     {
-      return 'check_edit';
+      $data = array();
+      $data['medicine_id'] = $request->medicine_id;
+      $data['doctor_id'] = $request->doctor_id;
+      $data['patient_id'] = $request->patient_id;
+      $data['symptoms'] = $request->symptoms;
+      $data['diagnosis'] = $request->diagnosis;
+      $data['advice'] = $request->advice;
+      $data['date'] = $request->date;
+      $data['instruction'] = $request->instruction;
+      DB::table('prescriptions')->where('id_pres',$id_pres)->update($data);
+      Session::put('message','Sửa đơn thuốc thành công');
+      return Redirect::back();
     }
     //Manage Prescription
 }

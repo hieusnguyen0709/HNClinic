@@ -59,6 +59,7 @@ Route::post('/admin/kt-them-don-thuoc',[AdminController::class, 'check_add_pres'
 Route::get('/admin/danh-sach-don-thuoc',[AdminController::class, 'show_list_pres'])->name('show_list_pres');
 Route::get('/admin/xoa-don-thuoc/{id_pres}',[AdminController::class, 'delete_pres'])->name('delete_pres');
 Route::get('/admin/sua-don-thuoc/{id_pres}',[AdminController::class, 'edit_pres'])->name('edit_pres');
+Route::post('/admin/kt-sua-don-thuoc/{id_pres}',[AdminController::class, 'check_edit_pres'])->name('check_edit_pres');
 //Doctor
 Route::get('/bac-si',[Doctorcontroller::class, 'index'])->name('doctor');
 
