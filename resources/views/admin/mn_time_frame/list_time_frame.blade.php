@@ -3,7 +3,7 @@
 <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Danh sách lịch làm</h4>
+                  <h4 class="card-title">Danh sách khung giờ</h4>
                   <?php
                          $message = Session::get('message');
                          if($message)
@@ -18,16 +18,13 @@
                       <thead>
                         <tr>
                         <th>
-                            Chức vụ
+                            Ca làm việc
                         </th>
                         <th>
-                            Tên
+                            Thời gian bắt đầu
                         </th>
                           <th>
-                            Ngày làm
-                          </th>
-                          <th>
-                            Ca làm
+                            Thời gian kết thúc
                           </th>
                           <th>
                             Thao tác
@@ -35,27 +32,23 @@
                         </tr>
                       </thead>
                       <tbody>
-                        @foreach($show_list_schedule as $key => $schedule)
+                        @foreach($show_list_time_frame as $key => $time_frame)
                         <tr>
-                          <td class="py-1">
-                            Bác sĩ
-                          </td>
                           <td>
-                              {{$schedule->last_name}}
+                            {{$time_frame->frame_name}}
                           </td>
                             <td>
-                                {{$schedule->date}}
+                            {{$time_frame->start_time}}
                             </td>
                           <td>
-                          {{$schedule->frame_name}} ({{$schedule->start_time}} - {{$schedule->end_time}})
-                          <!--  -->
+                            {{$time_frame->end_time}}
                           </td>
                           <td>
-                            <a href="{{URL::to('/admin/sua-lich-lam/'.$schedule->id_time)}}">Sửa</a> |
-                            <a href="{{URL::to('/admin/xoa-lich-lam/'.$schedule->id_time)}}">Xóa</a>
+                            <a href="{{URL::to('/admin/sua-khung-gio/'.$time_frame->id)}}">Sửa</a> |
+                            <a href="{{URL::to('/admin/xoa-khung-gio/'.$time_frame->id)}}">Xóa</a>
                           </td>
                         </tr>
-                        @endforeach
+                       @endforeach
                       </tbody>
                     </table>
                   </div>

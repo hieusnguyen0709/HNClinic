@@ -44,22 +44,18 @@
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-sm-3 col-form-label">Thời gian bắt đầu</label>
+                          <label class="col-sm-3 col-form-label">Ca làm</label>
                           <div class="col-sm-9">
-                            <input type="time" class="form-control timepicker" name="start_time"/>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-3 col-form-label">Thời gian kết thúc</label>
-                          <div class="col-sm-9">
-                            <input type="time" class="form-control" name="end_time"/>
+                          <select class="form-control" name="frame_name">
+                            @foreach($time_frame as $key => $frame)
+                              <option value="{{$frame->frame_name}}" >{{$frame->frame_name}}  ({{$frame->start_time}} - {{$frame->end_time}})</option>
+                            @endforeach
+                          </select>
                           </div>
                         </div>
                       </div>
                     </div>
-
+                    
                     <center><button type="submit" name="submit" class="btn btn-primary me-2">Thêm lịch làm</button></center>
                   </form>
                 </div>

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Schedule;
+use App\Models\Time_frame;
+use App\Models\Prescription;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -123,16 +126,16 @@ class Admincontroller extends Controller
     //Manage_Schedule
     public function add_schedule()
     {
+      $time_frame = DB::table('time_frame')->orderby('id','desc')->get();
       $show_list_user = DB::table('users')->where('type','4')->orderby('id','desc')->get();
-      return view('admin.mn_schedule.add_schedule')->with('show_list_user',$show_list_user);
+      return view('admin.mn_schedule.add_schedule')->with('show_list_user',$show_list_user)->with('time_frame',$time_frame);
     }
 
     public function check_add_schedule(Request $request)
     {
       $data = array();
       $data['date'] = $request->date;
-      $data['start_time'] = $request->start_time;
-      $data['end_time'] = $request->end_time;
+      $data['frame_name'] = $request->frame_name;
       $data['duration'] = '30m';
       $data['user_id'] = $request->type;
       DB::table('time_schedules')->insert($data);
@@ -142,15 +145,21 @@ class Admincontroller extends Controller
 
     public function show_list_schedule()
     {
-       $show_list_schedule = DB::table('time_schedules')->join('users','time_schedules.user_id','=','users.id')->get();
+       $show_list_schedule = DB::table('time_schedules')
+       ->join('time_frame','time_frame.frame_name','=','time_schedules.frame_name')
+       ->join('users','time_schedules.user_id','=','users.id')->get();
        $manager_list_schedule = view('admin.mn_schedule.list_schedule')->with('show_list_schedule',$show_list_schedule);
        return view('admin.index')->with('admin.mn_schedule.list_schedule',$manager_list_schedule);
     }
 
     public function edit_schedule($id_time)
     {
-      $edit_schedule = DB::table('time_schedules')->join('users','time_schedules.user_id','=','users.id')->where('id_time',$id_time)->get();
-      $manager_edit_schedule = view('admin.mn_schedule.edit_schedule')->with('edit_schedule',$edit_schedule);
+      $time_frame = DB::table('time_frame')->orderby('id','desc')->get();
+      $edit_schedule = DB::table('time_schedules')
+      ->join('users','time_schedules.user_id','=','users.id')
+      ->join('time_frame','time_frame.frame_name','=','time_schedules.frame_name')
+      ->where('id_time',$id_time)->get();
+      $manager_edit_schedule = view('admin.mn_schedule.edit_schedule')->with('edit_schedule',$edit_schedule)->with('time_frame',$time_frame);
       return view('admin.index')->with('admin.mn_schedule.edit_schedule',$manager_edit_schedule);
     }
 
@@ -158,8 +167,7 @@ class Admincontroller extends Controller
     {
       $data = array();
       $data['date'] = $request->date;
-      $data['start_time'] = $request->start_time;
-      $data['end_time'] = $request->end_time;
+      $data['frame_name'] = $request->frame_name;
       DB::table('time_schedules')->where('id_time',$id_time)->update($data);
       Session::put('message','Sửa lịch làm thành công');
       return Redirect::back();
@@ -298,4 +306,202 @@ class Admincontroller extends Controller
       return Redirect::back();
     }
     //Manage Prescription
+
+    //Manage Time_frame
+    public function add_time_frame()
+    {
+      return view('admin.mn_time_frame.add_time_frame');
+    }
+
+    public function check_add_time_frame(request $request)
+    {
+      $data = array();
+      $data['frame_name'] = $request->frame_name;
+      $data['start_time'] = $request->start_time;
+      $data['end_time'] = $request->end_time;
+      DB::table('time_frame')->insert($data);
+      Session::put('message','Thêm khung giờ thành công');
+      return Redirect::to('/admin/them-khung-gio');
+    }
+
+    public function show_list_time_frame()
+    {
+      $show_list_time_frame = DB::table('time_frame')->orderby('id','asc')->get();
+      $manager_list_time_frame = view('admin.mn_time_frame.list_time_frame')->with('show_list_time_frame',$show_list_time_frame);
+      return view('admin.index')->with('admin.mn_time_frame.list_time_frame',$manager_list_time_frame);
+    }
+
+    public function edit_time_frame($id)
+    {
+      $edit_time_frame = DB::table('time_frame')->where('id',$id)->get();
+      $manager_edit_time_frame = view('admin.mn_time_frame.edit_time_frame')->with('edit_time_frame',$edit_time_frame);
+      return view('admin.index')->with('admin.mn_time_frame.edit_time_frame',$manager_edit_time_frame);
+    }
+
+    public function check_edit_time_frame($id, request $request)
+    {
+      $data = array();
+      $data['frame_name'] = $request->frame_name;
+      $data['start_time'] = $request->start_time;
+      $data['end_time'] = $request->end_time;
+      DB::table('time_frame')->where('id',$id)->update($data);
+      Session::put('message','Sửa khung giờ thành công');
+      return Redirect::back();
+    }
+
+    public function delete_time_frame($id)
+    {
+      DB::table('time_frame')->where('id',$id)->delete();
+      Session::put('message','Xóa khung giờ thành công');
+      return Redirect::back();
+    }
+    //Manage Time_frame
+
+    //Manage Patient
+    public function add_patient()
+    {
+      return view('admin.mn_patient.add_patient');
+    }
+
+    public function check_add_patient(request $request)
+    {
+      $data = array();
+      $data['email'] = $request->email;
+      $data['password'] = $request->password;
+      $data['first_name'] = $request->first_name;
+      $data['last_name'] = $request->last_name;
+      $data['address'] = $request->address;
+      $data['birth_date'] = $request->birth_date;
+      $data['gender'] = $request->gender;
+      $data['phone'] = $request->phone;
+      $data['emergency'] = $request->emergency;
+      $data['type'] = '0';
+      $data['specialist'] = '0';
+      $data['blood_group'] = $request->blood_group;
+
+    	$get_image = $request->file('image');
+    	if($get_image)
+    	{
+    		$get_name_image = $get_image->getClientOriginalName();
+    		$name_image = current(explode('.',$get_name_image));
+    		$new_image = $name_image.rand(0,99).'.'.$get_image->getClientOriginalExtension();
+    		$get_image->move('upload_images',$new_image);
+    		$data['picture'] = $new_image;
+    		DB::table('users')->insert($data);
+	    	Session::put('message','Thêm bệnh nhân thành công');
+	    	return Redirect::to('/admin/them-benh-nhan');
+    	}
+      $data['picture'] = '0';
+      DB::table('users')->insert($data);
+      Session::put('message','Thêm bệnh nhân thành công');
+      return Redirect::to('/admin/them-benh-nhan');;
+    }
+
+    public function show_list_patient()
+    {
+      $show_list_patient= DB::table('users')->where('type','0')->get();
+      $manager_list_patient = view('admin.mn_patient.list_patient')->with('show_list_patient',$show_list_patient);
+      return view('admin.index')->with('admin.mn_patient.list_patient',$manager_list_patient);
+    }
+
+    public function detail_patient($id)
+    {
+      $detail_patient = DB::table('users')->where('id',$id)->get();
+      $manager_detail_patient = view('admin.mn_patient.detail_patient')->with('detail_patient',$detail_patient);
+      return view('admin.index')->with('admin.mn_patient.detail_patient',$manager_detail_patient);
+    }
+
+    public function edit_patient($id)
+    {
+      $edit_patient= DB::table('users')->where('id',$id)->get();
+      $manager_edit_patient = view('admin.mn_patient.edit_patient')->with('edit_patient',$edit_patient);
+      return view('admin.index')->with('admin.mn_patient.edit_patient',$manager_edit_patient);
+    }
+
+    public function check_edit_patient($id, request $request)
+    {
+      $data = array();
+      $data['email'] = $request->email;
+      $data['password'] = $request->password;
+      $data['first_name'] = $request->first_name;
+      $data['last_name'] = $request->last_name;
+      $data['address'] = $request->address;
+      $data['birth_date'] = $request->birth_date;
+      $data['gender'] = $request->gender;
+      $data['phone'] = $request->phone;
+      $data['emergency'] = $request->emergency;
+      $data['type'] = '0';
+      $data['specialist'] = '0';
+      $data['blood_group'] = $request->blood_group;
+
+      $get_image = $request->file('image');
+      if($get_image)
+      {
+         $get_name_image = $get_image->getClientOriginalName();
+         $name_image = current(explode('.',$get_name_image));
+         $new_image = $name_image.rand(0,99).'.'.$get_image->getClientOriginalExtension();
+         $get_image->move('upload_images',$new_image);
+         $data['picture'] = $new_image;
+         DB::table('users')->where('id',$id)->update($data);
+         Session::put('message','Sửa bệnh nhân thành công');
+         return Redirect::back();
+      }
+      DB::table('users')->where('id',$id)->update($data);
+      Session::put('message','Sửa bệnh nhân thành công');
+      return Redirect::back();
+    }
+
+    public function delete_patient($id)
+    {
+      DB::table('users')->where('id',$id)->delete();
+      Session::put('message','Xóa bệnh nhân thành công');
+      return Redirect::back();
+    }
+    //Manage Patient
+
+    //Manage Test type
+    public function add_test_type()
+    {
+      return view('admin.mn_test_type.add_test_type');
+    }
+
+    public function check_add_test_type(request $request)
+    {
+      $data = array();
+      $data['name_type'] = $request->name_type;
+      DB::table('test_type')->insert($data);
+      Session::put('message','Thêm loại xét nghiệm thành công');
+      return Redirect::to('/admin/them-loai-xet-nghiem');;
+    }
+
+    public function show_list_test_type()
+    {
+      $show_list_test_type= DB::table('test_type')->get();
+      $manager_list_test_type = view('admin.mn_test_type.list_test_type')->with('show_list_test_type',$show_list_test_type);
+      return view('admin.index')->with('admin.mn_test_type.list_test_type',$manager_list_test_type);
+    }
+
+    public function edit_test_type($id_test_type)
+    {
+      $edit_test_type= DB::table('test_type')->where('id_test_type',$id_test_type)->get();
+      $manager_edit_test_type = view('admin.mn_test_type.edit_test_type')->with('edit_test_type',$edit_test_type);
+      return view('admin.index')->with('admin.mn_test_type.edit_test_type',$manager_edit_test_type);
+    }
+
+    public function check_edit_test_type($id_test_type, request $request)
+    {
+      $data = array();
+      $data['name_type'] = $request->name_type;
+      DB::table('test_type')->where('id_test_type',$id_test_type)->update($data);
+      Session::put('message','Sửa loại xét nghiệm thành công');
+      return Redirect::back();
+    }
+
+    public function delete_test_type($id_test_type)
+    {
+      DB::table('test_type')->where('id_test_type',$id_test_type)->delete();
+      Session::put('message','Xóa loại xét nghiệm thành công');
+      return Redirect::back();
+    }
+    //Manage Test type
 }

@@ -3,7 +3,7 @@
 <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Danh sách lịch làm</h4>
+                  <h4 class="card-title">Danh sách loại xét nghiệm</h4>
                   <?php
                          $message = Session::get('message');
                          if($message)
@@ -18,44 +18,25 @@
                       <thead>
                         <tr>
                         <th>
-                            Chức vụ
+                            Tên loại
                         </th>
                         <th>
-                            Tên
-                        </th>
-                          <th>
-                            Ngày làm
-                          </th>
-                          <th>
-                            Ca làm
-                          </th>
-                          <th>
                             Thao tác
-                          </th>
+                        </th>
                         </tr>
                       </thead>
                       <tbody>
-                        @foreach($show_list_schedule as $key => $schedule)
+                        @foreach($show_list_test_type as $key => $test_type)
                         <tr>
-                          <td class="py-1">
-                            Bác sĩ
+                          <td>
+                            {{$test_type->name_type}}
                           </td>
                           <td>
-                              {{$schedule->last_name}}
-                          </td>
-                            <td>
-                                {{$schedule->date}}
-                            </td>
-                          <td>
-                          {{$schedule->frame_name}} ({{$schedule->start_time}} - {{$schedule->end_time}})
-                          <!--  -->
-                          </td>
-                          <td>
-                            <a href="{{URL::to('/admin/sua-lich-lam/'.$schedule->id_time)}}">Sửa</a> |
-                            <a href="{{URL::to('/admin/xoa-lich-lam/'.$schedule->id_time)}}">Xóa</a>
+                            <a href="{{URL::to('/admin/sua-loai-xet-nghiem/'.$test_type->id_test_type)}}">Sửa</a> |
+                            <a href="{{URL::to('/admin/xoa-loai-xet-nghiem/'.$test_type->id_test_type)}}">Xóa</a>
                           </td>
                         </tr>
-                        @endforeach
+                       @endforeach
                       </tbody>
                     </table>
                   </div>

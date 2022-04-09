@@ -2,7 +2,7 @@
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
           <li class="nav-item">
-            <a class="nav-link" href="{{URL::to('/admin')}}">
+            <a class="nav-link" href="{{URL::to('/duoc-si')}}">
               <i class="mdi mdi-grid-large menu-icon"></i>
               <!-- Trang chủ -->
               <span class="menu-title">Trang chủ</span>
@@ -23,8 +23,8 @@
             </a>
             <div class="collapse" id="form-elements">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="../pages/forms/basic_elements.html">Thêm thuốc</a></li>
-                <li class="nav-item"><a class="nav-link" href="../pages/forms/basic_elements.html">Danh sách thuốc</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{URL::to('duoc-si/them-thuoc')}}">Thêm thuốc</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{URL::to('duoc-si/danh-sach-thuoc')}}">Danh sách thuốc</a></li>
               </ul>
             </div>
           </li>

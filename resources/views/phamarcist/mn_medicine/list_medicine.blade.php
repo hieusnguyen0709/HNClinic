@@ -1,9 +1,9 @@
-@extends('admin.index')
-@section('admin_content')
+@extends('phamarcist.index')
+@section('phamarcist_content')
 <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Danh sách lịch làm</h4>
+                  <h4 class="card-title">Danh sách thuốc</h4>
                   <?php
                          $message = Session::get('message');
                          if($message)
@@ -18,16 +18,19 @@
                       <thead>
                         <tr>
                         <th>
-                            Chức vụ
+                            Tên thuốc
                         </th>
                         <th>
-                            Tên
+                            Đơn vị
                         </th>
                           <th>
-                            Ngày làm
+                            số lượng
                           </th>
                           <th>
-                            Ca làm
+                            Loại
+                          </th>
+                          <th>
+                            Cách dùng
                           </th>
                           <th>
                             Thao tác
@@ -35,24 +38,26 @@
                         </tr>
                       </thead>
                       <tbody>
-                        @foreach($show_list_schedule as $key => $schedule)
+                        @foreach($show_list_medicine as $key => $medicine)
                         <tr>
                           <td class="py-1">
-                            Bác sĩ
+                            {{$medicine->name}}
                           </td>
                           <td>
-                              {{$schedule->last_name}}
+                            {{$medicine->unit}}
                           </td>
                             <td>
-                                {{$schedule->date}}
+                            {{$medicine->quantity}}
                             </td>
                           <td>
-                          {{$schedule->frame_name}} ({{$schedule->start_time}} - {{$schedule->end_time}})
-                          <!--  -->
+                            {{$medicine->category}}
                           </td>
                           <td>
-                            <a href="{{URL::to('/admin/sua-lich-lam/'.$schedule->id_time)}}">Sửa</a> |
-                            <a href="{{URL::to('/admin/xoa-lich-lam/'.$schedule->id_time)}}">Xóa</a>
+                            {{$medicine->instruction}}
+                          </td>
+                          <td>
+                            <a href="{{URL::to('/duoc-si/sua-thuoc/'.$medicine->id)}}">Sửa</a> |
+                            <a href="{{URL::to('/duoc-si/xoa-thuoc/'.$medicine->id)}}">Xóa</a>
                           </td>
                         </tr>
                         @endforeach

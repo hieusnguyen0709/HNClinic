@@ -96,31 +96,46 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
       <form action="#">
         <div class="form-group">
           <!-- <label for="appointment_name" class="text-black">Full Name</label> -->
-          <input type="text" class="form-control" id="appointment_name" placeholder="Họ tên">
+          <input type="text" class="form-control" id="appointment_name" placeholder="Tên đầy đủ">
         </div>
         <div class="form-group">
           <!-- <label for="appointment_email" class="text-black">Email</label> -->
-          <input type="text" class="form-control" id="appointment_email" placeholder="Email">
+          <select class="form-control" name="gender">
+            <option value="0">Nam</option>
+            <option value="0">Nữ</option>
+          </select>
         </div>
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <!-- <label for="appointment_date" class="text-black">Date</label> -->
-              <input type="text" class="form-control appointment_date" placeholder="Ngày">
-            </div>    
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <!-- <label for="appointment_time" class="text-black">Time</label> -->
-              <input type="text" class="form-control appointment_time" placeholder="Thời gian">
-            </div>
-          </div>
+        <div class="form-group">
+          <!-- <label for="appointment_email" class="text-black">Email</label> -->
+          <input type="date" class="form-control" placeholder="Ngày sinh">
         </div>
-        
-
+        <div class="form-group">
+          <!-- <label for="appointment_email" class="text-black">Email</label> -->
+          <input type="text" class="form-control" placeholder="Số điện thoại">
+        </div>
         <div class="form-group">
           <!-- <label for="appointment_message" class="text-black">Message</label> -->
-          <textarea name="" id="appointment_message" class="form-control" cols="30" rows="10" placeholder="Lời nhắn"></textarea>
+          <textarea name="" id="appointment_message" class="form-control" cols="10" rows="10" placeholder="Triệu chứng"></textarea>
+        </div>
+      
+        <div class="form-group">
+          <!-- <label for="appointment_email" class="text-black">Email</label> -->
+          <select class="form-control" name="gender">
+            <option value="0">BS A</option>
+            <option value="0">BS B</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <!-- <label for="appointment_email" class="text-black">Email</label> -->
+          <input type="text" class="form-control" placeholder="Ngày làm">
+        </div>
+        <div class="form-group">
+          <!-- <label for="appointment_email" class="text-black">Email</label> -->
+          <input type="text" class="form-control" placeholder="Ca làm">
+        </div>
+        <div class="form-group">
+          <!-- <label for="appointment_email" class="text-black">Email</label> -->
+          <input type="text" class="form-control" placeholder="GIờ">
         </div>
         <div class="form-group">
           <input type="submit" value="Đặt" class="btn btn-primary">

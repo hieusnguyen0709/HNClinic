@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link type="image/png" rel="shortcut icon" href="<?php echo url('/'); ?>/images_user/logo.jpg"/>
-  <title>Bác sĩ | HNClinic </title>
+  <title>Dược sĩ | HNClinic </title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="{{asset('/panel_admin/vendors/feather/feather.css')}}">
   <link rel="stylesheet" href="{{asset('/panel_admin/vendors/mdi/css/materialdesignicons.min.css')}}">

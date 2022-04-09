@@ -57,11 +57,12 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Medicine</label>
                           <div class="col-sm-9">
-                          <select class="form-control" name="medicine_id">
+                          <select class="form-control" name="medicine_id" id="add_medi">
                             @foreach($medicine as $key => $md)
                               <option value="{{$md->id}}" >{{$md->name}}</option>
                             @endforeach
-                            </select>
+                          </select></br>
+                          <input type="button" onclick="add_more_medi()"  id="add_more_medi" class="btn btn-primary me-2" value="Thêm thuốc" name="add_more_medi" style="margin-top:20px;"/>
                           </div>
                         </div>
                       </div>

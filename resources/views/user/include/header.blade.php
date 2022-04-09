@@ -129,7 +129,7 @@
     				<h3 class="mb-2">Đặt lịch khám</h3>
     				<form action="#" class="appointment-form">
 	            <div class="row">
-	            	<div class="col-sm-4">
+	            	<!-- <div class="col-sm-4">
 	                <div class="form-group">
 			              <div class="select-wrap">
                       <div class="icon"><span class="ion-ios-arrow-down"></span></div>
@@ -142,11 +142,11 @@
                       </select>
                     </div>
 			            </div>
-	              </div>
+	              </div> -->
 	              <div class="col-sm-4">
 	                <div class="form-group">
 	                	<div class="icon"><span class="icon-user"></span></div>
-			              <input type="text" class="form-control" id="appointment_name" placeholder="Họ tên">
+			              <input type="text" class="form-control" id="appointment_name" placeholder="Tên đầy đủ">
 			            </div>
 	              </div>
 	              <div class="col-sm-4">

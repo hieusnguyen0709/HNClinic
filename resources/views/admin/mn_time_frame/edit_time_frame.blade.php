@@ -3,12 +3,12 @@
 <div class="col-12 grid-margin">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Sửa lịch làm</h4>
-                  @foreach($edit_schedule as $key => $schedule)
-                  <form method="post" role="form" action="{{URL::to('/admin/kt-sua-lich-lam/'.$schedule->id_time)}}" enctype="multipart/form-data" class="form-sample">
+                  <h4 class="card-title">Sửa khung giờ</h4>
+                  @foreach($edit_time_frame as $key => $time_frame)
+                  <form method="post" role="form" action="{{URL::to('/admin/kt-sua-khung-gio/'.$time_frame->id)}}" enctype="multipart/form-data" class="form-sample">
                   {{ csrf_field() }}
                     <p class="card-description">
-                      <?php
+                    <?php
                          $message = Session::get('message');
                          if($message)
                          {
@@ -21,38 +21,33 @@
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-sm-3 col-form-label">Tên Bác Sĩ</label>
+                          <label class="col-sm-3 col-form-label">Ca làm</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" value="{{$schedule->last_name}}" name="type" readonly>
+                            <input type="text" class="form-control timepicker" name="frame_name" value="{{$time_frame->frame_name}}"/>
                           </div>
                         </div>
-
-                      </div>
-                      <div class="col-md-6">
-                      <div class="form-group row">
-                      <label class="col-sm-3 col-form-label">Ngày</label>
-                          <div class="col-sm-9">
-                          <input type="date" class="form-control" name="date" value="{{ $schedule->date }}">
-                          </div>
-                        </div>
-
                       </div>
                     </div>
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-sm-3 col-form-label">Ca làm</label>
+                          <label class="col-sm-3 col-form-label">Thời gian bắt đầu</label>
                           <div class="col-sm-9">
-                          <select class="form-control" name="frame_name">
-                              @foreach($time_frame as $key => $frame)
-                                <option value="{{$frame->frame_name}}" >{{$frame->frame_name}}({{$frame->start_time}} - {{$frame->end_time}})</option>
-                              @endforeach
-                            </select>
+                            <input type="time" class="form-control timepicker" name="start_time" value="{{$time_frame->start_time}}"/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Thời gian kết thúc</label>
+                          <div class="col-sm-9">
+                            <input type="time" class="form-control" name="end_time" value="{{$time_frame->end_time}}"/>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <center><button type="submit" name="submit" class="btn btn-primary me-2">Sửa lịch làm</button></center>
+
+                    <center><button type="submit" name="submit" class="btn btn-primary me-2">Sửa khung giờ</button></center>
                   </form>
                   @endforeach
                 </div>

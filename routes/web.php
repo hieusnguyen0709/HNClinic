@@ -60,11 +60,41 @@ Route::get('/admin/danh-sach-don-thuoc',[AdminController::class, 'show_list_pres
 Route::get('/admin/xoa-don-thuoc/{id_pres}',[AdminController::class, 'delete_pres'])->name('delete_pres');
 Route::get('/admin/sua-don-thuoc/{id_pres}',[AdminController::class, 'edit_pres'])->name('edit_pres');
 Route::post('/admin/kt-sua-don-thuoc/{id_pres}',[AdminController::class, 'check_edit_pres'])->name('check_edit_pres');
+//Admin - Manage Time_Frame
+Route::get('/admin/them-khung-gio',[AdminController::class, 'add_time_frame'])->name('add_time_frame');
+Route::post('/admin/kt-them-khung-gio',[AdminController::class, 'check_add_time_frame'])->name('check_add_time_frame');
+Route::get('/admin/danh-sach-khung-gio',[AdminController::class, 'show_list_time_frame'])->name('show_list_time_frame');
+Route::get('/admin/sua-khung-gio/{id}',[AdminController::class, 'edit_time_frame'])->name('edit_time_frame');
+Route::post('/admin/kt-sua-khung-gio/{id}',[AdminController::class, 'check_edit_time_frame'])->name('check_edit_time_frame');
+Route::get('/admin/xoa-khung-gio/{id}',[AdminController::class, 'delete_time_frame'])->name('delete_time_frame');
+//Admin - Manage Patient
+Route::get('/admin/them-benh-nhan',[AdminController::class, 'add_patient'])->name('add_patient');
+Route::post('/admin/kt-them-benh-nhan',[AdminController::class, 'check_add_patient'])->name('check_add_patient');
+Route::get('/admin/danh-sach-benh-nhan',[AdminController::class, 'show_list_patient'])->name('show_list_patient');
+Route::get('/admin/chi-tiet-benh-nhan/{id}',[AdminController::class, 'detail_patient'])->name('detail_patient');
+Route::get('/admin/sua-benh-nhan/{id}',[AdminController::class, 'edit_patient'])->name('edit_patient');
+Route::post('/admin/kt-sua-benh-nhan/{id}',[AdminController::class, 'check_edit_patient'])->name('check_edit_patient');
+Route::get('/admin/xoa-benh-nhan/{id}',[AdminController::class, 'delete_patient'])->name('delete_patient');
+//Admin - Manage Test Type
+Route::get('/admin/them-loai-xet-nghiem',[AdminController::class, 'add_test_type'])->name('add_test_type');
+Route::post('/admin/kt-them-loai-xet-nghiem',[AdminController::class, 'check_add_test_type'])->name('check_add_test_type');
+Route::get('/admin/danh-sach-loai-xet-nghiem',[AdminController::class, 'show_list_test_type'])->name('show_list_test_type');
+Route::get('/admin/sua-loai-xet-nghiem/{id_test_type}',[AdminController::class, 'edit_test_type'])->name('edit_test_type');
+Route::post('/admin/kt-sua-loai-xet-nghiem/{id_test_type}',[AdminController::class, 'check_edit_test_type'])->name('check_edit_test_type');
+Route::get('/admin/xoa-loai-xet-nghiem/{id_test_type}',[AdminController::class, 'delete_test_type'])->name('delete_test_type');
+
 //Doctor
 Route::get('/bac-si',[Doctorcontroller::class, 'index'])->name('doctor');
 
 //Phamarcist
 Route::get('/duoc-si',[Phamarcistcontroller::class, 'index'])->name('phamarcist');
+//Phamarcist - Manage Medicine
+Route::get('/duoc-si/them-thuoc',[Phamarcistcontroller::class, 'add_medicine'])->name('add_medicine_phamarcist');
+Route::post('/duoc-si/kt-them-thuoc',[Phamarcistcontroller::class, 'check_add_medicine'])->name('check_add_medicine_phamarcist');
+Route::get('/duoc-si/danh-sach-thuoc',[Phamarcistcontroller::class, 'show_list_medicine'])->name('show_list_medicine_phamarcist');
+Route::get('/duoc-si/sua-thuoc/{id}',[Phamarcistcontroller::class, 'edit_medicine'])->name('edit_medicine_phamarcist');
+Route::post('/duoc-si/kt-sua-thuoc/{id}',[Phamarcistcontroller::class, 'check_edit_medicine'])->name('check_edit_medicine_phamarcist');
+Route::get('/duoc-si/xoa-thuoc/{id}',[Phamarcistcontroller::class, 'delete_medicine'])->name('delete_medicine_phamarcist');
 
 //Receptionist
 Route::get('/nhan-vien-y-te',[Receptionistcontroller::class, 'index'])->name('receptionist');
