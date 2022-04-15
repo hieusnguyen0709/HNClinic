@@ -279,7 +279,7 @@ class Admincontroller extends Controller
     {
       $show_list_pres = DB::table('prescriptions')
       ->join('medicines','medicines.id','=','prescriptions.medicine_id')
-      ->join('users','users.id','=','prescriptions.patient_id')->get();
+      ->join('users','users.id','=','prescriptions.patient_id')->orderBy('id_pres')->get();
       $manager_list_pres = view('admin.mn_prescription.list_pres')->with('show_list_pres',$show_list_pres);
       return view('admin.index')->with('admin.mn_prescription.list_pres',$manager_list_pres);
     }

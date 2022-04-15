@@ -34,7 +34,7 @@
                       <div class="form-group row">
                       <label class="col-sm-3 col-form-label">Ngày</label>
                           <div class="col-sm-9">
-                          <input type="date" class="form-control" name="date">
+                          <input type="date" class="form-control" name="date" onclick="date()">
                           </div>
                         </div>
                       </div>
@@ -58,4 +58,47 @@
                 </div>
               </div>
             </div>
+            <script type="text/javascript"> 
+              // function date()
+              // {
+              //   let d = new Date();
+              //   let year = d.getFullYear();
+              //   let month = d.getMonth()+1;
+              //   let text = "";	
+              //   let day = d.getDate();
+              //   let totalDayOfMonth;
+              //   if(month == 2 ){
+              //     totalDayOfMonth=29;
+              //   }
+              //   else if(month == 4 || month == 6 || month == 9 || month == 11){
+              //     totalDayOfMonth=30;
+              //   }
+              //   else{
+              //     totalDayOfMonth=31;
+              //   }
+              //   for(i=0;i<15;i++){						
+              //     if(day  <= totalDayOfMonth){
+              //       if(month > 12){
+              //         month = 1;
+              //         year = year +1;
+              //       }	
+              //       date = month+'/'+day;
+              //       dat = year+'/'+month+'/'+day;
+              //       text += '<li class="list-group-item list-group-item-action w-auto p-3 day" date="'+dat+'">'+date+'</li>';
+              //       day = day + 1;					
+              //     }
+              //     else{			
+              //       day = 1;
+              //       month = month + 1;
+              //       if(month > 12){
+              //         month = 1;
+              //         year = year +1;
+              //       }			
+              //       date = month+'/'+day;
+              //       dat = year+'/'+month+'/'+day;				
+              //       text += '<li class="list-group-item list-group-item-action w-auto p-3 day" date="'+dat+'">'+date+'</li>';
+              //       day= day +1;
+              //     }			
+              // }
+           </script>
 @endsection

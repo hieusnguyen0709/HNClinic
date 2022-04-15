@@ -40,6 +40,7 @@ class Homecontroller extends Controller
                 Session::put('email',$result->email);
                 Session::put('last_name',$result->last_name);
                 Session::put('id',$result->id);
+                
                 return Redirect::to('/trang-chu');
             }
             else if($type == '1')
@@ -103,5 +104,14 @@ class Homecontroller extends Controller
         Session::put('id',null);
         Session::put('last_name',null);
         return Redirect::to('/dang-nhap');
+    }
+
+    public function profile()
+    {
+        $id = Session::get('id');
+        $profile = DB::table('users')->where('id',$id)->get();
+        $manager_profile = view('user.profile')->with('profile',$profile);
+        return view('user.index')->with('user.profile',$manager_profile);
+        // return view('user.profile');
     }
 }

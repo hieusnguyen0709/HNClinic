@@ -28,6 +28,7 @@ Route::get('/dang-xuat',[HomeController::class, 'logout'])->name('logout');
 Route::get('/',[HomeController::class, 'index'])->name('home');
 Route::get('/trang-chu',[HomeController::class, 'index'])->name('home');
 Route::get('/thong-tin',[HomeController::class, 'info'])->name('info');
+Route::get('/tai-khoan',[HomeController::class, 'profile'])->name('profile');
 
 //Admin
 Route::get('/admin',[AdminController::class, 'index'])->name('admin');
