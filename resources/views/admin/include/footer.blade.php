@@ -32,6 +32,7 @@
   <script src="j{{asset('/panel_admin/s/jquery.cookie.js')}}" type="text/javascript"></script>
   <script src="{{asset('/panel_admin/js/dashboard.js')}}"></script>
   <script src="{{asset('/panel_admin/js/Chart.roundedBarCharts.js')}}"></script>
+  <script src="{{asset('/panel_admin/js/add_more_medicine.js')}}"></script>
   <!-- End custom js for this page-->
 </body>
 

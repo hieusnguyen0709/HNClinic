@@ -23,16 +23,11 @@
   <link rel="stylesheet" href="{{asset('/panel_admin/css/vertical-layout-light/style.css')}}">
   <!-- endinject -->
   <!-- <link rel="shortcut icon" href="images/favicon.png" /> -->
-<script type="text/javascript"> 
-  $(document).ready(function(){
-    var x = 1;
-    $("#add_more_medi").click(function(){
-      alert('ok');
-    });
-  });
+
+
+
 </script>
 </head>
 <body>
-  
 
 <div class="container-scroller">

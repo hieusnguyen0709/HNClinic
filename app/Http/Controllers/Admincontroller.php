@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Schedule;
 use App\Models\Time_frame;
-use App\Models\Prescription;
+use App\Models\Prescriptions;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -246,16 +246,31 @@ class Admincontroller extends Controller
 
     public function check_add_pres(Request $request)
     {
-      $data = array();
-      $data['medicine_id'] = $request->medicine_id;
-      $data['doctor_id'] = $request->doctor_id;
-      $data['patient_id'] = $request->patient_id;
-      $data['symptoms'] = $request->symptoms;
-      $data['diagnosis'] = $request->diagnosis;
-      $data['advice'] = $request->advice;
-      $data['date'] = $request->date;
-      $data['instruction'] = $request->instruction;
-      DB::table('prescriptions')->insert($data);
+      $medicine_id = $request->medicine_id;
+      $doctor_id = $request->doctor_id;
+      $patient_id = $request->patient_id;
+      $symptoms = $request->symptoms;
+      $diagnosis = $request->diagnosis;
+      $advice = $request->advice;
+      $date = $request->date;
+      $instruction = $request->instruction;
+      $count_medicine = count($medicine_id);
+      $pre_code = 'PR-'.rand(0,10000);
+      for($i = 0; $i < $count_medicine; $i++)
+      {
+        $data = [
+          'medicine_id' => $medicine_id[$i],
+          'doctor_id' => $doctor_id,
+          'patient_id' => $patient_id,
+          'symptoms' => $symptoms,
+          'diagnosis' => $diagnosis,
+          'advice' => $advice,
+          'date' => $date,
+          'pre_instruction' => $instruction[$i],
+          'pre_code' => $pre_code
+        ];
+        DB::table('prescriptions')->insert($data);
+      }
       Session::put('message','Thêm đơn thuốc thành công');
       return Redirect::to('/admin/them-don-thuoc');
     }
@@ -300,7 +315,7 @@ class Admincontroller extends Controller
       $data['diagnosis'] = $request->diagnosis;
       $data['advice'] = $request->advice;
       $data['date'] = $request->date;
-      $data['instruction'] = $request->instruction;
+      $data['pre_instruction'] = $request->instruction;
       DB::table('prescriptions')->where('id_pres',$id_pres)->update($data);
       Session::put('message','Sửa đơn thuốc thành công');
       return Redirect::back();

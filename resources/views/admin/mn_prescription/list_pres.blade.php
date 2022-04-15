@@ -18,6 +18,9 @@
                       <thead>
                         <tr>
                         <th>
+                            Mã đơn thuốc
+                        </th>
+                        <th>
                             Tên thuốc
                         </th>
                         <th>
@@ -39,7 +42,7 @@
                             Lời khuyên
                           </th>
                           <th>
-                            Hướng dẫn
+                            Cách dùng
                           </th>
                           <th>
                             Thao tác
@@ -49,14 +52,17 @@
                       <tbody>
                         @foreach($show_list_pres as $key => $pres)
                         <tr>
+                          <td>
+                          {{$pres->pre_code}}
+                          </td>
                           <td class="py-1">
-                            {{$pres->name}}
+                          {{$pres->name}}
                           </td>
                           <td>
                           {{$pres->date}}
                           </td>
                             <td>
-                                {{App\Models\User::where('id',$pres->doctor_id)->value('last_name')}}
+                              {{App\Models\User::where('id',$pres->doctor_id)->value('last_name')}}
                             </td>
                           <td>
                           {{$pres->last_name}}
@@ -71,7 +77,7 @@
                           {{$pres->advice}}
                           </td>
                           <td>
-                            <textarea readonly rows="5" cols="20">{{$pres->instruction}}</textarea>
+                            <textarea readonly rows="5" cols="20">{{$pres->pre_instruction}}</textarea>
                           </td>
                           <td>
                             <a href="{{URL::to('admin/sua-don-thuoc/'.$pres->id_pres)}}">Sửa</a> |

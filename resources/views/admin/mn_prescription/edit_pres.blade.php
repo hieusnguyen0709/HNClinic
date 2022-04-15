@@ -24,7 +24,7 @@
                           <label class="col-sm-3 col-form-label">Bệnh nhân</label>
                           <div class="col-sm-9"> 
                             <select class="form-control" name="patient_id">
-                                <option value="{{$pres->id}}" >{{$pres->last_name}}</option>
+                                <!-- <option value="{{$pres->id}}" >{{$pres->last_name}}</option> -->
                               @foreach($patient as $key => $pt)
                                 <option value="{{$pt->id}}" >{{$pt->last_name}}</option>
                               @endforeach
@@ -37,7 +37,7 @@
                       <label class="col-sm-3 col-form-label">Bác sĩ</label>
                           <div class="col-sm-9">
                           <select class="form-control" name="doctor_id">
-                            <option selected value="{{$pres->doctor_id}}"> {{App\Models\User::where('id',$pres->doctor_id)->value('last_name')}}</option>
+                            <!-- <option selected value="{{$pres->doctor_id}}"> {{App\Models\User::where('id',$pres->doctor_id)->value('last_name')}}</option> -->
                             @foreach($doctor as $key => $dt)
                                 <option value="{{$dt->id}}" >{{$dt->last_name}}</option>
                             @endforeach
@@ -58,10 +58,9 @@
                       </div>
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-sm-3 col-form-label">Medicine</label>
+                          <label class="col-sm-3 col-form-label">Thuốc</label>
                           <div class="col-sm-9">
                           <select class="form-control" name="medicine_id">
-                                <option value="{{$pres->id}}" >{{$pres->name}}</option>
                               @foreach($medicine as $key => $md)
                                 <option value="{{$md->id}}" >{{$md->name}}</option>
                               @endforeach
@@ -101,7 +100,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Cách dùng</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control timepicker" name="instruction" value="{{$pres->instruction}}"/>
+                            <input type="text" class="form-control timepicker" name="instruction" value="{{$pres->pre_instruction}}"/>
                           </div>
                         </div>
                       </div>
