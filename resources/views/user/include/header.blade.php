@@ -29,8 +29,7 @@
   <body>
 	  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 	    <div class="container">
-	      <a class="navbar-brand" href="">HN<span>Clinic</span></a>
-        <!-- <a href="{{URL::to('/trang-chu')}}"><img src="<?php echo url('/'); ?>/images_user/logo.jpg" width="50px" height="50"></a> -->
+	      <a class="navbar-brand" href="{{URL::to('/trang-chu')}}">HN<span>Clinic</span></a>
 	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="oi oi-menu"></span> Menu
 	      </button>
@@ -45,11 +44,10 @@
 	          <li class="nav-item"><a href="contact.html" class="nav-link">Liên lạc</a></li>
             @php
                  $name = Session::get('last_name')
-			@endphp
+            @endphp
             @if($name)
-                <li class="nav-item"><a href="{{URL::to('/tai-khoan')}}" class="nav-link">Tài khoản</a></li>
-			@endif
-            
+              <li class="nav-item"><a href="{{URL::to('/tai-khoan')}}" class="nav-link">Tài khoản</a></li>
+            @endif
 	          <li class="nav-item cta"><a href="contact.html" class="nav-link" data-toggle="modal" data-target="#modalRequest"><span>Đặt lịch khám</span></a></li>  
             <?php
               $name = Session::get('last_name');

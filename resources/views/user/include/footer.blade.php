@@ -1,5 +1,3 @@
-<div id="map"></div>
-
 <footer class="ftco-footer ftco-bg-dark ftco-section">
   <div class="container">
     <div class="row mb-5">
@@ -82,70 +80,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <!-- loader -->
 <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
 
-<!-- Modal -->
-<div class="modal fade" id="modalRequest" tabindex="-1" role="dialog" aria-labelledby="modalRequestLabel" aria-hidden="true">
-<div class="modal-dialog" role="document">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h5 class="modal-title" id="modalRequestLabel">Đặt lịch khám</h5>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <form action="#">
-        <div class="form-group">
-          <!-- <label for="appointment_name" class="text-black">Full Name</label> -->
-          <input type="text" class="form-control" id="appointment_name" placeholder="Tên đầy đủ">
-        </div>
-        <div class="form-group">
-          <!-- <label for="appointment_email" class="text-black">Email</label> -->
-          <select class="form-control" name="gender">
-            <option value="0">Nam</option>
-            <option value="0">Nữ</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <!-- <label for="appointment_email" class="text-black">Email</label> -->
-          <input type="date" class="form-control" placeholder="Ngày sinh">
-        </div>
-        <div class="form-group">
-          <!-- <label for="appointment_email" class="text-black">Email</label> -->
-          <input type="text" class="form-control" placeholder="Số điện thoại">
-        </div>
-        <div class="form-group">
-          <!-- <label for="appointment_message" class="text-black">Message</label> -->
-          <textarea name="" id="appointment_message" class="form-control" cols="10" rows="10" placeholder="Triệu chứng"></textarea>
-        </div>
-      
-        <div class="form-group">
-          <!-- <label for="appointment_email" class="text-black">Email</label> -->
-          <select class="form-control" name="gender">
-            <option value="0">BS A</option>
-            <option value="0">BS B</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <!-- <label for="appointment_email" class="text-black">Email</label> -->
-          <input type="text" class="form-control" placeholder="Ngày làm">
-        </div>
-        <div class="form-group">
-          <!-- <label for="appointment_email" class="text-black">Email</label> -->
-          <input type="text" class="form-control" placeholder="Ca làm">
-        </div>
-        <div class="form-group">
-          <!-- <label for="appointment_email" class="text-black">Email</label> -->
-          <input type="text" class="form-control" placeholder="GIờ">
-        </div>
-        <div class="form-group">
-          <input type="submit" value="Đặt" class="btn btn-primary">
-        </div>
-      </form>
-    </div>
-    
-  </div>
-</div>
-</div>
+
 
 
 <script src="<?php echo url('/'); ?>/js_user/jquery.min.js"></script>

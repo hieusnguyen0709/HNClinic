@@ -14,7 +14,10 @@ class Homecontroller extends Controller
 {
     public function index()
     {
-        return view('user.include.content');
+        $id = Session::get('id');
+        $info_user_appointment = DB::table('users')->where('id',$id)->get();
+        return view('user.include.content')->with('info_user_appointment',$info_user_appointment);
+        // return view('user.index')->with('user.include.content',$manage_info_user_appointment);
     }
 
     public function info()
@@ -40,7 +43,6 @@ class Homecontroller extends Controller
                 Session::put('email',$result->email);
                 Session::put('last_name',$result->last_name);
                 Session::put('id',$result->id);
-                
                 return Redirect::to('/trang-chu');
             }
             else if($type == '1')
@@ -110,8 +112,8 @@ class Homecontroller extends Controller
     {
         $id = Session::get('id');
         $profile = DB::table('users')->where('id',$id)->get();
-        $manager_profile = view('user.profile')->with('profile',$profile);
-        return view('user.index')->with('user.profile',$manager_profile);
-        // return view('user.profile');
+        return view('user.profile')->with('profile',$profile);
+        // return view('user.index')->with('user.profile',$manager_profile);
     }
+
 }

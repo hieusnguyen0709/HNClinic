@@ -40,7 +40,11 @@
             <div class="form-group row">
             <label class="col-sm-3 col-form-label">Giới tính</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" name="first_name" placeholder="{{$pro->gender}}"/>
+                    @if($pro->gender == 0)
+                        <input type="text" class="form-control" name="first_name" placeholder="Nam"/>
+                    @else
+                        <input type="text" class="form-control" name="first_name" placeholder="Nữ"/>
+                    @endif
                 </div>
             </div>
             <div class="form-group row">
@@ -58,11 +62,19 @@
             <div class="form-group row">
             <label class="col-sm-3 col-form-label">Nhóm máu</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" name="first_name" placeholder="{{$pro->blood_group}}"/>
+                @if($pro->blood_group == 0)
+                    <input type="text" class="form-control" name="first_name" placeholder="A"/>
+                @elseif($pro->blood_group == 1)
+                    <input type="text" class="form-control" name="first_name" placeholder="B"/>
+                @elseif($pro->blood_group == 2)
+                    <input type="text" class="form-control" name="first_name" placeholder="AB"/>
+                @elseif($pro->blood_group == 3)
+                    <input type="text" class="form-control" name="first_name" placeholder="O"/>
+                @endif
                 </div>
             </div>
             @endforeach
             </form>
-          
           </div>
+
 @endsection

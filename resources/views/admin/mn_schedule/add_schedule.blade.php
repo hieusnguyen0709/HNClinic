@@ -32,73 +32,97 @@
                       </div>
                       <div class="col-md-6">
                       <div class="form-group row">
-                      <label class="col-sm-3 col-form-label">Ngày</label>
-                          <div class="col-sm-9">
-                          <input type="date" class="form-control" name="date" onclick="date()">
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-3 col-form-label">Ca làm</label>
+                      <label class="col-sm-3 col-form-label">Ca làm</label>
                           <div class="col-sm-9">
                           <select class="form-control" name="frame_name">
                             @foreach($time_frame as $key => $frame)
                               <option value="{{$frame->frame_name}}" >{{$frame->frame_name}} ({{$frame->start_time}} - {{$frame->end_time}})</option>
                             @endforeach
                           </select>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Ca làm</label>
+                          <div class="col-sm-9">
+                          
                           </div>
                         </div>
                       </div>
+                    </div> -->
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group row">
+                        <center>
+                          <button type="button" class="btn btn-outline-primary" id="calendar">Lịch làm</button>
+                        </center>
+                        </br>
+                    <div style="border:1px solid black; margin:20px">
+                      <span class="text">Ngày: </span><span id="d"></span>
+                        <ul class="list-group list-group-horizontal" id="day_picker">
+                        <li style="margin:10px; border:1px solid black; border-radius:5xp" class="list-group-item list-group-item-action w-auto p-3 day" date="1">
+                          14/06<center><input style="display:block;" type="checkbox" name="termOfService" value="yes"></center>
+                        </li>
+
+                        </ul>
                     </div>
                     <center><button type="submit" name="submit" class="btn btn-primary me-2">Thêm lịch làm</button></center>
                   </form>
                 </div>
               </div>
             </div>
-            <script type="text/javascript"> 
-              // function date()
-              // {
-              //   let d = new Date();
-              //   let year = d.getFullYear();
-              //   let month = d.getMonth()+1;
-              //   let text = "";	
-              //   let day = d.getDate();
-              //   let totalDayOfMonth;
-              //   if(month == 2 ){
-              //     totalDayOfMonth=29;
-              //   }
-              //   else if(month == 4 || month == 6 || month == 9 || month == 11){
-              //     totalDayOfMonth=30;
-              //   }
-              //   else{
-              //     totalDayOfMonth=31;
-              //   }
-              //   for(i=0;i<15;i++){						
-              //     if(day  <= totalDayOfMonth){
-              //       if(month > 12){
-              //         month = 1;
-              //         year = year +1;
-              //       }	
-              //       date = month+'/'+day;
-              //       dat = year+'/'+month+'/'+day;
-              //       text += '<li class="list-group-item list-group-item-action w-auto p-3 day" date="'+dat+'">'+date+'</li>';
-              //       day = day + 1;					
-              //     }
-              //     else{			
-              //       day = 1;
-              //       month = month + 1;
-              //       if(month > 12){
-              //         month = 1;
-              //         year = year +1;
-              //       }			
-              //       date = month+'/'+day;
-              //       dat = year+'/'+month+'/'+day;				
-              //       text += '<li class="list-group-item list-group-item-action w-auto p-3 day" date="'+dat+'">'+date+'</li>';
-              //       day= day +1;
-              //     }			
-              // }
+
+            <script type="text/javascript">
+            $("#calendar").click(function(){
+            let d = new Date();
+            let year = d.getFullYear();
+            let month = d.getMonth()+1;
+            let text = "";
+            let day = d.getDate();
+            let totalDayOfMonth;
+            if(month == 2 )
+            {
+              totalDayOfMonth=29;
+            }
+            else if(month == 4 || month == 6 || month == 9 || month == 11){
+              totalDayOfMonth=30;
+            }
+            else
+            {
+              totalDayOfMonth=31;
+            }
+            for(i=0;i<8;i++)
+            {
+              if(day  <= totalDayOfMonth)
+              {
+                if(month > 12)
+                {
+                  month = 1;
+                  year = year +1;
+                }
+                date = month+'/'+day;
+                dat = year+'/'+month+'/'+day;
+                text += '<li style="margin:10px; border:1px solid black" class="list-group-item list-group-item-action w-auto p-3 day" date="'+dat+'">'+date+'<center><input style="display:block;" type="checkbox" name="termOfService" value="yes"></center></li>';
+                day = day + 1;
+              }
+              else
+              {
+                day = 1;
+                month = month + 1;
+                if(month > 12)
+                {
+                  month = 1;
+                  year = year +1;
+                }
+                date = month+'/'+day;
+                dat = year+'/'+month+'/'+day;
+                text += '<li style="margin:10px; border:1px solid black" class="list-group-item list-group-item-action w-auto p-3 day" date="'+dat+'">'+date+'<center><input style="display:block;" type="checkbox" name="termOfService" value="yes"></center></li>';
+                day= day +1;
+              }
+              $("#day_picker").html(text);
+            }
+          });
            </script>
 @endsection

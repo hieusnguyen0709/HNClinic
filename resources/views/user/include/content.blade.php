@@ -592,4 +592,79 @@
     		</div>
     	</div>
     </section>
+	<!-- Modal -->
+<div class="modal fade" id="modalRequest" tabindex="-1" role="dialog" aria-labelledby="modalRequestLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="modalRequestLabel">Đặt lịch khám</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form action="#">
+        @foreach($info_user_appointment as $key => $info_user)
+        <div class="form-group">
+          <label for="appointment_name" class="text-black">Họ và tên (*)</label>
+          <input type="text" class="form-control" id="appointment_name" value="{{$info_user->first_name}} {{$info_user->last_name}}">
+        </div>
+        <div class="form-group">
+          <label for="appointment_email" class="text-black">Email (*)</label>
+          <input type="text" class="form-control" id="appointment_name" value="{{$info_user->email}}">
+        </div>
+        <div class="form-group">
+          <label for="appointment_email" class="text-black">Giới tính (*)</label>
+          <select class="form-control" name="gender">
+          @if($info_user->gender == 0)
+            <option value="0" selected>Nam</option>
+            <option value="1">Nữ</option>
+          @else
+            <option value="0">Nam</option>
+            <option value="1" selected>Nữ</option>
+          @endif
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="appointment_email" class="text-black">Ngày sinh</label>
+          <input type="date" class="form-control" value="{{$info_user->birth_date}}">
+        </div>
+        <div class="form-group">
+          <label for="appointment_email" class="text-black">Số điện thoại</label>
+          <input type="text" class="form-control" value="{{$info_user->phone}}">
+        </div>
+        <div class="form-group">
+          <!-- <label for="appointment_message" class="text-black">Message</label> -->
+          <textarea name="" id="appointment_message" class="form-control" cols="10" rows="10" placeholder="Triệu chứng"></textarea>
+        </div>
+      
+        <div class="form-group">
+          <!-- <label for="appointment_email" class="text-black">Email</label> -->
+          <select class="form-control" name="gender">
+            <option value="0">BS A</option>
+            <option value="0">BS B</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <!-- <label for="appointment_email" class="text-black">Email</label> -->
+          <input type="text" class="form-control" placeholder="Ngày làm">
+        </div>
+        <div class="form-group">
+          <!-- <label for="appointment_email" class="text-black">Email</label> -->
+          <input type="text" class="form-control" placeholder="Ca làm">
+        </div>
+        <div class="form-group">
+          <!-- <label for="appointment_email" class="text-black">Email</label> -->
+          <input type="text" class="form-control" placeholder="GIờ">
+        </div>
+        <div class="form-group">
+          <input type="submit" value="Đặt" class="btn btn-primary">
+        </div>
+        @endforeach
+      </form>
+    </div>
+    
+  </div>
+</div>
+</div>
 @endsection

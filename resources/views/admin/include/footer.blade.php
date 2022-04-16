@@ -29,7 +29,7 @@
   <script src="{{asset('/panel_admin/js/todolist.js')}}"></script>
   <!-- endinject -->
   <!-- Custom js for this page-->
-  <script src="j{{asset('/panel_admin/s/jquery.cookie.js')}}" type="text/javascript"></script>
+  <script src="{{asset('/panel_admin/js/jquery.cookie.js')}}" type="text/javascript"></script>
   <script src="{{asset('/panel_admin/js/dashboard.js')}}"></script>
   <script src="{{asset('/panel_admin/js/Chart.roundedBarCharts.js')}}"></script>
   <script src="{{asset('/panel_admin/js/add_more_medicine.js')}}"></script>
