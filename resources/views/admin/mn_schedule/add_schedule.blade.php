@@ -31,27 +31,7 @@
                         </div>
                       </div>
                       <div class="col-md-6">
-                      <div class="form-group row">
-                      <label class="col-sm-3 col-form-label">Ca làm</label>
-                          <div class="col-sm-9">
-                          <select class="form-control" name="frame_name">
-                            @foreach($time_frame as $key => $frame)
-                              <option value="{{$frame->frame_name}}" >{{$frame->frame_name}} ({{$frame->start_time}} - {{$frame->end_time}})</option>
-                            @endforeach
-                          </select>
-                        </div>
-                      </div>
                     </div>
-                    <!-- <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-3 col-form-label">Ca làm</label>
-                          <div class="col-sm-9">
-                          
-                          </div>
-                        </div>
-                      </div>
-                    </div> -->
                     <div class="row">
                       <div class="col-md-12">
                         <div class="form-group row">
@@ -63,9 +43,11 @@
                       <span class="text">Ngày: </span><span id="d"></span>
                         <ul class="list-group list-group-horizontal" id="day_picker">
                         <li style="margin:10px; border:1px solid black; border-radius:5xp" class="list-group-item list-group-item-action w-auto p-3 day" date="1">
-                          14/06<center><input style="display:block;" type="checkbox" name="termOfService" value="yes"></center>
+                          14/06<center><input style="display:block;" type="checkbox" name="date[]" value="14/06"></center>
+                          @foreach($time_frame as $key => $frame)
+                            {{$frame->frame_name}}<center><input style="display:block;" type="checkbox" name="frame_name[]" value="{{$frame->frame_name}}"><center>
+                          @endforeach
                         </li>
-
                         </ul>
                     </div>
                     <center><button type="submit" name="submit" class="btn btn-primary me-2">Thêm lịch làm</button></center>
@@ -93,7 +75,7 @@
             {
               totalDayOfMonth=31;
             }
-            for(i=0;i<8;i++)
+            for(i=0;i<7;i++)
             {
               if(day  <= totalDayOfMonth)
               {
@@ -104,7 +86,7 @@
                 }
                 date = month+'/'+day;
                 dat = year+'/'+month+'/'+day;
-                text += '<li style="margin:10px; border:1px solid black" class="list-group-item list-group-item-action w-auto p-3 day" date="'+dat+'">'+date+'<center><input style="display:block;" type="checkbox" name="termOfService" value="yes"></center></li>';
+                text += '<li style="margin:10px; border:1px solid black" class="list-group-item list-group-item-action w-auto p-3 day" date="">'+date+'<center><input style="display:block;" type="checkbox" name="date[]" value="'+dat+'"></center> @foreach($time_frame as $key => $frame){{$frame->frame_name}}<center><input style="display:block;" type="checkbox" name="frame_name[]" value="{{$frame->frame_name}}"><center>@endforeach</li>';
                 day = day + 1;
               }
               else
@@ -118,11 +100,30 @@
                 }
                 date = month+'/'+day;
                 dat = year+'/'+month+'/'+day;
-                text += '<li style="margin:10px; border:1px solid black" class="list-group-item list-group-item-action w-auto p-3 day" date="'+dat+'">'+date+'<center><input style="display:block;" type="checkbox" name="termOfService" value="yes"></center></li>';
+                text += '<li style="margin:10px; border:1px solid black" class="list-group-item list-group-item-action w-auto p-3 day" date="">'+date+'<center><input style="display:block;" type="checkbox" name="date[]" value="'+dat+'"></center> @foreach($time_frame as $key => $frame){{$frame->frame_name}}<center><input style="display:block;" type="checkbox" name="frame_name[]" value="{{$frame->frame_name}}"><center>@endforeach</li>';
                 day= day +1;
               }
               $("#day_picker").html(text);
             }
           });
+
+          $("body").on("click",".day",function(){
+          $("#t").html("");
+          let date = $(this).attr("date");
+          $("#d").html(date);
+          $.ajax({
+            url:"../../controller/patient/gettime.php",
+            method:"GET",
+            data:{date:date},
+            success:function(data){
+              if(data=="wrong"){
+                alert("Thất bại");
+              }
+              else{
+                $("#tim").html(data);
+              }
+            }
+          });
+        });
            </script>
 @endsection

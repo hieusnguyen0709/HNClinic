@@ -133,12 +133,45 @@ class Admincontroller extends Controller
 
     public function check_add_schedule(Request $request)
     {
-      $data = array();
-      $data['date'] = $request->date;
-      $data['frame_name'] = $request->frame_name;
-      $data['duration'] = '30m';
-      $data['user_id'] = $request->type;
-      DB::table('time_schedules')->insert($data);
+      $date = $request->date;
+      $frame_name = $request->frame_name;
+      $duration = '30m';
+      $user_id = $request->type;
+      $count_date = count($date);
+      $count_frame = count($frame_name);
+      for($i = 0; $i < $count_date; $i++)
+      {
+        if($count_date == 1)
+        {
+          for($u = 0; $u < $count_frame; $u++)
+          {
+            $data = [
+              'date' => $date[$i],
+              'user_id' => $user_id,
+              'frame_name' => $frame_name[$u],
+              'duration' => $duration,
+            ];
+            DB::table('time_schedules')->insert($data);
+          }
+        }
+
+        else
+        {
+         if($frame_name>1)
+         {
+          for($u = 0; $u < $count_frame; $u++)
+          {
+            $data = [
+              'date' => $date[$i],
+              'user_id' => $user_id,
+              'frame_name' => $frame_name[$u],
+              'duration' => $duration,
+            ];
+            DB::table('time_schedules')->insert($data);
+          }
+         }
+        }
+      }
       Session::put('message','Thêm lịch làm thành công');
       return Redirect::to('/admin/them-lich-lam');
     }
