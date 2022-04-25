@@ -8,6 +8,7 @@ use App\Models\User;
 use DB;
 use Session;
 use Illuminate\Support\Facades\Redirect;
+use Mail;
 session_start();
 
 class Homecontroller extends Controller
@@ -16,8 +17,15 @@ class Homecontroller extends Controller
     {
         $id = Session::get('id');
         $info_user_appointment = DB::table('users')->where('id',$id)->get();
-        return view('user.include.content')->with('info_user_appointment',$info_user_appointment);
-        // return view('user.index')->with('user.include.content',$manage_info_user_appointment);
+        $info_doctor_appointment = DB::table('users')->where('type','4')->get();
+        $info_schedule_doctor = DB::table('users')
+        ->join('time_schedules','time_schedules.user_id','=','users.id')
+        ->where('type','4')->get();
+        $manage_info_appointment = view('user.include.content')
+        ->with('info_user_appointment',$info_user_appointment)
+        ->with('info_doctor_appointment',$info_doctor_appointment)
+        ->with('info_schedule_doctor',$info_schedule_doctor);
+        return view('user.index')->with('user.include.content',$manage_info_appointment);
     }
 
     public function info()
@@ -89,7 +97,7 @@ class Homecontroller extends Controller
         $data['picture'] = '0';
         $data['birth_date'] = $request->birth_date;
         $data['gender'] = '0';
-        $data['phone'] = '0';
+        $data['phone'] = $request->phone;
         $data['emergency'] = '0';
         $data['type'] = '0';
         $data['specialist'] = '0';
@@ -114,6 +122,50 @@ class Homecontroller extends Controller
         $profile = DB::table('users')->where('id',$id)->get();
         return view('user.profile')->with('profile',$profile);
         // return view('user.index')->with('user.profile',$manager_profile);
+    }
+
+    public function book_appointment(Request $request)
+    {
+        $data = array();
+        $data['email'] = $request->email;
+        $data['patient_id'] = $request->patient_id;
+        $data['full_name'] = $request->full_name;
+        $data['birth_date'] = $request->birth_date;
+        $data['gender'] = $request->gender;
+        $data['phone'] = $request->phone;
+        $data['doctor_id'] = $request->doctor_id;
+        $data['department_id'] = '0';
+        $data['date'] = $request->date;
+        $data['time'] = $request->time;
+        $data['symptoms'] = $request->symptoms;
+        $data['status'] = 'Chờ duyệt';
+        DB::table('appointments')->insert($data);
+
+        //Send mail//
+        $to_name = "Phòng khám HNClinic";
+        $to_email = $request->email;
+        $full_name = $request->full_name;
+        $birth_date = $request->birth_date;
+        $gender = $request->gender;
+        $phone = $request->phone;
+        $date = $request->date;
+        $time = $request->time;
+        $symptoms = $request->symptoms;
+
+        $data = array
+        (
+            "name" =>"Chúng tôi là HNClinic",
+            "body"=>"Thông tin lịch khám của bạn : Tên : ".$full_name." Số điện thoại : ".$phone."Ngày : ".$date."Thời gian : ".$time.""
+        );
+
+        Mail::send('user.send_mail',$data,function($message) use ($to_name,$to_email)
+        {
+            $message->to($to_email)->subject('Bạn đã đặt lịch khám tại HNClinic');
+            $message->from($to_email,$to_name);
+        });
+
+    	Session::put('message','Đặt lịch khám thành công');
+    	return Redirect::to('/trang-chu');
     }
 
 }

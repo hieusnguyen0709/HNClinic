@@ -29,6 +29,7 @@ Route::get('/',[HomeController::class, 'index'])->name('home');
 Route::get('/trang-chu',[HomeController::class, 'index'])->name('home');
 Route::get('/thong-tin',[HomeController::class, 'info'])->name('info');
 Route::get('/tai-khoan',[HomeController::class, 'profile'])->name('profile');
+Route::post('/kt-dat-lich',[HomeController::class, 'book_appointment'])->name('book_appointment');
 
 //Admin
 Route::get('/admin',[AdminController::class, 'index'])->name('admin');

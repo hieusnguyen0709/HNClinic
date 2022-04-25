@@ -18,17 +18,14 @@
                       <thead>
                         <tr>
                         <th>
-                            Chức vụ
-                        </th>
-                        <th>
                             Tên
                         </th>
                           <th>
                             Ngày làm
                           </th>
-                          <th>
+                          <!-- <th>
                             Ca làm
-                          </th>
+                          </th> -->
                           <th>
                             Thao tác
                           </th>
@@ -37,19 +34,15 @@
                       <tbody>
                         @foreach($show_list_schedule as $key => $schedule)
                         <tr>
-                          <td class="py-1">
-                            Bác sĩ
-                          </td>
                           <td>
                               {{$schedule->last_name}}
                           </td>
                             <td>
                                 {{$schedule->date}}
                             </td>
-                          <td>
-                          {{$schedule->frame_name}} ({{$schedule->start_time}} - {{$schedule->end_time}})
-                          <!--  -->
-                          </td>
+                          <!-- <td>
+                            
+                          </td> -->
                           <td>
                             <a href="{{URL::to('/admin/sua-lich-lam/'.$schedule->id_time)}}">Sửa</a> |
                             <a href="{{URL::to('/admin/xoa-lich-lam/'.$schedule->id_time)}}">Xóa</a>

@@ -67,7 +67,7 @@
               </div>
               <div class="form-group last mb-4">
                 <label for="birthdate"></label>
-                <input type="date" class="form-control" id="birthdate" name="birthdate" Required>
+                <input type="date" class="form-control" id="birthdate" name="birth_date" Required>
               </div>
               <div class="form-group last mb-4">
                 <label for="phone">Số điện thoại</label>

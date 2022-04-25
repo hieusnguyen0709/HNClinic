@@ -603,15 +603,28 @@
       </button>
     </div>
     <div class="modal-body">
-      <form action="#">
+		@php
+			$patient_id = Session::get('id');
+			$message = Session::get('message');
+		@endphp
+		<?php
+			if(isset($message))
+			{
+				echo'<script type="text/javascript">alert("'.$message.'")</script>';
+				Session::put('message',null);
+			}
+		?>
+      <form action="{{route('book_appointment')}}" method="POST">
+		{{csrf_field()}}
         @foreach($info_user_appointment as $key => $info_user)
+		<input type="hidden" name="patient_id" value="{{$patient_id}}">
         <div class="form-group">
-          <label for="appointment_name" class="text-black">Họ và tên (*)</label>
-          <input type="text" class="form-control" id="appointment_name" value="{{$info_user->first_name}} {{$info_user->last_name}}">
+          <label class="text-black">Họ và tên (*)</label>
+          <input type="text" class="form-control" name="full_name" value="{{$info_user->first_name}} {{$info_user->last_name}}">
         </div>
         <div class="form-group">
           <label for="appointment_email" class="text-black">Email (*)</label>
-          <input type="text" class="form-control" id="appointment_name" value="{{$info_user->email}}">
+          <input type="text" class="form-control" name="email" value="{{$info_user->email}}">
         </div>
         <div class="form-group">
           <label for="appointment_email" class="text-black">Giới tính (*)</label>
@@ -627,40 +640,47 @@
         </div>
         <div class="form-group">
           <label for="appointment_email" class="text-black">Ngày sinh</label>
-          <input type="date" class="form-control" value="{{$info_user->birth_date}}">
+          <input type="date" class="form-control" name="birth_date" value="{{$info_user->birth_date}}">
         </div>
         <div class="form-group">
           <label for="appointment_email" class="text-black">Số điện thoại</label>
-          <input type="text" class="form-control" value="{{$info_user->phone}}">
+          <input type="text" class="form-control" name="phone" value="{{$info_user->phone}}">
         </div>
+		@endforeach
         <div class="form-group">
-          <!-- <label for="appointment_message" class="text-black">Message</label> -->
-          <textarea name="" id="appointment_message" class="form-control" cols="10" rows="10" placeholder="Triệu chứng"></textarea>
+          <label class="text-black">Triệu chứng</label>
+          <textarea name="" name="symptoms" class="form-control" cols="10" rows="10"></textarea>
         </div>
-      
-        <div class="form-group">
-          <!-- <label for="appointment_email" class="text-black">Email</label> -->
-          <select class="form-control" name="gender">
-            <option value="0">BS A</option>
-            <option value="0">BS B</option>
+		<div class="form-group">
+          <label class="text-black">Bác sĩ</label>
+          <select class="form-control" name="doctor_id">
+		  	@foreach($info_doctor_appointment as $key => $info_doctor)
+            	<option value="{{$info_doctor->id}}">{{$info_doctor->last_name}}</option>
+			@endforeach
           </select>
         </div>
         <div class="form-group">
-          <!-- <label for="appointment_email" class="text-black">Email</label> -->
-          <input type="text" class="form-control" placeholder="Ngày làm">
+          <label for="appointment_email" class="text-black">Ngày làm</label>
+		  <ul class="list-group list-group-horizontal" id="day_picker">
+		  @foreach($info_schedule_doctor as $key => $info_schedule)
+            <li style="margin:10px; border:1px solid black; border-radius:5xp" class="list-group-item list-group-item-action w-auto p-3 day" date="">
+				{{$info_schedule->date}}<center><input style="display:block;" type="checkbox" name="date" value="{{$info_schedule->date}}"></center>
+        	</li>
+		  @endforeach
+          </ul>
+        </div>
+        <!-- <div class="form-group">
+          <label for="appointment_email" class="text-black">Ca làm</label>
+          <input type="text" class="form-control">
+        </div> -->
+        <div class="form-group">
+          <label for="appointment_email" class="text-black">Giờ</label>
+          <input type="text" class="form-control" name="time" value="7:00">
         </div>
         <div class="form-group">
-          <!-- <label for="appointment_email" class="text-black">Email</label> -->
-          <input type="text" class="form-control" placeholder="Ca làm">
+          <input type="submit" value="Đặt" name="book" class="btn btn-primary">
         </div>
-        <div class="form-group">
-          <!-- <label for="appointment_email" class="text-black">Email</label> -->
-          <input type="text" class="form-control" placeholder="GIờ">
-        </div>
-        <div class="form-group">
-          <input type="submit" value="Đặt" class="btn btn-primary">
-        </div>
-        @endforeach
+        
       </form>
     </div>
     
