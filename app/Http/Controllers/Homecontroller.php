@@ -51,6 +51,7 @@ class Homecontroller extends Controller
                 Session::put('email',$result->email);
                 Session::put('last_name',$result->last_name);
                 Session::put('id',$result->id);
+                Session::put('password',$result->password);
                 return Redirect::to('/trang-chu');
             }
             else if($type == '1')
@@ -88,20 +89,21 @@ class Homecontroller extends Controller
 
     public function check_register(Request $request)
     {
+        DB::table('users')->where('email',$request->email)->get();
         $data = array();
         $data['email'] = $request->email;
         $data['password'] = $request->password;
     	$data['first_name'] = $request->first_name;
     	$data['last_name'] = $request->last_name;
         $data['address'] = $request->address;
-        $data['picture'] = '0';
+        $data['picture'] = 'Chưa cập nhật';
         $data['birth_date'] = $request->birth_date;
-        $data['gender'] = '0';
+        $data['gender'] = 'Chưa cập nhật';
         $data['phone'] = $request->phone;
-        $data['emergency'] = '0';
+        $data['emergency'] = 'Chưa cập nhật';
         $data['type'] = '0';
         $data['specialist'] = '0';
-        $data['blood_group'] = '0';
+        $data['blood_group'] = 'Chưa cập nhật';
 
     	DB::table('users')->insert($data);
     	Session::put('message','Đăng ký tài khoản thành công');
@@ -168,4 +170,49 @@ class Homecontroller extends Controller
     	return Redirect::to('/trang-chu');
     }
 
+    public function appointment_datepicker()
+    {
+        return view('user.book_appointment_datepicker');
+    }
+
+    public function edit_profile($id)
+    {
+        $edit_profile = DB::table('users')->where('id',$id)->get();
+        $manager_edit_profile = view('user.edit_profile')->with('edit_profile',$edit_profile);
+        return view('user.index')->with('user.index.edit_profile',$manager_edit_profile);
+        // return view('user.edit_profile');
+    }
+
+    public function check_edit_profile(Request $request,$id)
+    {
+      $email = Session::get('email');
+      $password = '';
+      $data = array();
+      $data['email'] = $email;
+      $data['password'] = $password;
+      $data['first_name'] = $request->first_name;
+      $data['last_name'] = $request->last_name;
+      $data['address'] = $request->address;
+      $data['birth_date'] = $request->birth_date;
+      $data['gender'] = $request->gender;
+      $data['phone'] = $request->phone;
+      $data['emergency'] = $request->emergency;
+      $data['type'] = '0';
+      $data['specialist'] = $request->specialist;
+      $data['blood_group'] = $request->blood_group;
+
+      $get_image = $request->file('image');
+      if($get_image)
+      {
+         $get_name_image = $get_image->getClientOriginalName();
+         $name_image = current(explode('.',$get_name_image));
+         $new_image = $name_image.rand(0,99).'.'.$get_image->getClientOriginalExtension();
+         $get_image->move('upload_images',$new_image);
+         $data['picture'] = $new_image;
+         DB::table('users')->where('id',$id)->update($data);
+         return Redirect::to('/tai-khoan');
+      }
+      DB::table('users')->where('id',$id)->update($data);
+      return Redirect::to('/tai-khoan');
+    }
 }

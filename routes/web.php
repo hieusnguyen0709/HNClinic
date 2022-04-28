@@ -30,6 +30,11 @@ Route::get('/trang-chu',[HomeController::class, 'index'])->name('home');
 Route::get('/thong-tin',[HomeController::class, 'info'])->name('info');
 Route::get('/tai-khoan',[HomeController::class, 'profile'])->name('profile');
 Route::post('/kt-dat-lich',[HomeController::class, 'book_appointment'])->name('book_appointment');
+Route::get('/dat-lich',[HomeController::class, 'appointment'])->name('appointment');
+Route::get('/sua-tai-khoan/{id}',[HomeController::class, 'edit_profile'])->name('edit_profile');
+Route::post('/kt-sua-tai-khoan/{id}',[HomeController::class, 'check_edit_profile'])->name('check_edit_profile');
+
+Route::get('/dat-lich-datepicker',[HomeController::class, 'appointment_datepicker'])->name('appointment_datepicker');
 
 //Admin
 Route::get('/admin',[AdminController::class, 'index'])->name('admin');

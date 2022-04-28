@@ -41,14 +41,14 @@
 	          <li class="nav-item"><a href="services.html" class="nav-link">Dịch vụ</a></li>
 	          <li class="nav-item"><a href="doctors.html" class="nav-link">Bác sĩ</a></li>
 	          <li class="nav-item"><a href="blog.html" class="nav-link">Bài viết</a></li>
-	          <li class="nav-item"><a href="contact.html" class="nav-link">Liên lạc</a></li>
+	          <li class="nav-item"><a href="{{route('appointment_datepicker')}}" class="nav-link">Đặt lịch DatePicker</a></li>
             @php
                  $name = Session::get('last_name')
             @endphp
             @if($name)
               <li class="nav-item"><a href="{{URL::to('/tai-khoan')}}" class="nav-link">Tài khoản</a></li>
             @endif
-	          <li class="nav-item cta"><a href="contact.html" class="nav-link" data-toggle="modal" data-target="#modalRequest"><span>Đặt lịch khám</span></a></li>  
+	          <li class="nav-item cta"><a href="" class="nav-link" data-toggle="modal" data-target="#modalRequest"><span>Đặt lịch khám</span></a></li>  
             <?php
               $name = Session::get('last_name');
               if($name)

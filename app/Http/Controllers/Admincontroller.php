@@ -96,7 +96,7 @@ class Admincontroller extends Controller
       $data['phone'] = $request->phone;
       $data['emergency'] = $request->emergency;
       $data['type'] = $request->type;
-      $data['specialist'] = $request->specialist;
+      $data['specialist'] = 'Chưa cập nhật';
       $data['blood_group'] = $request->blood_group;
 
       $get_image = $request->file('image');
@@ -109,7 +109,7 @@ class Admincontroller extends Controller
          $data['picture'] = $new_image;
          DB::table('users')->where('id',$id)->update($data);
          Session::put('message','Sửa người dùng thành công');
-         return Redirect::back();
+         return Redirect::to('user.profile');
       }
       DB::table('users')->where('id',$id)->update($data);
       Session::put('message','Sửa người dùng thành công');
