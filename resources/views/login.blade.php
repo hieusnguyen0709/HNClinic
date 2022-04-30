@@ -34,14 +34,6 @@
             <div class="col-md-8">
               <div class="mb-4">
               <h3>Đăng nhập</h3>
-              <?php
-                // $message = Session::get('message');
-                // if($message)
-                // {
-                //   echo '<center style="color:red>'.$message.'</center>';
-                //   Session::put('message',null);
-                // }
-              ?>
             </div>
             <form action="{{URL::to('/')}}" method="post">
               {{ csrf_field() }}

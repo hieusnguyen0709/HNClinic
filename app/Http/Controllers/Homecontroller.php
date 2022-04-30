@@ -13,19 +13,34 @@ session_start();
 
 class Homecontroller extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $id = Session::get('id');
-        $info_user_appointment = DB::table('users')->where('id',$id)->get();
-        $info_doctor_appointment = DB::table('users')->where('type','4')->get();
-        $info_schedule_doctor = DB::table('users')
-        ->join('time_schedules','time_schedules.user_id','=','users.id')
-        ->where('type','4')->get();
-        $manage_info_appointment = view('user.include.content')
-        ->with('info_user_appointment',$info_user_appointment)
-        ->with('info_doctor_appointment',$info_doctor_appointment)
-        ->with('info_schedule_doctor',$info_schedule_doctor);
-        return view('user.index')->with('user.include.content',$manage_info_appointment);
+        if($request->ajax())
+        {
+           $option = $request->get('option');
+           if(isset($option) && !empty($option))
+           {
+                $doctor_schedule = DB::table('time_schedules')->where('user_id', $request->get('option'))->get();
+                return view('user.schedule')->with('doctor_schedule',$doctor_schedule);
+           }
+        }
+        else
+        {
+            $doctor_schedule = DB::table('time_schedules')->where('user_id','')->get();
+            $id = Session::get('id');
+            $info_user_appointment = DB::table('users')->where('id',$id)->get();
+            $info_doctor_appointment = DB::table('users')->where('type','4')->get();
+            $info_schedule_doctor = DB::table('users')
+            ->join('time_schedules','time_schedules.user_id','=','users.id')
+            ->where('type','4')->get();
+            $manage_info_appointment = view('user.include.content')
+            ->with('info_user_appointment',$info_user_appointment)
+            ->with('info_doctor_appointment',$info_doctor_appointment)
+            ->with('info_schedule_doctor',$info_schedule_doctor)
+            ->with('doctor_schedule',$doctor_schedule);
+            return view('user.index')->with('user.include.content',$manage_info_appointment);
+        }
+
     }
 
     public function info()
@@ -77,7 +92,7 @@ class Homecontroller extends Controller
         }
         else
         {
-            Session::put('message','Tên đăng nhập hoặc mật khẩu không đúng');
+            // Session::put('message','Tên đăng nhập hoặc mật khẩu không đúng');
             return Redirect::to('/dang-nhap');
         }
     }
@@ -214,5 +229,24 @@ class Homecontroller extends Controller
       }
       DB::table('users')->where('id',$id)->update($data);
       return Redirect::to('/tai-khoan');
+    }
+
+    public function show_schedule_by_doctor_id(Request $request)
+    {
+        //  if($request->ajax())
+        // {
+        //    $option = $request->get('option');
+        //    if(isset($option) && !empty($option))
+        //    {
+        //         echo $option;
+        //         $doctor_schedule = DB::table('time_schedules')->where('user_id',$option)->get();
+        //         var_dump($doctor_schedule);
+        //         $manage_info_appointment = view('user.include.content')
+        //         ->with('doctor_schedule',$doctor_schedule);
+        //         return view('user.index')->with('user.include.content',$manage_info_appointment);
+        //    }
+        // }
+        // $doctor_schedule = DB::table('time_schedules')->where('user_id','21')->get();
+        // return view('user.schedule')->with('doctor_schedule',$doctor_schedule);
     }
 }

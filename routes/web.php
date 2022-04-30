@@ -33,7 +33,7 @@ Route::post('/kt-dat-lich',[HomeController::class, 'book_appointment'])->name('b
 Route::get('/dat-lich',[HomeController::class, 'appointment'])->name('appointment');
 Route::get('/sua-tai-khoan/{id}',[HomeController::class, 'edit_profile'])->name('edit_profile');
 Route::post('/kt-sua-tai-khoan/{id}',[HomeController::class, 'check_edit_profile'])->name('check_edit_profile');
-
+Route::get('/lich-bac-si',[HomeController::class, 'show_schedule_by_doctor_id'])->name('show_schedule_by_doctor_id');
 Route::get('/dat-lich-datepicker',[HomeController::class, 'appointment_datepicker'])->name('appointment_datepicker');
 
 //Admin

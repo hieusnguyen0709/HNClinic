@@ -597,7 +597,7 @@
 <div class="modal-dialog" role="document">
   <div class="modal-content">
     <div class="modal-header">
-      <h5 class="modal-title" id="modalRequestLabel">Đặt lịch khám</h5>
+      <h5 class="modal-title" id="modalRequestLabel" style="font-size:30px; font-weight:bold; color:red">ĐẶT LỊCH KHÁM</h5>
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -620,15 +620,15 @@
 		<input type="hidden" name="patient_id" value="{{$patient_id}}">
         <div class="form-group">
           <label class="text-black">Họ và tên (*)</label>
-          <input type="text" class="form-control" name="full_name" value="{{$info_user->first_name}} {{$info_user->last_name}}">
+          <input type="text" class="form-control" name="full_name" value="{{$info_user->first_name}} {{$info_user->last_name}}" required>
         </div>
         <div class="form-group">
           <label for="appointment_email" class="text-black">Email (*)</label>
-          <input type="text" class="form-control" name="email" value="{{$info_user->email}}">
+          <input type="text" class="form-control" name="email" value="{{$info_user->email}}" required>
         </div>
         <div class="form-group">
           <label for="appointment_email" class="text-black">Giới tính (*)</label>
-          <select class="form-control" name="gender">
+          <select class="form-control" name="gender" required>
           @if($info_user->gender == 0)
             <option value="0" selected>Nam</option>
             <option value="1">Nữ</option>
@@ -640,51 +640,68 @@
         </div>
         <div class="form-group">
           <label for="appointment_email" class="text-black">Ngày sinh</label>
-          <input type="date" class="form-control" name="birth_date" value="{{$info_user->birth_date}}">
+          <input type="date" class="form-control" name="birth_date" value="{{$info_user->birth_date}}" required>
         </div>
         <div class="form-group">
           <label for="appointment_email" class="text-black">Số điện thoại</label>
-          <input type="text" class="form-control" name="phone" value="{{$info_user->phone}}">
+          <input type="text" class="form-control" name="phone" value="{{$info_user->phone}}" required>
         </div>
 		@endforeach
         <div class="form-group">
           <label class="text-black">Triệu chứng</label>
-          <textarea name="" name="symptoms" class="form-control" cols="10" rows="10"></textarea>
+          <textarea name="" name="symptoms" class="form-control" cols="10" rows="5"></textarea>
         </div>
 		<div class="form-group">
           <label class="text-black">Bác sĩ</label>
-          <select class="form-control" name="doctor_id">
+          <select class="form-control" name="doctor_id" id="get_schedule" onchange="scheduleFunction()" required>
 		  	@foreach($info_doctor_appointment as $key => $info_doctor)
             	<option value="{{$info_doctor->id}}">{{$info_doctor->last_name}}</option>
 			@endforeach
           </select>
         </div>
-        <div class="form-group">
-          <label for="appointment_email" class="text-black">Ngày làm</label>
-		  <ul class="list-group list-group-horizontal" id="day_picker">
-		  @foreach($info_schedule_doctor as $key => $info_schedule)
-            <li style="margin:10px; border:1px solid black; border-radius:5xp" class="list-group-item list-group-item-action w-auto p-3 day" date="">
-				{{$info_schedule->date}}<center><input style="display:block;" type="checkbox" name="date" value="{{$info_schedule->date}}"></center>
-        	</li>
-		  @endforeach
-          </ul>
+		<p id="demo"></p>
+        <div class="form-group" id="show_schedule">
+			  @include('user.schedule')
         </div>
+
         <!-- <div class="form-group">
           <label for="appointment_email" class="text-black">Ca làm</label>
           <input type="text" class="form-control">
         </div> -->
+
         <div class="form-group">
           <label for="appointment_email" class="text-black">Giờ</label>
-          <input type="text" class="form-control" name="time" value="7:00">
+          <input type="text" class="form-control" name="time" value="7:00" required>
         </div>
         <div class="form-group">
           <input type="submit" value="Đặt" name="book" class="btn btn-primary">
         </div>
-        
       </form>
     </div>
-    
   </div>
 </div>
 </div>
+<script>
+	function scheduleFunction()
+	{
+		var select = document.getElementById('get_schedule');
+		var value = select.options[select.selectedIndex].value;
+		$.ajaxSetup({
+    	headers: {
+        			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+		$.ajax({
+			url:"{{URL::to('/')}}",
+			type:"GET",
+			data:{option:value},
+			success:function(data)
+			{
+				console.log(value);
+				console.log(data);
+				$("#show_schedule").html(data);
+			}
+			});
+	}
+</script>
 @endsection

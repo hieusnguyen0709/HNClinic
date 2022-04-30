@@ -42,18 +42,18 @@
                       </div>
                     </div>
                     </div>
-                    <div style="border:1px solid black; margin:20px">
+                    <div style="border:1px solid black; margin:10">
                       <span class="text">Ngày: </span><span id="d"></span>
                         <ul class="list-group list-group-horizontal" id="day_picker">
-                        <li style="margin:10px; border:1px solid black; border-radius:5xp" class="list-group-item list-group-item-action w-auto p-3 day" date="">
+                        <li style="margin:10px; border:1px solid black; border-radius:5px" class="list-group-item list-group-item-action w-auto p-3 day" date="">
                           14/06<center><input style="display:block;" type="checkbox" name="date[]" value="14/06"></center>
                           @foreach($time_frame as $key => $frame)
                             {{$frame->frame_name}}<center><input style="display:block;" type="checkbox" name="frame_name[]" value="{{$frame->frame_name}}"><center>
                           @endforeach
                         </li>
                         </ul>
-                    </div>
-                    <center><button type="submit" name="submit" class="btn btn-primary me-2">Thêm lịch làm</button></center>
+                    </div><br>
+                    <center><button type="submit" name="submit" class="btn btn-primary me-2" style="margin-top:10px;">Thêm lịch làm</button></center>
                   </form>
                 </div>
               </div>
@@ -89,7 +89,7 @@
                 }
                 date = month+'/'+day;
                 dat = year+'/'+month+'/'+day;
-                text += '<li style="margin:10px; border:1px solid black" class="list-group-item list-group-item-action w-auto p-3 day" date="">'+date+'<center><input style="display:block;" type="checkbox" name="date[]" value="'+dat+'"></center></li>';
+                text += '<li style="margin:10px; border:1px solid black;border-radius:5px"" class="list-group-item list-group-item-action w-auto p-3 day" date="">'+date+'<center><input style="display:block;" type="checkbox" name="date[]" value="'+dat+'"></center></li>';
                 day = day + 1;
               }
               else
@@ -103,7 +103,7 @@
                 }
                 date = month+'/'+day;
                 dat = year+'/'+month+'/'+day;
-                text += '<li style="margin:10px; border:1px solid black" class="list-group-item list-group-item-action w-auto p-3 day" date="">'+date+'<center><input style="display:block;" type="checkbox" name="date[]" value="'+dat+'"></center></li>';
+                text += '<li style="margin:10px; border:1px solid black;border-radius:5px"" class="list-group-item list-group-item-action w-auto p-3 day" date="">'+date+'<center><input style="display:block;" type="checkbox" name="date[]" value="'+dat+'"></center></li>';
                 day= day +1;
               }
               $("#day_picker").html(text);

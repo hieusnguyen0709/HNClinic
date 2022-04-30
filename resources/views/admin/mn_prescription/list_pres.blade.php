@@ -55,7 +55,7 @@
                           <td>
                           {{$pres->pre_code}}
                           </td>
-                          <td class="py-1">
+                          <td>
                           {{$pres->name}}
                           </td>
                           <td>

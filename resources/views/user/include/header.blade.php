@@ -25,6 +25,8 @@
     <link rel="stylesheet" href="<?php echo url('/'); ?>/css_user/flaticon.css">
     <link rel="stylesheet" href="<?php echo url('/'); ?>/css_user/icomoon.css">
     <link rel="stylesheet" href="<?php echo url('/'); ?>/css_user/style.css">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   </head>
   <body>
 	  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
@@ -41,7 +43,7 @@
 	          <li class="nav-item"><a href="services.html" class="nav-link">Dịch vụ</a></li>
 	          <li class="nav-item"><a href="doctors.html" class="nav-link">Bác sĩ</a></li>
 	          <li class="nav-item"><a href="blog.html" class="nav-link">Bài viết</a></li>
-	          <li class="nav-item"><a href="{{route('appointment_datepicker')}}" class="nav-link">Đặt lịch DatePicker</a></li>
+	          <!-- <li class="nav-item"><a href="{{route('appointment_datepicker')}}" class="nav-link">Đặt lịch DatePicker</a></li> -->
             @php
                  $name = Session::get('last_name')
             @endphp
