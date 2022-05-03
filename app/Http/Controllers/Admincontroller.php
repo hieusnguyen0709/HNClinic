@@ -18,7 +18,7 @@ class Admincontroller extends Controller
     public function index()
     {
       // $role = User::ROLE_ADMIN;
-       return view('admin.index');
+       return view('admin.home');
     }
 
    //Manage_User
@@ -534,4 +534,136 @@ class Admincontroller extends Controller
       return Redirect::back();
     }
     //Manage Test type
+
+    //Manage Appointment
+    public function add_appointment(Request $request)
+    {
+      if($request->ajax())
+      {
+         $option = $request->get('option');
+         if(isset($option) && !empty($option))
+         {
+              $doctor_schedule = DB::table('time_schedules')->where('user_id', $request->get('option'))->get();
+              return view('admin.mn_appointment.schedule')->with('doctor_schedule',$doctor_schedule);
+         }
+      }
+
+      $info_patient = DB::table('users')->where('type','0')->get();
+      $info_doctor = DB::table('users')->where('type','4')->get();
+      $doctor_schedule = DB::table('time_schedules')->where('user_id','')->get();
+      return view('admin.mn_appointment.add_appointment')->with('info_patient',$info_patient)->with('info_doctor',$info_doctor)->with('doctor_schedule',$doctor_schedule);
+    }
+
+    public function check_add_appointment(Request $request)
+    {
+
+      // $info_patient_by_id = DB::table('users')->where('id',$request->patient_id)->get('first_name','last_name');
+      // foreach($info_patient_by_id as $patient)
+      // {
+      //   echo $patient['last_name'];
+      // }
+      // dd($info_patient_by_id);
+
+      // $full_name = DB::table('users')->where('id',$request->patient_id)->get();
+
+      $appointment_code = 'AP-'.rand(0,10000);
+      $data = array();
+      $data['email'] = $request->email;
+      $data['patient_id'] = $request->patient_id;
+      $data['full_name'] = '0';
+      $data['birth_date'] = $request->birth_date;
+      $data['gender'] = $request->gender;
+      $data['phone'] = $request->phone;
+      $data['doctor_id'] = $request->doctor_id;
+      $data['appointment_code'] = $appointment_code;
+      $data['department_id'] = '0';
+      $data['date'] = $request->date;
+      $data['time'] = $request->time;
+      $data['symptoms'] = $request->symptoms;
+      $data['status'] = '0';
+      DB::table('appointments')->insert($data);
+      Session::put('message','Thêm lịch hẹn thành công');
+    	return Redirect::to('/admin/them-lich-hen');
+    }
+
+    public function show_list_appointment()
+    {
+      $show_list_appointment= DB::table('appointments')->get();
+      $manager_show_list_appointment = view('admin.mn_appointment.list_appointment')->with('show_list_appointment',$show_list_appointment);
+      return view('admin.index')->with('admin.mn_appointment.list_appointment',$manager_show_list_appointment);
+    }
+
+    public function edit_appointment($schedule_id, Request $request)
+    {
+      if($request->ajax())
+      {
+         $option = $request->get('option');
+         if(isset($option) && !empty($option))
+         {
+              $doctor_schedule = DB::table('time_schedules')->where('user_id', $request->get('option'))->get();
+              return view('admin.mn_appointment.schedule')->with('doctor_schedule',$doctor_schedule);
+         }
+      }
+
+      $info_patient = DB::table('users')->where('type','0')->get();
+      $info_doctor = DB::table('users')->where('type','4')->get();
+      $edit_appointment= DB::table('appointments')->where('schedule_id',$schedule_id)->get();
+      $doctor_schedule = DB::table('time_schedules')->where('user_id','')->get();
+      $manager_edit_appointment = view('admin.mn_appointment.edit_appointment')
+      ->with('edit_appointment',$edit_appointment)
+      ->with('info_patient',$info_patient)
+      ->with('info_doctor',$info_doctor)
+      ->with('doctor_schedule',$doctor_schedule);
+      return view('admin.index')->with('admin.mn_appointment.edit_appointment',$manager_edit_appointment);
+    }
+
+    public function check_edit_appointment(Request $request, $schedule_id)
+    {
+      $data = array();
+      $data['email'] = $request->email;
+      $data['patient_id'] = $request->patient_id;
+      $data['full_name'] = '0';
+      $data['birth_date'] = $request->birth_date;
+      $data['gender'] = $request->gender;
+      $data['phone'] = $request->phone;
+      $data['doctor_id'] = $request->doctor_id;
+      $data['appointment_code'] = $request->appointment_code;
+      $data['department_id'] = '0';
+      $data['date'] = $request->date;
+      $data['time'] = $request->time;
+      $data['symptoms'] = $request->symptoms;
+      $data['status'] = $request->status;
+      DB::table('appointments')->where('schedule_id',$schedule_id)->update($data);
+      Session::put('message','Cập nhật lịch hẹn thành công');
+    	return Redirect::to('/admin/danh-sach-lich-hen');
+    }
+
+    public function delete_appointment($schedule_id)
+    {
+      DB::table('appointments')->where('schedule_id',$schedule_id)->delete();
+      Session::put('message','Xóa lịch hẹn thành công');
+      return Redirect::back();
+    }
+
+    public function status_appointment($schedule_id, Request $request)
+    {
+      if($request->ajax())
+      {
+         $status = $request->get('status');
+         if(isset($status) && !empty($status))
+         {
+              $data = array();
+              $data['status'] = $status;
+              Session::put('message','Cập nhật trạng thái thành công');
+              return Redirect::to('/admin/danh-sach-lich-hen');
+         }
+      }
+      return Redirect::to('/admin/danh-sach-lich-hen');
+      // $data = array();
+      // $data['status'] = $status;
+      // DB::table('appointments')->where('schedule_id',$schedule_id)->update($data);
+      // Session::put('message','Cập nhật trạng thái thành công');
+      // return Redirect::to('/admin/danh-sach-lich-hen');
+    }
+    //Manage Appointment
 }

@@ -624,7 +624,7 @@
         </div>
         <div class="form-group">
           <label for="appointment_email" class="text-black">Email (*)</label>
-          <input type="text" class="form-control" name="email" value="{{$info_user->email}}" required>
+          <input type="text" class="form-control" name="email" value="{{$info_user->email}}" required readonly placeholder="{{$info_user->email}}">
         </div>
         <div class="form-group">
           <label for="appointment_email" class="text-black">Giới tính (*)</label>
@@ -649,7 +649,7 @@
 		@endforeach
         <div class="form-group">
           <label class="text-black">Triệu chứng</label>
-          <textarea name="" name="symptoms" class="form-control" cols="10" rows="5"></textarea>
+          <textarea name="symptoms" class="form-control" cols="10" rows="5"></textarea>
         </div>
 		<div class="form-group">
           <label class="text-black">Bác sĩ</label>
@@ -661,7 +661,21 @@
         </div>
 		<p id="demo"></p>
         <div class="form-group" id="show_schedule">
-			  @include('user.schedule')
+		
+			@include('user.schedule')
+			<!-- <ul>
+				<li style="display:inline;margin:5px; border:1px solid black; border-radius:5px;padding:1px;" date="01/05" id="date" onclick="get_date()">
+					2022/01/05
+				</li>
+				<li style="display:inline;margin:5px; border:1px solid black; border-radius:5px;padding:1px;" onclick="get_date()">
+					02/05
+				</li>
+				<li style="display:inline;margin:5px; border:1px solid black; border-radius:5px;padding:1px;" onclick="get_date()">
+					03/05
+				</li>
+			</ul> -->
+
+
         </div>
 
         <!-- <div class="form-group">
@@ -670,11 +684,38 @@
         </div> -->
 
         <div class="form-group">
-          <label for="appointment_email" class="text-black">Giờ</label>
-          <input type="text" class="form-control" name="time" value="7:00" required>
+          <label for="appointment_email" class="text-black">Giờ <span id="get_time"></span></label><br>
+		  <table>
+                          <tbody>
+                            <tr>
+                              <td><input type="button" value="08:00 - 08:30" class="btn btn-success" style="padding:5px; margin:5px;" id="time" onclick="timeFunction()"></td>
+                              <td><input type="button" value="08:30 - 09:00" class="btn btn-success" style="padding:5px; margin:5px;" id="time2" onclick="timeFunction2()"></td>
+                              <td><input type="button" value="09:00 - 09:30" class="btn btn-success" style="padding:5px; margin:5px;" id="time3" onclick="timeFunction3()"></td>
+                              <td><input type="button" value="09:30 - 10:00" class="btn btn-success" style="padding:5px; margin:5px;" id="time4" onclick="timeFunction4()"></td>
+                            </tr>
+                            <tr>
+                              <td><input type="button" value="10:00 - 10:30" class="btn btn-success" style="padding:5px; margin:5px;" id="time5" onclick="timeFunction5()"></td>
+                              <td><input type="button" value="10:30 - 11:00" class="btn btn-success" style="padding:5px; margin:5px;" id="time6" onclick="timeFunction6()"></td>
+                              <td><input type="button" value="11:00 - 11:30" class="btn btn-success" style="padding:5px; margin:5px;" id="time7" onclick="timeFunction7()"></td>
+                              <td><input type="button" value="11:30 - 12:00" class="btn btn-success" style="padding:5px; margin:5px;" id="time8" onclick="timeFunction8()"></td>
+                            </tr>
+                            <tr>
+                              <td><input type="button" value="13:00 - 13:30" class="btn btn-success" style="padding:5px; margin:5px;" id="time9" onclick="timeFunction9()"></td>
+                              <td><input type="button" value="13:30 - 14:00" class="btn btn-success" style="padding:5px; margin:5px;" id="time10" onclick="timeFunction10()"></td>
+                              <td><input type="button" value="14:00 - 14:30" class="btn btn-success" style="padding:5px; margin:5px;" id="time11" onclick="timeFunction11()"></td>
+                              <td><input type="button" value="14:30 - 15:00" class="btn btn-success" style="padding:5px; margin:5px;" id="time12" onclick="timeFunction12()"></td>
+                            </tr>
+                            <tr>
+                              <td><input type="button" value="15:00 - 15:30" class="btn btn-success" style="padding:5px; margin:5px;" id="time13" onclick="timeFunction13()"></td>
+                              <td><input type="button" value="15:30 - 16:00" class="btn btn-success" style="padding:5px; margin:5px;" id="time14" onclick="timeFunction14()"></td>
+                              <td><input type="button" value="16:00 - 16:30" class="btn btn-success" style="padding:5px; margin:5px;" id="time15" onclick="timeFunction15()"></td>
+                              <td><input type="button" value="16:30 - 17:00" class="btn btn-success" style="padding:5px; margin:5px;" id="time16" onclick="timeFunction16()"></td>
+                            </tr>
+                          </tbody>
+                        </table>
         </div>
         <div class="form-group">
-          <input type="submit" value="Đặt" name="book" class="btn btn-primary">
+          <input type="submit" value="Đặt lịch" name="book" class="btn btn-primary">
         </div>
       </form>
     </div>
@@ -703,5 +744,134 @@
 			}
 			});
 	}
+
+	// function get_date()
+	// {
+		
+	// 	// var date = document.getElementById('date').value;
+	// 	// console.log(date);
+	// 	$('#date').html('2');
+	// }
+	function timeFunction()
+	{
+		var time = document.getElementById('time').value;
+		console.log(time);
+		let text = '<input type="text" value="'+time+'" name="time" readonly required style="border:1px solid white;font-size:17px;font-weight:bold;">'
+		$('#get_time').html(text);
+	}
+	function timeFunction2()
+	{
+		var time = document.getElementById('time2').value;
+		console.log(time);
+		let text = '<input type="text" value="'+time+'" name="time" readonly required style="border:1px solid white;font-size:17px;font-weight:bold;">'
+		$('#get_time').html(text);
+	}
+	function timeFunction3()
+	{
+		var time = document.getElementById('time3').value;
+		console.log(time);
+		let text = '<input type="text" value="'+time+'" name="time" readonly required style="border:1px solid white;font-size:17px;font-weight:bold;">'
+		$('#get_time').html(text);
+	}
+	function timeFunction4()
+	{
+		var time = document.getElementById('time4').value;
+		console.log(time);
+		let text = '<input type="text" value="'+time+'" name="time" readonly required style="border:1px solid white;font-size:17px;font-weight:bold;">'
+		$('#get_time').html(text);
+	}
+	function timeFunction5()
+	{
+		var time = document.getElementById('time5').value;
+		console.log(time);
+		let text = '<input type="text" value="'+time+'" name="time" readonly required style="border:1px solid white;font-size:17px;font-weight:bold;">'
+		$('#get_time').html(text);
+	}
+	function timeFunction6()
+	{
+		var time = document.getElementById('time6').value;
+		console.log(time);
+		let text = '<input type="text" value="'+time+'" name="time" readonly required style="border:1px solid white;font-size:17px;font-weight:bold;">'
+		$('#get_time').html(text);
+	}
+	function timeFunction7()
+	{
+		var time = document.getElementById('time7').value;
+		console.log(time);
+		let text = '<input type="text" value="'+time+'" name="time" readonly required style="border:1px solid white;font-size:17px;font-weight:bold;">'
+		$('#get_time').html(text);
+	}
+	function timeFunction8()
+	{
+		var time = document.getElementById('time8').value;
+		console.log(time);
+		let text = '<input type="text" value="'+time+'" name="time" readonly required style="border:1px solid white;font-size:17px;font-weight:bold;">'
+		$('#get_time').html(text);
+	}
+	function timeFunction9()
+	{
+		var time = document.getElementById('time9').value;
+		console.log(time);
+		let text = '<input type="text" value="'+time+'" name="time" readonly required style="border:1px solid white;font-size:17px;font-weight:bold;">'
+		$('#get_time').html(text);
+	}
+	function timeFunction10()
+	{
+		var time = document.getElementById('time10').value;
+		console.log(time);
+		let text = '<input type="text" value="'+time+'" name="time" readonly required style="border:1px solid white;font-size:17px;font-weight:bold;">'
+		$('#get_time').html(text);
+	}
+	function timeFunction11()
+	{
+		var time = document.getElementById('time11').value;
+		console.log(time);
+		let text = '<input type="text" value="'+time+'" name="time" readonly required style="border:1px solid white;font-size:17px;font-weight:bold;">'
+		$('#get_time').html(text);
+	}
+	function timeFunction12()
+	{
+		var time = document.getElementById('time12').value;
+		console.log(time);
+		let text = '<input type="text" value="'+time+'" name="time" readonly required style="border:1px solid white;font-size:17px;font-weight:bold;">'
+		$('#get_time').html(text);
+	}
+	function timeFunction13()
+	{
+		var time = document.getElementById('time13').value;
+		console.log(time);
+		let text = '<input type="text" value="'+time+'" name="time" readonly required style="border:1px solid white;font-size:17px;font-weight:bold;">'
+		$('#get_time').html(text);
+	}
+	function timeFunction14()
+	{
+		var time = document.getElementById('time14').value;
+		console.log(time);
+		let text = '<input type="text" value="'+time+'" name="time" readonly required style="border:1px solid white;font-size:17px;font-weight:bold;">'
+		$('#get_time').html(text);
+	}
+	function timeFunction15()
+	{
+		var time = document.getElementById('time15').value;
+		console.log(time);
+		let text = '<input type="text" value="'+time+'" name="time" readonly required style="border:1px solid white;font-size:17px;font-weight:bold;">'
+		$('#get_time').html(text);
+	}
+	function timeFunction16()
+	{
+		var time = document.getElementById('time16').value;
+		console.log(time);
+		let text = '<input type="text" value="'+time+'" name="time" readonly required style="border:1px solid white;font-size:17px;font-weight:bold;">'
+		$('#get_time').html(text);
+	}
+
+$('body').on('click', '#get_date', function()
+  {
+    let date = $(this).attr("date");
+	// console.log(date);
+	let text = '<input type="text" value="'+date+'" name="date" readonly required style="border:1px solid white;font-size:17px;font-weight:bold;">'
+	$('#show_date').html(text);
+   });
+
 </script>
 @endsection

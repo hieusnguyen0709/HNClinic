@@ -27,6 +27,7 @@ Route::get('/dang-xuat',[HomeController::class, 'logout'])->name('logout');
 //User
 Route::get('/',[HomeController::class, 'index'])->name('home');
 Route::get('/trang-chu',[HomeController::class, 'index'])->name('home');
+Route::get('/lich-hen',[HomeController::class, 'appointment_booked'])->name('appointment_booked');
 Route::get('/thong-tin',[HomeController::class, 'info'])->name('info');
 Route::get('/tai-khoan',[HomeController::class, 'profile'])->name('profile');
 Route::post('/kt-dat-lich',[HomeController::class, 'book_appointment'])->name('book_appointment');
@@ -89,7 +90,14 @@ Route::get('/admin/danh-sach-loai-xet-nghiem',[AdminController::class, 'show_lis
 Route::get('/admin/sua-loai-xet-nghiem/{id_test_type}',[AdminController::class, 'edit_test_type'])->name('edit_test_type');
 Route::post('/admin/kt-sua-loai-xet-nghiem/{id_test_type}',[AdminController::class, 'check_edit_test_type'])->name('check_edit_test_type');
 Route::get('/admin/xoa-loai-xet-nghiem/{id_test_type}',[AdminController::class, 'delete_test_type'])->name('delete_test_type');
-
+//Admin - Manage Appointment
+Route::get('/admin/them-lich-hen',[AdminController::class, 'add_appointment'])->name('add_appointment');
+Route::post('/admin/kt-them-lich-hen',[AdminController::class, 'check_add_appointment'])->name('check_add_appointment');
+Route::get('/admin/danh-sach-lich-hen',[AdminController::class, 'show_list_appointment'])->name('show_list_appointment');
+Route::get('/admin/sua-lich-hen/{schedule_id}',[AdminController::class, 'edit_appointment'])->name('edit_appointment');
+Route::post('/admin/kt-sua-lich-hen/{schedule_id}',[AdminController::class, 'check_edit_appointment'])->name('check_edit_appointment');
+Route::get('/admin/xoa-lich-hen/{schedule_id}',[AdminController::class, 'delete_appointment'])->name('delete_appointment');
+Route::post('/admin/trang-thai-lich-hen/{schedule_id}',[AdminController::class, 'status_appointment'])->name('status_appointment');
 //Doctor
 Route::get('/bac-si',[Doctorcontroller::class, 'index'])->name('doctor');
 

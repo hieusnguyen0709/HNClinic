@@ -75,6 +75,7 @@
             </div>
             <div class="form-group row">
                 <a href="{{URL::to('sua-tai-khoan/'.$pro->id)}}" class="btn btn-primary" style="margin-right:20px;">Sửa thông tin</a>
+                <a href="{{URL::to('lich-hen')}}" class="btn btn-danger" style="margin-right:20px;">Lịch hẹn</a>
                 <a href="" class="btn btn-success">Hồ sơ bệnh án</a>
             </div>
             @endforeach

@@ -6,11 +6,6 @@
           <h2 class="ftco-heading-2">HNClinic</h2>
           <p>"Gieo mầm hi vọng - Gặt trọn yêu thương"</p>
         </div>
-        <ul class="ftco-footer-social list-unstyled float-md-left float-lft ">
-          <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
-          <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
-          <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
-        </ul>
       </div>
       <div class="col-md-2">
         <div class="ftco-footer-widget mb-4 ml-md-5">
@@ -56,9 +51,9 @@
             <h2 class="ftco-heading-2">Office</h2>
             <div class="block-23 mb-3">
               <ul>
-                <li><span class="icon icon-map-marker"></span><span class="text">Phòng khám đa khoa HNClinic - Số 12 Nguyễn Văn Bảo, Phường 4, Quận Gò Vấp, Thành phố Hồ Chí Minh</span></li>
-                <li><a href="#"><span class="icon icon-phone"></span><span class="text">0365549764 | 0971376033</span></a></li>
-                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">hieusnguyen0709@gmail.com</span></a></li>
+                <li><span class="text">Phòng khám đa khoa HNClinic - Số 12 Nguyễn Văn Bảo, Phường 4, Quận Gò Vấp, Thành phố Hồ Chí Minh</span></li>
+                <li><a href="#"></span><span class="text">0365549764 | 0971376033</span></a></li>
+                <li><a href="#"></span><span class="text">hieusnguyen0709@gmail.com</span></a></li>
               </ul>
             </div>
         </div>

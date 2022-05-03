@@ -143,6 +143,7 @@ class Homecontroller extends Controller
 
     public function book_appointment(Request $request)
     {
+        $appointment_code = 'AP-'.rand(0,10000);
         $data = array();
         $data['email'] = $request->email;
         $data['patient_id'] = $request->patient_id;
@@ -151,11 +152,12 @@ class Homecontroller extends Controller
         $data['gender'] = $request->gender;
         $data['phone'] = $request->phone;
         $data['doctor_id'] = $request->doctor_id;
+        $data['appointment_code'] = $appointment_code;
         $data['department_id'] = '0';
         $data['date'] = $request->date;
         $data['time'] = $request->time;
         $data['symptoms'] = $request->symptoms;
-        $data['status'] = 'Chờ duyệt';
+        $data['status'] = '0';
         DB::table('appointments')->insert($data);
 
         //Send mail//
@@ -248,5 +250,12 @@ class Homecontroller extends Controller
         // }
         // $doctor_schedule = DB::table('time_schedules')->where('user_id','21')->get();
         // return view('user.schedule')->with('doctor_schedule',$doctor_schedule);
+    }
+
+    public function appointment_booked()
+    {
+        $id = Session::get('id');
+        $appointment_booked = DB::table('appointments')->where('patient_id',$id)->get();
+        return view('user.appointment_booked')->with('appointment_booked',$appointment_booked);
     }
 }
