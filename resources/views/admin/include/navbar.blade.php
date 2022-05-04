@@ -7,7 +7,7 @@
           </button>
         </div>
         <div>
-          <a class="navbar-brand brand-logo" href="{{URL::to('/admin')}}">
+          <a class="navbar-brand brand-logo" href="{{URL::to('/admin/tong-quan')}}">
             <img src="<?php echo url('/'); ?>/images_user/logo.jpg" alt="logo" /> HN<b>Clinic</b>
           </a>
           <a class="navbar-brand brand-logo-mini" href="index.html">

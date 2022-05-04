@@ -38,7 +38,7 @@ Route::get('/lich-bac-si',[HomeController::class, 'show_schedule_by_doctor_id'])
 Route::get('/dat-lich-datepicker',[HomeController::class, 'appointment_datepicker'])->name('appointment_datepicker');
 
 //Admin
-Route::get('/admin',[AdminController::class, 'index'])->name('admin');
+Route::get('/admin/tong-quan',[AdminController::class, 'index'])->name('admin');
 //Admin - Manage Users
 Route::get('/admin/them-nguoi-dung',[AdminController::class, 'add_user'])->name('add_user');
 Route::post('/admin/kt-them-nguoi-dung',[AdminController::class, 'check_add_user'])->name('check_add_user');
@@ -98,8 +98,22 @@ Route::get('/admin/sua-lich-hen/{schedule_id}',[AdminController::class, 'edit_ap
 Route::post('/admin/kt-sua-lich-hen/{schedule_id}',[AdminController::class, 'check_edit_appointment'])->name('check_edit_appointment');
 Route::get('/admin/xoa-lich-hen/{schedule_id}',[AdminController::class, 'delete_appointment'])->name('delete_appointment');
 Route::post('/admin/trang-thai-lich-hen/{schedule_id}',[AdminController::class, 'status_appointment'])->name('status_appointment');
+
 //Doctor
 Route::get('/bac-si',[Doctorcontroller::class, 'index'])->name('doctor');
+//Doctor - Manage Appointment
+Route::get('/bac-si/danh-sach-lich-hen',[Doctorcontroller::class, 'show_list_appointment'])->name('show_list_appointment_doctor');
+//Doctor - Manage Schedule
+Route::get('/bac-si/dang-ky-lich-lam',[Doctorcontroller::class, 'add_schedule'])->name('add_schedule_doctor');
+Route::post('/bac-si/kt-dang-ky-lich-lam',[Doctorcontroller::class, 'check_add_schedule'])->name('check_add_schedule_doctor');
+Route::get('/bac-si/xem-lich-lam',[Doctorcontroller::class, 'show_list_schedule'])->name('show_list_schedule_doctor');
+//Doctor - Manage Prescription
+Route::get('/bac-si/them-don-thuoc',[Doctorcontroller::class, 'add_pres'])->name('add_pres_doctor');
+Route::post('/bac-si/kt-them-don-thuoc',[Doctorcontroller::class, 'check_add_pres'])->name('check_add_pres_doctor');
+Route::get('/bac-si/danh-sach-don-thuoc',[Doctorcontroller::class, 'show_list_pres'])->name('show_list_pres_doctor');
+Route::get('/bac-si/xoa-don-thuoc/{id_pres}',[Doctorcontroller::class, 'delete_pres'])->name('delete_pres_doctor');
+Route::get('/bac-si/sua-don-thuoc/{id_pres}',[Doctorcontroller::class, 'edit_pres'])->name('edit_pres_doctor');
+Route::post('/bac-si/kt-sua-don-thuoc/{id_pres}',[Doctorcontroller::class, 'check_edit_pres'])->name('check_edit_pres_doctor');
 
 //Phamarcist
 Route::get('/duoc-si',[Phamarcistcontroller::class, 'index'])->name('phamarcist');
@@ -113,6 +127,24 @@ Route::get('/duoc-si/xoa-thuoc/{id}',[Phamarcistcontroller::class, 'delete_medic
 
 //Receptionist
 Route::get('/nhan-vien-y-te',[Receptionistcontroller::class, 'index'])->name('receptionist');
+//Receptionist - Manage Appointment
+Route::get('/nhan-vien-y-te/them-lich-hen',[Receptionistcontroller::class, 'add_appointment'])->name('add_appointment_receptionist');
+Route::post('/nhan-vien-y-te/kt-them-lich-hen',[Receptionistcontroller::class, 'check_add_appointment'])->name('check_add_appointment_receptionist');
+Route::get('/nhan-vien-y-te/danh-sach-lich-hen',[Receptionistcontroller::class, 'show_list_appointment'])->name('show_list_appointment_receptionist');
+Route::get('/nhan-vien-y-te/sua-lich-hen/{schedule_id}',[Receptionistcontroller::class, 'edit_appointment'])->name('edit_appointment_receptionist');
+Route::post('/nhan-vien-y-te/kt-sua-lich-hen/{schedule_id}',[Receptionistcontroller::class, 'check_edit_appointment'])->name('check_edit_appointment_receptionist');
+Route::get('/nhan-vien-y-te/xoa-lich-hen/{schedule_id}',[Receptionistcontroller::class, 'delete_appointment'])->name('delete_appointment_receptionist');
+Route::post('/nhan-vien-y-te/trang-thai-lich-hen/{schedule_id}',[Receptionistcontroller::class, 'status_appointment'])->name('status_appointment_receptionist');
 
-//Test_Doctor
-Route::get('/nhan-vien-xet-nghiem',[Test_Doctorcontroller::class, 'index'])->name('test_doctor');
+//Test Doctor
+Route::get('/bac-si-xet-nghiem',[Test_Doctorcontroller::class, 'index'])->name('test_doctor');
+//Test Doctor - Manage Test Type
+Route::get('/bac-si-xet-nghiem/them-loai-xet-nghiem',[Test_Doctorcontroller::class, 'add_test_type'])->name('add_test_type_test_doctor');
+Route::post('/bac-si-xet-nghiem/kt-them-loai-xet-nghiem',[Test_Doctorcontroller::class, 'check_add_test_type'])->name('check_add_test_type_test_doctor');
+Route::get('/bac-si-xet-nghiem/danh-sach-loai-xet-nghiem',[Test_Doctorcontroller::class, 'show_list_test_type'])->name('show_list_test_type_test_doctor');
+Route::get('/bac-si-xet-nghiem/sua-loai-xet-nghiem/{id_test_type}',[Test_Doctorcontroller::class, 'edit_test_type'])->name('edit_test_type_test_doctor');
+Route::post('/bac-si-xet-nghiem/kt-sua-loai-xet-nghiem/{id_test_type}',[Test_Doctorcontroller::class, 'check_edit_test_type'])->name('check_edit_test_type_test_doctor');
+Route::get('/bac-si-xet-nghiem/xoa-loai-xet-nghiem/{id_test_type}',[Test_Doctorcontroller::class, 'delete_test_type'])->name('delete_test_type_test_doctor');
+
+//Test Doctor - Manage Test
+Route::get('/bac-si-xet-nghiem/yeu-cau-xet-nghiem',[Test_Doctorcontroller::class, 'require_testing'])->name('require_testing');

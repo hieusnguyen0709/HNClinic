@@ -2,7 +2,7 @@
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
           <li class="nav-item">
-            <a class="nav-link" href="{{URL::to('/admin')}}">
+            <a class="nav-link" href="{{URL::to('/admin/tong-quan')}}">
               <i class="mdi mdi-grid-large menu-icon"></i>
               <!-- Trang chủ -->
               <span class="menu-title">Tổng quan</span>

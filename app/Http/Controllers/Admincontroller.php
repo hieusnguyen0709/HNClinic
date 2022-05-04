@@ -506,7 +506,7 @@ class Admincontroller extends Controller
 
     public function show_list_test_type()
     {
-      $show_list_test_type= DB::table('test_type')->get();
+      $show_list_test_type= DB::table('test_type')->orderby('id_test_type','desc')->get();
       $manager_list_test_type = view('admin.mn_test_type.list_test_type')->with('show_list_test_type',$show_list_test_type);
       return view('admin.index')->with('admin.mn_test_type.list_test_type',$manager_list_test_type);
     }
@@ -588,7 +588,7 @@ class Admincontroller extends Controller
 
     public function show_list_appointment()
     {
-      $show_list_appointment= DB::table('appointments')->get();
+      $show_list_appointment= DB::table('appointments')->orderby('schedule_id','desc')->get();
       $manager_show_list_appointment = view('admin.mn_appointment.list_appointment')->with('show_list_appointment',$show_list_appointment);
       return view('admin.index')->with('admin.mn_appointment.list_appointment',$manager_show_list_appointment);
     }

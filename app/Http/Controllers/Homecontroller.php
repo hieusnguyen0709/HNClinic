@@ -83,6 +83,10 @@ class Homecontroller extends Controller
             }   
             else if($type == '4')
             {
+                Session::put('doctor_email',$result->email);
+                Session::put('doctor_last_name',$result->last_name);
+                Session::put('doctor_id',$result->id);
+                Session::put('doctor_password',$result->password);
                 return Redirect::to('/bac-si');
             }   
             else if($type == '5')
