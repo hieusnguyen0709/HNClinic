@@ -79,7 +79,7 @@ class Homecontroller extends Controller
             }   
             else if($type == '3')
             {
-                return Redirect::to('/nhan-vien-xet-nghiem');
+                return Redirect::to('/bac-si-xet-nghiem');
             }   
             else if($type == '4')
             {

@@ -3,7 +3,7 @@
 <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Danh sách lịch làm</h4>
+                  <h4 class="card-title">Lịch làm đã đăng ký</h4>
                   <?php
                          $message = Session::get('message');
                          if($message)
@@ -14,37 +14,32 @@
                       ?>
                     </p>
                   <div class="table-responsive">
-                    <table class="table table-striped">
-                      <thead>
-                        <tr>
-                        <th>
-                            Tên
-                        </th>
-                          <th>
-                            Ngày làm
-                          </th>
-                          <!-- <th>
-                            Ca làm
-                          </th> -->
-                        </tr>
-                      </thead>
-                      <tbody>
-                        @foreach($show_list_schedule as $key => $schedule)
-                        <tr>
-                          <td>
-                              {{$schedule->last_name}}
-                          </td>
-                            <td>
-                                {{$schedule->date}}
-                            </td>
-                          <!-- <td>
-                            
-                          </td> -->
+                    <div>
+                        <ul class="list-group list-group-horizontal">
+                          <li style="border:1px solid white; border-radius:5px; font-size:20px; font-weight:bold" class="list-group-item list-group-item-action w-auto p-3 day">
+                              Tên
+                          </li>
+                            <li style="border:1px solid white; border-radius:5px;font-size:20px; font-weight:bold" class="list-group-item list-group-item-action w-auto p-3 day">
+                              Ngày làm
+                          </li>
+                        </ul>
+                    </div><br>
 
-                        </tr>
-                        @endforeach
-                      </tbody>
-                    </table>
+                    <div style="border:1px solid black; margin:10">
+                        <ul class="list-group list-group-horizontal">
+                          
+                          @foreach($show_doctor as $key => $schedule)
+                          <li style="margin:10px; border:1px solid black; border-radius:5px" class="list-group-item list-group-item-action w-auto p-3 day" date=" {{$schedule->date}}">
+                              {{$schedule->last_name}}
+                          </li>
+                          @endforeach
+                          @foreach($show_schedule as $key => $schedule)
+                            <li style="margin:10px; border:1px solid black; border-radius:5px" class="list-group-item list-group-item-action w-auto p-3 day" date=" {{$schedule->date}}">
+                              {{$schedule->date}}
+                          </li>
+                          @endforeach
+                        </ul>
+                    </div><br>
                   </div>
                 </div>
               </div>

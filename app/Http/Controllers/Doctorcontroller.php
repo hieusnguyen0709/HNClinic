@@ -118,10 +118,12 @@ class Doctorcontroller extends Controller
     public function show_list_schedule()
     {
        $doctor_id = Session::get('doctor_id');
-       $show_list_schedule = DB::table('time_schedules')
+       $show_doctor = DB::table('time_schedules')
       //  ->join('time_frame','time_frame.frame_name','=','time_schedules.frame_name')
-       ->join('users','time_schedules.user_id','=','users.id')->where('id',$doctor_id)->orderby('id_time')->get();
-       $manager_list_schedule = view('doctor.mn_schedule.list_schedule')->with('show_list_schedule',$show_list_schedule);
+       ->join('users','time_schedules.user_id','=','users.id')->where('id',$doctor_id)->orderby('id_time')->limit(1)->get();
+       $show_schedule = DB::table('time_schedules')
+        ->join('users','time_schedules.user_id','=','users.id')->where('id',$doctor_id)->orderby('id_time')->get();
+       $manager_list_schedule = view('doctor.mn_schedule.list_schedule')->with('show_doctor',$show_doctor)->with('show_schedule',$show_schedule);
        return view('doctor.index')->with('doctor.mn_schedule.list_schedule',$manager_list_schedule);
       // return view('doctor.mn_schedule.list_schedule');
     }

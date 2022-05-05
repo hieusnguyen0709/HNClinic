@@ -48,7 +48,7 @@
                             Trạng thái
                           </th>
                           <th>
-                            Thao tác
+                            Xét nghiệm
                           </th>
                         </tr>
                       </thead>
