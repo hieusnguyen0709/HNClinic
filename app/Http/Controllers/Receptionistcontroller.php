@@ -55,6 +55,8 @@ class Receptionistcontroller extends Controller
       $data['time'] = $request->time;
       $data['symptoms'] = $request->symptoms;
       $data['status'] = '0';
+      $data['require_testing'] = '0';
+      $data['QR_id'] = '0';
       DB::table('appointments')->insert($data);
       Session::put('message','Thêm lịch hẹn thành công');
       return Redirect::to('/nhan-vien-y-te/them-lich-hen');

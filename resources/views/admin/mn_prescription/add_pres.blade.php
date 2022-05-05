@@ -111,7 +111,7 @@
                       </div>
                     </div>
                     </div>
-                    <input type="button" onclick="add_more_field()"  id="add_more_medi" class="btn btn-primary me-2" value="Thêm thuốc" name="add_more_medi" style="margin-top:20px;"/>
+                    <input type="button" onclick="add_more_field()"  id="add_more_medi" class="btn btn-success" value="Thêm thuốc" name="add_more_medi" style="margin-top:20px;"/>
                     <center><button type="submit" name="submit" class="btn btn-primary me-2">Thêm đơn thuốc</button></center>
                   </form>
                 </div>

@@ -206,7 +206,6 @@ class Doctorcontroller extends Controller
       ->join('users','users.id','=','prescriptions.doctor_id')->where('users.id',$doctor_id)->orderBy('id_pres')->get();
       $manager_list_pres = view('doctor.mn_prescription.list_pres')->with('show_list_pres',$show_list_pres);
       return view('doctor.index')->with('doctor.mn_prescription.list_pres',$manager_list_pres);
-      // return view('doctor.mn_prescription.list_pres');
     }
 
     public function delete_pres($id_pres)
@@ -246,4 +245,58 @@ class Doctorcontroller extends Controller
       return Redirect::back();
     }
     //Manage Prescription
+
+    //Manage Require testing
+    public function require_testing($schedule_id)
+    {
+        $info_appointment= DB::table('appointments')->where('schedule_id',$schedule_id)->get();
+        $test_type= DB::table('test_type')->orderby('id_test_type','desc')->get();
+        return view('doctor.mn_test.require_testing')
+        ->with('info_appointment',$info_appointment)
+        ->with('test_type',$test_type);
+    }
+
+    public function check_require_testing($schedule_id,Request $request)
+    {
+      $schedule_id = $request->schedule_id;
+      $id_patient = $request->id_patient;
+      $id_test_type = $request->id_test_type;
+      $note = $request->note;
+      $result = '0';
+      $test_status = '0';
+      $count_test_type = count($id_test_type);
+
+      for($i = 0; $i < $count_test_type; $i++)
+      {
+        $data =
+        [
+          'id_test_type' => $id_test_type[$i],
+          'id_patient' => $id_patient,
+          'id_appointment' => $schedule_id,
+          'note' => $note[$i],
+          'result' => $result,
+          'test_status' => $test_status
+        ];
+        DB::table('test')->insert($data);
+      }
+
+      $arr = array();
+      $arr['require_testing'] = '1';
+      DB::table('appointments')->where('schedule_id',$schedule_id)->update($arr);
+
+      Session::put('message','Yêu cầu xét nghiệm thành công');
+      return Redirect::to('/bac-si/danh-sach-lich-hen');
+    }
+
+    public function test_result()
+    {
+      $show_require_testing = DB::table('test')
+      ->join('users','test.id_patient','=','users.id')
+      ->join('appointments','appointments.schedule_id','=','test.id_appointment')
+      ->join('test_type','test_type.id_test_type','=','test.id_test_type')->get();
+      $manager_show_require_testing = view('doctor.mn_test.list_test_result')->with('show_require_testing',$show_require_testing);
+      return view('doctor.index')->with('doctor.mn_test.list_test_result',$manager_show_require_testing);
+      // return view('doctor.mn_test.list_test_result');
+    }
+    //Manage Require testing
 }

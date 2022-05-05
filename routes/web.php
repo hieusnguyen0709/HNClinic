@@ -114,7 +114,10 @@ Route::get('/bac-si/danh-sach-don-thuoc',[Doctorcontroller::class, 'show_list_pr
 Route::get('/bac-si/xoa-don-thuoc/{id_pres}',[Doctorcontroller::class, 'delete_pres'])->name('delete_pres_doctor');
 Route::get('/bac-si/sua-don-thuoc/{id_pres}',[Doctorcontroller::class, 'edit_pres'])->name('edit_pres_doctor');
 Route::post('/bac-si/kt-sua-don-thuoc/{id_pres}',[Doctorcontroller::class, 'check_edit_pres'])->name('check_edit_pres_doctor');
-
+//Doctor - Require Testing
+Route::get('/bac-si/yeu-cau-xet-nghiem/{schedule_id}',[Doctorcontroller::class, 'require_testing'])->name('require_testing_doctor');
+Route::post('/bac-si/kt-yeu-cau-xet-nghiem/{schedule_id}',[Doctorcontroller::class, 'check_require_testing'])->name('check_require_testing_doctor');
+Route::get('/bac-si/ket-qua-xet-nghiem',[Doctorcontroller::class, 'test_result'])->name('test_result_doctor');
 //Phamarcist
 Route::get('/duoc-si',[Phamarcistcontroller::class, 'index'])->name('phamarcist');
 //Phamarcist - Manage Medicine
@@ -145,6 +148,8 @@ Route::get('/bac-si-xet-nghiem/danh-sach-loai-xet-nghiem',[Test_Doctorcontroller
 Route::get('/bac-si-xet-nghiem/sua-loai-xet-nghiem/{id_test_type}',[Test_Doctorcontroller::class, 'edit_test_type'])->name('edit_test_type_test_doctor');
 Route::post('/bac-si-xet-nghiem/kt-sua-loai-xet-nghiem/{id_test_type}',[Test_Doctorcontroller::class, 'check_edit_test_type'])->name('check_edit_test_type_test_doctor');
 Route::get('/bac-si-xet-nghiem/xoa-loai-xet-nghiem/{id_test_type}',[Test_Doctorcontroller::class, 'delete_test_type'])->name('delete_test_type_test_doctor');
+Route::get('/bac-si-xet-nghiem/nhap-ket-qua-xet-nghiem/{id_test}',[Test_Doctorcontroller::class, 'add_test_result'])->name('add_test_result_test_doctor');
+Route::post('/bac-si-xet-nghiem/kt-nhap-ket-qua-xet-nghiem/{id_test}',[Test_Doctorcontroller::class, 'check_add_test_result'])->name('check_add_test_result_test_doctor');
 
 //Test Doctor - Manage Test
 Route::get('/bac-si-xet-nghiem/yeu-cau-xet-nghiem',[Test_Doctorcontroller::class, 'require_testing'])->name('require_testing');

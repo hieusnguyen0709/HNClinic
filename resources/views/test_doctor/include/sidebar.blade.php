@@ -24,8 +24,6 @@
             <div class="collapse" id="form-elements-4">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"><a class="nav-link" href="{{URL::to('/bac-si-xet-nghiem/yeu-cau-xet-nghiem')}}">Yêu cầu xét nghiệm</a></li>
-                <li class="nav-item"><a class="nav-link" href="../pages/forms/basic_elements.html">Thêm kết quả xét nghiệm</a></li>
-                <li class="nav-item"><a class="nav-link" href="../pages/forms/basic_elements.html">Danh sách xét nghiệm</a></li>
                 <li class="nav-item">
                   <a class="nav-link" href="">Loại xét nghiệm</a>
                   <div class="" id="form-elements">

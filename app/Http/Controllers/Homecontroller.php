@@ -71,7 +71,7 @@ class Homecontroller extends Controller
             }
             else if($type == '1')
             {
-                return Redirect::to('/admin');
+                return Redirect::to('/admin/tong-quan');
             }      
             else if($type == '2')
             {
@@ -162,6 +162,8 @@ class Homecontroller extends Controller
         $data['time'] = $request->time;
         $data['symptoms'] = $request->symptoms;
         $data['status'] = '0';
+        $data['require_testing'] = '0';
+        $data['QR_id'] = '0';
         DB::table('appointments')->insert($data);
 
         //Send mail//

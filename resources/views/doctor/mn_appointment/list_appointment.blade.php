@@ -92,76 +92,17 @@
                                   <input type="button" value="Đã hủy" class="btn btn-danger" style="width:100px;"/>
                               </td>
                               @endif
-                              <!-- @if($appointment->status == 0)
+                              @if($appointment->require_testing == 0)
                               <td>
-                                  <select id="form_status" onchange="change_status()">
-                                    <option value="0" selected>Chờ duyệt</option>
-                                    <option value="1">Đã duyệt</option>
-                                    <option value="2">Đã khám</option>
-                                    <option value="3">Đã hủy</option>
-                                  </select>
+                                <a href="{{URL::to('/bac-si/yeu-cau-xet-nghiem/'.$appointment->schedule_id)}}" class="btn btn-dark" style="width:100px;">Yêu cầu</a>
                               </td>
                               @endif
-                              @if($appointment->status == 1)
+                              @if($appointment->require_testing == 1)
                               <td>
-                              <select>
-                                    <option value="0">Chờ duyệt</option>
-                                    <option value="1" selected>Đã duyệt</option>
-                                    <option value="2">Đã khám</option>
-                                    <option value="3">Đã hủy</option>
-                                  </select>
+                                <input type="button" value="Đã yêu cầu" class="btn btn-light" style="color:gray" style="width:100px;"/>
                               </td>
                               @endif
-                              @if($appointment->status == 2)
-                              <td>
-                              <select>
-                                    <option value="0">Chờ duyệt</option>
-                                    <option value="1">Đã duyệt</option>
-                                    <option value="2" selected>Đã khám</option>
-                                    <option value="3">Đã hủy</option>
-                                  </select>
-                              </td>
-                              @endif
-                              @if($appointment->status == 3)
-                              <td>
-                              <select>
-                                    <option value="0">Chờ duyệt</option>
-                                    <option value="1">Đã duyệt</option>
-                                    <option value="2">Đã khám</option>
-                                    <option value="3" selected>Đã hủy</option>
-                                  </select>
-                              </td>
-                              @endif -->
-                              <td>
-                                    <input type="button" value="Yêu cầu" class="btn btn-dark" style="width:100px;"/>
-                              </td>
                           </tr>
-                          <script>
-                                // function change_status()
-                                // {
-                                //   var select = document.getElementById('form_status');
-                                //   var value = select.options[select.selectedIndex].value;
-                                //   $.ajaxSetup({
-                                //     headers: {
-                                //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                //       }
-                                //     });
-                                //   $.ajax({
-                                //     url:"{{URL::to('/admin/trang-thai-lich-hen/'.$appointment->schedule_id)}}",
-                                //     type:"POST",
-                                //     data:{status:value},
-                                //     success:function(data)
-                                //     {
-                                //       // const value = JSON.parse(data);
-			                          //       // $("#namec").val(value.name);
-                                //       console.log(value);
-                                //       // console.log(data);
-                                //       // $("#show_schedule").html(data);
-                                //     }
-                                //     });
-                                  // document.getElementById('form_status').submit(value);
-                                }
-                              </script>
                         @endforeach
                       </tbody>
                     </table>

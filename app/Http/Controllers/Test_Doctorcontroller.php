@@ -69,10 +69,36 @@ class Test_Doctorcontroller extends Controller
     //Manage Test
     public function require_testing()
     {
-        $show_list_appointment= DB::table('appointments')->orderby('schedule_id','desc')->get();
-        $manager_show_list_appointment = view('test_doctor.mn_test.require_testing')->with('show_list_appointment',$show_list_appointment);
-        return view('test_doctor.index')->with('test_doctor.mn_test.require_testing',$manager_show_list_appointment);
-        // return view('test_doctor.mn_test.require_testing');
+        $show_require_testing = DB::table('test')
+        ->join('users','test.id_patient','=','users.id')
+        ->join('appointments','appointments.schedule_id','=','test.id_appointment')
+        ->join('test_type','test_type.id_test_type','=','test.id_test_type')->get();
+        $manager_show_require_testing = view('test_doctor.mn_test.require_testing')->with('show_require_testing',$show_require_testing);
+        return view('test_doctor.index')->with('test_doctor.mn_test.require_testing',$manager_show_require_testing);
+    }
+
+    public function add_test_result($id_test, Request $request)
+    {
+      $show_require_testing = DB::table('test')
+      ->join('users','test.id_patient','=','users.id')
+      ->join('appointments','appointments.schedule_id','=','test.id_appointment')
+      ->join('test_type','test_type.id_test_type','=','test.id_test_type')->where('id_test',$id_test)->get();
+      $manager_show_require_testing = view('test_doctor.mn_test.add_test_result')->with('show_require_testing',$show_require_testing);
+      return view('test_doctor.index')->with('test_doctor.mn_test.add_test_result',$manager_show_require_testing);
+    }
+
+    public function check_add_test_result($id_test, Request $request)
+    {
+      $data = array();
+      $data['id_appointment'] = $request->id_appointment;
+      $data['id_patient'] = $request->id_patient;
+      $data['id_test_type'] = $request->id_test_type;
+      $data['note'] = $request->note;
+      $data['test_status'] = '1';
+      $data['result'] = $request->result;
+      DB::table('test')->where('id_test',$id_test)->update($data);
+      Session::put('message','Nhập kết quả xét nghiệm thành công');
+      return Redirect::to('/bac-si-xet-nghiem/yeu-cau-xet-nghiem');
     }
     //Manage Test
 }

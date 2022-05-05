@@ -1,5 +1,5 @@
-@extends('test_doctor.index')
-@section('test_doctor_content')
+@extends('doctor.index')
+@section('doctor_content')
 <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
@@ -49,7 +49,7 @@
                                   <input type="button" value="Chờ xét nghiệm" class="btn btn-primary" style="width:150px;"/>
                               </td>
                               <td>
-                                <a href="{{URL::to('/bac-si-xet-nghiem/nhap-ket-qua-xet-nghiem/'.$require_testing->id_test)}}" class="btn btn-dark" style="width:150px;">Nhập kết quả</a>
+                                  <input type="button" value="Chưa có kết quả" class="btn btn-danger" style="width:150px;"/>
                               </td>
                             @endif
                             @if($require_testing->test_status == 1)

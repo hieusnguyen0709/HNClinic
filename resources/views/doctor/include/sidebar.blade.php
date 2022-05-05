@@ -54,9 +54,7 @@
             </a>
             <div class="collapse" id="form-elements-4">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="../pages/forms/basic_elements.html">Yêu cầu xét nghiệm</a></li>
-                <li class="nav-item"><a class="nav-link" href="../pages/forms/basic_elements.html">Thêm xét nghiệm</a></li>
-                <li class="nav-item"><a class="nav-link" href="../pages/forms/basic_elements.html">Danh sách xét nghiệm</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{URL::to('/bac-si/ket-qua-xet-nghiem')}}">Yêu cầu xét nghiệm</a></li>
               </ul>
             </div>
           </li>
