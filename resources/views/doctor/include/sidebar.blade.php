@@ -23,7 +23,8 @@
             </a>
             <div class="collapse" id="form-elements-5">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="{{URL::to('/bac-si/danh-sach-lich-hen')}}">Danh sách lịch hẹn</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{URL::to('/bac-si/danh-sach-lich-hen')}}">Lịch chưa khám</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{URL::to('/bac-si/danh-sach-lich-da-kham')}}">Lịch đã khám</a></li>
               </ul>
             </div>
           </li>

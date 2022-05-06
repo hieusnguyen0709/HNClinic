@@ -22,6 +22,13 @@
                       </div>
                     </div>
                     <div class="form-group row">
+                      <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Bác sĩ</label>
+                      <div class="col-sm-9">
+                        <input type="hidden" class="form-control" name="id_doctor" value="{{App\Models\User::where('id',$require_testing->doctor_id)->value('id')}}" readonly>
+                        <input type="text" class="form-control" value="{{App\Models\User::where('id',$require_testing->doctor_id)->value('last_name')}}" readonly>
+                      </div>
+                    </div>
+                    <div class="form-group row">
                       <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Loại xét nghiệm</label>
                       <div class="col-sm-9">
                         <input type="hidden" class="form-control" name="id_test_type" value="{{$require_testing->id_test_type}}" readonly>

@@ -3,7 +3,7 @@
 <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Danh sách lịch hẹn</h4>
+                  <h4 class="card-title">Danh sách lịch đã khám</h4>
                   <?php
                          $message = Session::get('message');
                          if($message)
@@ -48,7 +48,7 @@
                             Trạng thái
                           </th>
                           <th>
-                            Xét nghiệm
+                            Thao tác
                           </th>
                         </tr>
                       </thead>
@@ -84,16 +84,9 @@
                               </td>
                               @endif
 
-                              @if($appointment->require_testing == 0)
                               <td>
-                                <a href="{{URL::to('/bac-si/yeu-cau-xet-nghiem/'.$appointment->schedule_id)}}" class="btn btn-dark" style="width:100px;">Yêu cầu</a>
+                                <a href="{{URL::to('/bac-si/xem-don-thuoc/'.$appointment->schedule_id)}}" class="btn btn-success" style="width:150px;">Xem đơn thuốc</a>
                               </td>
-                              @endif
-                              @if($appointment->require_testing == 1)
-                              <td>
-                                <input type="button" value="Đã yêu cầu" class="btn btn-light" style="color:gray" style="width:100px;"/>
-                              </td>
-                              @endif
                           </tr>
                         @endforeach
                       </tbody>

@@ -19,62 +19,72 @@ class Doctorcontroller extends Controller
     {
        return view('doctor.index');
     }
-      //Manage Appointment
-      public function show_list_appointment()
+
+    //Manage Appointment
+    public function show_list_appointment()
+    {
+      $doctor_id = Session::get('doctor_id');
+      $show_list_appointment= DB::table('appointments')
+      ->join('users','users.id','=','appointments.doctor_id')->where('users.id',$doctor_id)
+      ->where('status','1')->orderby('schedule_id','desc')->get();
+      $manager_show_list_appointment = view('doctor.mn_appointment.list_appointment')->with('show_list_appointment',$show_list_appointment);
+      return view('doctor.index')->with('doctor',$manager_show_list_appointment);
+    }
+
+    public function show_list_checked_appointment()
+    {
+      $doctor_id = Session::get('doctor_id');
+      $show_list_appointment= DB::table('appointments')
+      ->join('users','users.id','=','appointments.doctor_id')->where('users.id',$doctor_id)
+      ->where('status','2')->orderby('schedule_id','desc')->get();
+      $manager_show_list_appointment = view('doctor.mn_appointment.list_checked_appointment')->with('show_list_appointment',$show_list_appointment);
+      return view('doctor.index')->with('doctor',$manager_show_list_appointment);
+    }
+
+    public function add_check_result($schedule_id, Request $request)
+    {
+      $show_detail_appointment = DB::table('appointments')->where('schedule_id',$schedule_id)->get();
+      $medicine = DB::table('medicines')->orderby('id','desc')->get();
+      return view('doctor.mn_appointment.add_check_result')
+      ->with('show_detail_appointment',$show_detail_appointment)
+      ->with('medicine',$medicine);
+    }
+
+    public function check_add_check_result($schedule_id, Request $request)
+    {
+      $medicine_id = $request->medicine_id;
+      $doctor_id = $request->doctor_id;
+      $patient_id = $request->patient_id;
+      $symptoms = $request->symptoms;
+      $diagnosis = $request->diagnosis;
+      $advice = $request->advice;
+      $date = $request->date;
+      $instruction = $request->instruction;
+      $count_medicine = count($medicine_id);
+      $pre_code = 'PR-'.rand(0,10000);
+      for($i = 0; $i < $count_medicine; $i++)
       {
-        $show_list_appointment= DB::table('appointments')->where('status','1')->orderby('schedule_id','desc')->get();
-        $manager_show_list_appointment = view('doctor.mn_appointment.list_appointment')->with('show_list_appointment',$show_list_appointment);
-        return view('doctor.index')->with('doctor',$manager_show_list_appointment);
-        // return view('doctor.mn_appointment.list_appointment');
+        $data = [
+          'medicine_id' => $medicine_id[$i],
+          'doctor_id' => $doctor_id,
+          'patient_id' => $patient_id,
+          'symptoms' => $symptoms,
+          'diagnosis' => $diagnosis,
+          'advice' => $advice,
+          'date' => $date,
+          'pre_instruction' => $instruction[$i],
+          'pre_code' => $pre_code,
+          'appointment_id' => $schedule_id
+        ];
+        DB::table('prescriptions')->insert($data);
       }
-
-    //   public function edit_appointment($schedule_id, Request $request)
-    //   {
-    //     if($request->ajax())
-    //     {
-    //        $option = $request->get('option');
-    //        if(isset($option) && !empty($option))
-    //        {
-    //             $doctor_schedule = DB::table('time_schedules')->where('user_id', $request->get('option'))->get();
-    //             return view('receptionist.mn_appointment.schedule')->with('doctor_schedule',$doctor_schedule);
-    //        }
-    //     }
-  
-    //     $info_patient = DB::table('users')->where('type','0')->get();
-    //     $info_doctor = DB::table('users')->where('type','4')->get();
-    //     $edit_appointment= DB::table('appointments')->where('schedule_id',$schedule_id)->get();
-    //     $doctor_schedule = DB::table('time_schedules')->where('user_id','')->get();
-    //     $manager_edit_appointment = view('receptionist.mn_appointment.edit_appointment')
-    //     ->with('edit_appointment',$edit_appointment)
-    //     ->with('info_patient',$info_patient)
-    //     ->with('info_doctor',$info_doctor)
-    //     ->with('doctor_schedule',$doctor_schedule);
-    //     return view('receptionist.index')->with('receptionist.mn_appointment.edit_appointment',$manager_edit_appointment);
-    //   return view('receptionist.mn_appointment.edit_appointment');
-    //   }
-  
-    //   public function check_edit_appointment(Request $request, $schedule_id)
-    //   {
-    //     $data = array();
-    //     $data['email'] = $request->email;
-    //     $data['patient_id'] = $request->patient_id;
-    //     $data['full_name'] = '0';
-    //     $data['birth_date'] = $request->birth_date;
-    //     $data['gender'] = $request->gender;
-    //     $data['phone'] = $request->phone;
-    //     $data['doctor_id'] = $request->doctor_id;
-    //     $data['appointment_code'] = $request->appointment_code;
-    //     $data['department_id'] = '0';
-    //     $data['date'] = $request->date;
-    //     $data['time'] = $request->time;
-    //     $data['symptoms'] = $request->symptoms;
-    //     $data['status'] = $request->status;
-    //     DB::table('appointments')->where('schedule_id',$schedule_id)->update($data);
-    //     Session::put('message','Cập nhật lịch hẹn thành công');
-    //     return Redirect::to('/nhan-vien-y-te/danh-sach-lich-hen');
-    //   }
-
-      //Manage Appointment
+      $arr = array();
+      $arr['status'] = '2';
+      DB::table('appointments')->where('schedule_id',$schedule_id)->update($arr);
+      Session::put('message','Thêm đơn thuốc thành công');
+      return Redirect::to('/bac-si/danh-sach-lich-hen');
+    }
+    //Manage Appointment
 
     //Manage_Schedule
     public function add_schedule()
@@ -86,10 +96,6 @@ class Doctorcontroller extends Controller
 
     public function check_add_schedule(Request $request)
     {
-      // $doctor_id = Session::get('doctor_id');
-      // $show_list_schedule = DB::table('time_schedules')
-      // //  ->join('time_frame','time_frame.frame_name','=','time_schedules.frame_name')
-      //  ->join('users','time_schedules.user_id','=','users.id')->where('id',$doctor_id)->orderby('id_time','desc')->get();
 
       $date = $request->date;
       $frame_name = 'none';
@@ -125,7 +131,6 @@ class Doctorcontroller extends Controller
         ->join('users','time_schedules.user_id','=','users.id')->where('id',$doctor_id)->orderby('id_time')->get();
        $manager_list_schedule = view('doctor.mn_schedule.list_schedule')->with('show_doctor',$show_doctor)->with('show_schedule',$show_schedule);
        return view('doctor.index')->with('doctor.mn_schedule.list_schedule',$manager_list_schedule);
-      // return view('doctor.mn_schedule.list_schedule');
     }
 
     public function edit_schedule($id_time)
@@ -179,6 +184,7 @@ class Doctorcontroller extends Controller
       $instruction = $request->instruction;
       $count_medicine = count($medicine_id);
       $pre_code = 'PR-'.rand(0,10000);
+      $appointment_id = '0';
       for($i = 0; $i < $count_medicine; $i++)
       {
         $data = [
@@ -190,7 +196,8 @@ class Doctorcontroller extends Controller
           'advice' => $advice,
           'date' => $date,
           'pre_instruction' => $instruction[$i],
-          'pre_code' => $pre_code
+          'pre_code' => $pre_code,
+          'appointment_id' => $appointment_id
         ];
         DB::table('prescriptions')->insert($data);
       }
@@ -244,6 +251,18 @@ class Doctorcontroller extends Controller
       Session::put('message','Sửa đơn thuốc thành công');
       return Redirect::back();
     }
+
+    public function detail_pres($schedule_id)
+    {
+      $detail_pres = DB::table('prescriptions')->where('appointment_id',$schedule_id)
+      ->join('appointments','appointments.schedule_id','=','prescriptions.appointment_id')
+      ->limit(1)->get();
+      $medicine_instruction = DB::table('prescriptions')
+      ->join('medicines','medicines.id','=','prescriptions.medicine_id')
+      ->where('appointment_id',$schedule_id)
+      ->get();
+      return view('doctor.mn_prescription.detail_pres')->with('detail_pres',$detail_pres)->with('medicine_instruction',$medicine_instruction);
+    }
     //Manage Prescription
 
     //Manage Require testing
@@ -258,6 +277,7 @@ class Doctorcontroller extends Controller
 
     public function check_require_testing($schedule_id,Request $request)
     {
+      $id_doctor = Session::get('doctor_id');
       $schedule_id = $request->schedule_id;
       $id_patient = $request->id_patient;
       $id_test_type = $request->id_test_type;
@@ -275,7 +295,8 @@ class Doctorcontroller extends Controller
           'id_appointment' => $schedule_id,
           'note' => $note[$i],
           'result' => $result,
-          'test_status' => $test_status
+          'test_status' => $test_status,
+          'id_doctor' => $id_doctor
         ];
         DB::table('test')->insert($data);
       }
@@ -290,13 +311,13 @@ class Doctorcontroller extends Controller
 
     public function test_result()
     {
+      $id_doctor = Session::get('doctor_id');
       $show_require_testing = DB::table('test')
       ->join('users','test.id_patient','=','users.id')
       ->join('appointments','appointments.schedule_id','=','test.id_appointment')
-      ->join('test_type','test_type.id_test_type','=','test.id_test_type')->get();
+      ->join('test_type','test_type.id_test_type','=','test.id_test_type')->where('doctor_id',$id_doctor)->get();
       $manager_show_require_testing = view('doctor.mn_test.list_test_result')->with('show_require_testing',$show_require_testing);
       return view('doctor.index')->with('doctor.mn_test.list_test_result',$manager_show_require_testing);
-      // return view('doctor.mn_test.list_test_result');
     }
     //Manage Require testing
 }

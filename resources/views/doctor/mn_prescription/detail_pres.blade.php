@@ -3,8 +3,7 @@
 <div class="col-12 grid-margin">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Thêm đơn thuốc</h4>
-                  <form method="post" role="form"  action="{{URL::to('/bac-si/kt-them-don-thuoc')}}" enctype="multipart/form-data" class="form-sample">
+                  <h4 class="card-title">Xem đơn thuốc</h4>
                   {{ csrf_field() }}
                     <p class="card-description">
                     <?php
@@ -16,17 +15,31 @@
                          }
                       ?>
                     </p>
-
+                    @foreach($detail_pres as $key =>$pres)
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Mã cuộc hẹn</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control timepicker" value="{{$pres->appointment_code}}" readonly/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Mã đơn thuốc</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control timepicker" value="{{$pres->pre_code}}" readonly/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Bệnh nhân</label>
                           <div class="col-sm-9">
-                          <select class="form-control" name="patient_id">
-                            @foreach($patient as $key => $pt)
-                              <option value="{{$pt->id}}" >{{$pt->last_name}}</option>
-                            @endforeach
-                            </select>
+                            <input type="text" class="form-control timepicker" value="{{App\Models\User::where('id',$pres->patient_id)->value('last_name')}}" readonly/>
                           </div>
                         </div>
                       </div>
@@ -34,11 +47,7 @@
                       <div class="form-group row">
                       <label class="col-sm-3 col-form-label">Bác sĩ</label>
                           <div class="col-sm-9">
-                          <select class="form-control" name="doctor_id">
-                            @foreach($doctor as $key => $dt)
-                              <option value="{{$dt->id}}" >{{$dt->last_name}}</option>
-                            @endforeach
-                            </select>
+                            <input type="text" class="form-control timepicker" value="{{App\Models\User::where('id',$pres->doctor_id)->value('last_name')}}" readonly/>
                           </div>
                         </div>
                       </div>
@@ -49,7 +58,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Ngày</label>
                           <div class="col-sm-9">
-                            <input type="date" class="form-control timepicker" name="date"/>
+                            <input type="date" class="form-control timepicker" value="{{$pres->date}}" readonly/>
                           </div>
                         </div>
                       </div>
@@ -57,7 +66,7 @@
                       <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Triệu chứng</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control timepicker" name="symptoms"/>
+                            <input type="text" class="form-control timepicker" value="{{$pres->symptoms}}" readonly/>
                           </div>
                         </div>
                       </div>
@@ -67,7 +76,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Lời khuyên</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control timepicker" name="advice"/>
+                            <input type="text" class="form-control timepicker" value="{{$pres->advice}}" readonly/>
                           </div>
                         </div>
                       </div>
@@ -75,56 +84,38 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Chẩn đoán</label>
                           <div class="col-sm-9">
-                          <input type="text" class="form-control timepicker" name="diagnosis"/>
+                          <input type="text" class="form-control timepicker" value="{{$pres->diagnosis}}" readonly/>
                           </div>
                         </div>
                       </div>
                     </div>
+                    @endforeach
                     <div id="more_medicine">
+                    @foreach($medicine_instruction as $key =>$m_i)
                     <div class="row" id="add_medicine">
                       <div class="col-md-6">
                       <div class="form-group row" >
                           <label class="col-sm-3 col-form-label">Thuốc</label>
                           <div class="col-sm-9">
-                          <select class="form-control" name="medicine_id[]">
-                            @foreach($medicine as $key => $md)
-                              <option value="{{$md->id}}" >{{$md->name}}</option>
-                            @endforeach
-                          </select>
+                            <input type="text" class="form-control timepicker" value="{{$m_i->name}}" readonly/>
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-5">
-                        <div class="form-group row">
+                      <div class="col-md-6">
+                      <div class="form-group row" >
                           <label class="col-sm-3 col-form-label">Cách dùng</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control timepicker" name="instruction[]" style="margin-left:20px;"/>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-1">
-                        <div class="form-group row">
-                          <div class="col-sm-2">
-                          <input type="button" onclick="remove_field()"  id="remove_medi" class="btn btn-danger me-2" value="X" name="remove_medi" style="padding:7px;"/>
+                          <input type="text" class="form-control timepicker" value="{{$pres->pre_instruction}}" readonly/>
                           </div>
                         </div>
                       </div>
                     </div>
                     </div>
-                    <input type="button" onclick="add_more_field()"  id="add_more_medi" class="btn btn-success" value="Thêm thuốc" name="add_more_medi" style="margin-top:20px;"/>
-                    <center><button type="submit" name="submit" class="btn btn-primary me-2">Thêm đơn thuốc</button></center>
-                  </form>
+                    @endforeach
+                    <center><a href="{{URL::to('/bac-si/danh-sach-lich-da-kham/')}}" class="btn btn-primary">Quay lại</a></center>
+                    <br>
                 </div>
               </div>
             </div>
-            <script type="text/javascript">
-              function add_more_field()
-              {
-                $('#add_medicine').clone().appendTo('#more_medicine')
-              }
-              function remove_field()
-              {
-                $('#more_medicine #add_medicine').last().remove();
-              }
-            </script>
+
 @endsection

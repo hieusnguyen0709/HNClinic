@@ -103,6 +103,7 @@ Route::post('/admin/trang-thai-lich-hen/{schedule_id}',[AdminController::class, 
 Route::get('/bac-si',[Doctorcontroller::class, 'index'])->name('doctor');
 //Doctor - Manage Appointment
 Route::get('/bac-si/danh-sach-lich-hen',[Doctorcontroller::class, 'show_list_appointment'])->name('show_list_appointment_doctor');
+Route::get('/bac-si/danh-sach-lich-da-kham',[Doctorcontroller::class, 'show_list_checked_appointment'])->name('show_list_checked_appointment_doctor');
 //Doctor - Manage Schedule
 Route::get('/bac-si/dang-ky-lich-lam',[Doctorcontroller::class, 'add_schedule'])->name('add_schedule_doctor');
 Route::post('/bac-si/kt-dang-ky-lich-lam',[Doctorcontroller::class, 'check_add_schedule'])->name('check_add_schedule_doctor');
@@ -114,10 +115,14 @@ Route::get('/bac-si/danh-sach-don-thuoc',[Doctorcontroller::class, 'show_list_pr
 Route::get('/bac-si/xoa-don-thuoc/{id_pres}',[Doctorcontroller::class, 'delete_pres'])->name('delete_pres_doctor');
 Route::get('/bac-si/sua-don-thuoc/{id_pres}',[Doctorcontroller::class, 'edit_pres'])->name('edit_pres_doctor');
 Route::post('/bac-si/kt-sua-don-thuoc/{id_pres}',[Doctorcontroller::class, 'check_edit_pres'])->name('check_edit_pres_doctor');
+Route::get('/bac-si/nhap-ket-qua-kham/{schedule_id}',[Doctorcontroller::class, 'add_check_result'])->name('add_check_result_doctor');
+Route::post('/bac-si/kt-nhap-ket-qua-kham/{schedule_id}',[Doctorcontroller::class, 'check_add_check_result'])->name('check_add_check_result_doctor');
+Route::get('/bac-si/xem-don-thuoc/{schedule_id}',[Doctorcontroller::class, 'detail_pres'])->name('detail_pres_doctor');
 //Doctor - Require Testing
 Route::get('/bac-si/yeu-cau-xet-nghiem/{schedule_id}',[Doctorcontroller::class, 'require_testing'])->name('require_testing_doctor');
 Route::post('/bac-si/kt-yeu-cau-xet-nghiem/{schedule_id}',[Doctorcontroller::class, 'check_require_testing'])->name('check_require_testing_doctor');
 Route::get('/bac-si/ket-qua-xet-nghiem',[Doctorcontroller::class, 'test_result'])->name('test_result_doctor');
+
 //Phamarcist
 Route::get('/duoc-si',[Phamarcistcontroller::class, 'index'])->name('phamarcist');
 //Phamarcist - Manage Medicine

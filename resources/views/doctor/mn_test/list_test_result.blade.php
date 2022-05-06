@@ -23,6 +23,9 @@
                         <th>
                             Bệnh nhân
                         </th>
+                        <th>
+                            Bác sĩ
+                          </th>
                           <th>
                             Loại xét nghiệm
                           </th>
@@ -42,6 +45,7 @@
                          <tr>
                            <td>{{$require_testing->appointment_code}}</td>
                            <td>{{$require_testing->last_name}}</td>
+                           <td>{{App\Models\User::where('id',$require_testing->id_doctor)->value('last_name')}}</td>
                            <td>{{$require_testing->name_type}}</td>
                            <td>{{$require_testing->note}}</td>
                            @if($require_testing->test_status == 0)

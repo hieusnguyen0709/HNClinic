@@ -92,6 +92,7 @@ class Test_Doctorcontroller extends Controller
       $data = array();
       $data['id_appointment'] = $request->id_appointment;
       $data['id_patient'] = $request->id_patient;
+      $data['id_doctor'] = $request->id_doctor;
       $data['id_test_type'] = $request->id_test_type;
       $data['note'] = $request->note;
       $data['test_status'] = '1';

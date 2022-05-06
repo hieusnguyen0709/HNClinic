@@ -271,6 +271,7 @@ class Admincontroller extends Controller
       $instruction = $request->instruction;
       $count_medicine = count($medicine_id);
       $pre_code = 'PR-'.rand(0,10000);
+      $appointment_id = '0';
       for($i = 0; $i < $count_medicine; $i++)
       {
         $data = [
@@ -282,7 +283,8 @@ class Admincontroller extends Controller
           'advice' => $advice,
           'date' => $date,
           'pre_instruction' => $instruction[$i],
-          'pre_code' => $pre_code
+          'pre_code' => $pre_code,
+          'appointment_id' => $appointment_id
         ];
         DB::table('prescriptions')->insert($data);
       }
@@ -331,6 +333,7 @@ class Admincontroller extends Controller
       $data['advice'] = $request->advice;
       $data['date'] = $request->date;
       $data['pre_instruction'] = $request->instruction;
+      $data['appointment_id'] = '0';
       DB::table('prescriptions')->where('id_pres',$id_pres)->update($data);
       Session::put('message','Sửa đơn thuốc thành công');
       return Redirect::back();
