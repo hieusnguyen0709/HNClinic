@@ -57,8 +57,6 @@
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"><a class="nav-link" href="{{URL::to('/admin/them-bac-si')}}">Thêm bác sĩ</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{URL::to('/admin/danh-sach-bac-si')}}">Danh sách bác sĩ</a></li>
-                <li class="nav-item"><a class="nav-link" href="../pages/forms/basic_elements.html">Lịch làm</a></li>
-                <li class="nav-item"><a class="nav-link" href="../pages/forms/basic_elements.html">Lịch hẹn</a></li>
               </ul>
             </div>
           </li>
@@ -75,58 +73,10 @@
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"><a class="nav-link" href="{{URL::to('/admin/them-benh-nhan')}}">Thêm bệnh nhân</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{URL::to('/admin/danh-sach-benh-nhan')}}">Danh sách bệnh nhân</a></li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{{URL::to('/admin/ket-qua-xet-nghiem')}}">Kết quả xét nghiệm</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="">Hồ sơ bệnh án</a>
-                  <div class="collapse" id="form-elements">
-                    <ul class="nav flex-column sub-menu">
-                      <li><a class="nav-link" href="{{URL::to('/admin/them-ho-so-benh-an')}}"> - Thêm hồ sơ</a></li>
-                      <li><a class="nav-link" href="{{URL::to('/admin/danh-sach-ho-so-benh-an')}}"> - Danh sách hồ sơ</a></li>
-                    </ul>
-                  </div>
-                </li>
-               
               </ul>
             </div>
           </li>
           <!-- Quản lý bệnh nhân -->
-
-           <!-- Quản lý nhân sự -->
-           <!-- <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
-              <i class="menu-icon mdi mdi-card-text-outline"></i>
-              <span class="menu-title">Quản lý nhân sự</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="form-elements">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item">
-                  <a class="nav-link" href="../pages/forms/basic_elements.html">Lễ tân</a>
-                  <div class="collapse" id="form-elements">
-                    <ul class="nav flex-column sub-menu">
-                      <li><a class="nav-link" href="../pages/forms/basic_elements.html"> - Thêm lễ tân</a></li>
-                      <li><a class="nav-link" href="../pages/forms/basic_elements.html"> - Danh sách lễ tân</a></li>
-                    </ul>
-                  </div>
-                </li>
-              </ul>
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item">
-                  <a class="nav-link" href="../pages/forms/basic_elements.html">Nhân viên xét nghiệm</a>
-                  <div class="collapse" id="form-elements">
-                    <ul class="nav flex-column sub-menu">
-                      <li><a class="nav-link" href="../pages/forms/basic_elements.html"> - Thêm nhân viên xét nghiệm</a></li>
-                      <li><a class="nav-link" href="../pages/forms/basic_elements.html"> - Danh sách nhân viên xét nghiệm</a></li>
-                    </ul>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </li> -->
-          <!-- Quản lý nhân sự -->
-
 
            <!-- Quản lý xét nghiệm -->
            <li class="nav-item">
@@ -137,7 +87,7 @@
             </a>
             <div class="collapse" id="form-elements-4">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="../pages/forms/basic_elements.html">Yêu cầu xét nghiệm</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{URL::to('/admin/yeu-cau-xet-nghiem')}}">Yêu cầu xét nghiệm</a></li>
                 <li class="nav-item">
                   <a class="nav-link" href="">Loại xét nghiệm</a>
                   <div class="" id="form-elements">
@@ -160,8 +110,10 @@
             </a>
             <div class="collapse" id="form-elements-5">
               <ul class="nav flex-column sub-menu">
+                <li class="nav-item"><a class="nav-link" href="{{URL::to('/admin/lich-chua-kham')}}">Lịch chưa khám</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{URL::to('/admin/lich-da-kham')}}">Lịch đã khám</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{URL::to('/admin/them-lich-hen')}}">Thêm lịch hẹn</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{URL::to('/admin/danh-sach-lich-hen')}}">Danh sách lịch hẹn</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{URL::to('/admin/danh-sach-lich-hen')}}">Tất cả lịch hẹn</a></li>
               </ul>
             </div>
           </li>

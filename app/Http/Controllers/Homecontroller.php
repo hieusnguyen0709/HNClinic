@@ -264,4 +264,13 @@ class Homecontroller extends Controller
         $appointment_booked = DB::table('appointments')->where('patient_id',$id)->get();
         return view('user.appointment_booked')->with('appointment_booked',$appointment_booked);
     }
+
+    public function case_histories()
+    {
+        $id = Session::get('id');
+        $prescription = DB::table('prescriptions')
+        ->join('medicines','medicines.id','=','prescriptions.medicine_id')
+        ->where('patient_id',$id)->get();
+        return view('user.case_histories')->with('prescription',$prescription);
+    }
 }

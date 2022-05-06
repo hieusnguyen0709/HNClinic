@@ -338,6 +338,19 @@ class Admincontroller extends Controller
       Session::put('message','Sửa đơn thuốc thành công');
       return Redirect::back();
     }
+
+    public function detail_pres($schedule_id)
+    {
+      $detail_pres = DB::table('prescriptions')->where('appointment_id',$schedule_id)
+      ->join('appointments','appointments.schedule_id','=','prescriptions.appointment_id')
+      ->limit(1)->get();
+      $medicine_instruction = DB::table('prescriptions')
+      ->join('medicines','medicines.id','=','prescriptions.medicine_id')
+      ->where('appointment_id',$schedule_id)
+      ->get();
+      return view('admin.mn_prescription.detail_pres')->with('detail_pres',$detail_pres)->with('medicine_instruction',$medicine_instruction);
+    }
+
     //Manage Prescription
 
     //Manage Time_frame
@@ -650,6 +663,22 @@ class Admincontroller extends Controller
       return Redirect::back();
     }
 
+    public function waiting_appointment()
+    {
+      $show_list_appointment= DB::table('appointments')->join('users','users.id','=','appointments.doctor_id')
+      ->where('status','1')->orderby('schedule_id','desc')->get();
+      $manager_show_list_appointment = view('admin.mn_appointment.waiting_appointment')->with('show_list_appointment',$show_list_appointment);
+      return view('admin.index')->with('admin',$manager_show_list_appointment);
+    }
+
+    public function checked_appointment()
+    {
+      $show_list_appointment= DB::table('appointments')->join('users','users.id','=','appointments.doctor_id')
+      ->where('status','2')->orderby('schedule_id','desc')->get();
+      $manager_show_list_appointment = view('admin.mn_appointment.checked_appointment')->with('show_list_appointment',$show_list_appointment);
+      return view('admin.index')->with('admin',$manager_show_list_appointment);
+    }
+
     public function status_appointment($schedule_id, Request $request)
     {
       if($request->ajax())
@@ -670,5 +699,128 @@ class Admincontroller extends Controller
       // Session::put('message','Cập nhật trạng thái thành công');
       // return Redirect::to('/admin/danh-sach-lich-hen');
     }
+
+    public function add_check_result($schedule_id, Request $request)
+    {
+      $show_detail_appointment = DB::table('appointments')->where('schedule_id',$schedule_id)->get();
+      $medicine = DB::table('medicines')->orderby('id','desc')->get();
+      return view('admin.mn_appointment.add_check_result')
+      ->with('show_detail_appointment',$show_detail_appointment)
+      ->with('medicine',$medicine);
+    }
+
+    public function check_add_check_result($schedule_id, Request $request)
+    {
+      $medicine_id = $request->medicine_id;
+      $doctor_id = $request->doctor_id;
+      $patient_id = $request->patient_id;
+      $symptoms = $request->symptoms;
+      $diagnosis = $request->diagnosis;
+      $advice = $request->advice;
+      $date = $request->date;
+      $instruction = $request->instruction;
+      $count_medicine = count($medicine_id);
+      $pre_code = 'PR-'.rand(0,10000);
+      for($i = 0; $i < $count_medicine; $i++)
+      {
+        $data = [
+          'medicine_id' => $medicine_id[$i],
+          'doctor_id' => $doctor_id,
+          'patient_id' => $patient_id,
+          'symptoms' => $symptoms,
+          'diagnosis' => $diagnosis,
+          'advice' => $advice,
+          'date' => $date,
+          'pre_instruction' => $instruction[$i],
+          'pre_code' => $pre_code,
+          'appointment_id' => $schedule_id
+        ];
+        DB::table('prescriptions')->insert($data);
+      }
+      $arr = array();
+      $arr['status'] = '2';
+      DB::table('appointments')->where('schedule_id',$schedule_id)->update($arr);
+      Session::put('message','Thêm đơn thuốc thành công');
+      return Redirect::to('/admin/lich-da-kham');
+    }
     //Manage Appointment
+
+    //Manage Require testing
+    public function require_testing($schedule_id)
+    {
+        $info_appointment= DB::table('appointments')->where('schedule_id',$schedule_id)->get();
+        $test_type= DB::table('test_type')->orderby('id_test_type','desc')->get();
+        return view('admin.mn_test.require_testing')
+        ->with('info_appointment',$info_appointment)
+        ->with('test_type',$test_type);
+    }
+    
+        public function check_require_testing($schedule_id,Request $request)
+        {
+          $id_doctor = $request->id_doctor;
+          $schedule_id = $request->schedule_id;
+          $id_patient = $request->id_patient;
+          $id_test_type = $request->id_test_type;
+          $note = $request->note;
+          $result = '0';
+          $test_status = '0';
+          $count_test_type = count($id_test_type);
+    
+          for($i = 0; $i < $count_test_type; $i++)
+          {
+            $data =
+            [
+              'id_test_type' => $id_test_type[$i],
+              'id_patient' => $id_patient,
+              'id_appointment' => $schedule_id,
+              'note' => $note[$i],
+              'result' => $result,
+              'test_status' => $test_status,
+              'id_doctor' => $id_doctor
+            ];
+            DB::table('test')->insert($data);
+          }
+    
+          $arr = array();
+          $arr['require_testing'] = '1';
+          DB::table('appointments')->where('schedule_id',$schedule_id)->update($arr);
+    
+          Session::put('message','Yêu cầu xét nghiệm thành công');
+          return Redirect::to('/admin/lich-chua-kham');
+        }
+    
+        public function test_result()
+        {
+          $show_require_testing = DB::table('test')
+          ->join('users','test.id_patient','=','users.id')
+          ->join('appointments','appointments.schedule_id','=','test.id_appointment')
+          ->join('test_type','test_type.id_test_type','=','test.id_test_type')->get();
+          $manager_show_require_testing = view('admin.mn_test.list_test_result')->with('show_require_testing',$show_require_testing);
+          return view('admin.index')->with('admin.mn_test.list_test_result',$manager_show_require_testing);
+        }
+
+    public function add_test_result($id_test, Request $request)
+    {
+      $show_require_testing = DB::table('test')
+      ->join('users','test.id_patient','=','users.id')
+      ->join('appointments','appointments.schedule_id','=','test.id_appointment')
+      ->join('test_type','test_type.id_test_type','=','test.id_test_type')->where('id_test',$id_test)->get();
+      $manager_show_require_testing = view('admin.mn_test.add_test_result')->with('show_require_testing',$show_require_testing);
+      return view('admin.index')->with('admin.mn_test.add_test_result',$manager_show_require_testing);
+    }
+
+    public function check_add_test_result($id_test, Request $request)
+    {
+      $data = array();
+      $data['id_appointment'] = $request->id_appointment;
+      $data['id_patient'] = $request->id_patient;
+      $data['id_doctor'] = $request->id_doctor;
+      $data['id_test_type'] = $request->id_test_type;
+      $data['note'] = $request->note;
+      $data['test_status'] = '1';
+      $data['result'] = $request->result;
+      DB::table('test')->where('id_test',$id_test)->update($data);
+      Session::put('message','Nhập kết quả xét nghiệm thành công');
+      return Redirect::to('/admin/yeu-cau-xet-nghiem');
+    }
 }

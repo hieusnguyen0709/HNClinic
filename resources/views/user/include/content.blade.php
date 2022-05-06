@@ -620,7 +620,7 @@
 		<input type="hidden" name="patient_id" value="{{$patient_id}}">
         <div class="form-group">
           <label class="text-black">Họ và tên (*)</label>
-          <input type="text" class="form-control" name="full_name" value="{{$info_user->first_name}} {{$info_user->last_name}}" required>
+          <input type="text" class="form-control" name="full_name" value="{{$info_user->last_name}}" required>
         </div>
         <div class="form-group">
           <label for="appointment_email" class="text-black">Email (*)</label>

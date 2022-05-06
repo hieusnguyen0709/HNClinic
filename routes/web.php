@@ -36,6 +36,7 @@ Route::get('/sua-tai-khoan/{id}',[HomeController::class, 'edit_profile'])->name(
 Route::post('/kt-sua-tai-khoan/{id}',[HomeController::class, 'check_edit_profile'])->name('check_edit_profile');
 Route::get('/lich-bac-si',[HomeController::class, 'show_schedule_by_doctor_id'])->name('show_schedule_by_doctor_id');
 Route::get('/dat-lich-datepicker',[HomeController::class, 'appointment_datepicker'])->name('appointment_datepicker');
+Route::get('/ho-so-benh-an',[HomeController::class, 'case_histories'])->name('case_histories');
 
 //Admin
 Route::get('/admin/tong-quan',[AdminController::class, 'index'])->name('admin');
@@ -68,6 +69,9 @@ Route::get('/admin/danh-sach-don-thuoc',[AdminController::class, 'show_list_pres
 Route::get('/admin/xoa-don-thuoc/{id_pres}',[AdminController::class, 'delete_pres'])->name('delete_pres');
 Route::get('/admin/sua-don-thuoc/{id_pres}',[AdminController::class, 'edit_pres'])->name('edit_pres');
 Route::post('/admin/kt-sua-don-thuoc/{id_pres}',[AdminController::class, 'check_edit_pres'])->name('check_edit_pres');
+Route::get('/admin/nhap-ket-qua-kham/{schedule_id}',[AdminController::class, 'add_check_result'])->name('add_check_result_admin');
+Route::post('/admin/kt-nhap-ket-qua-kham/{schedule_id}',[AdminController::class, 'check_add_check_result'])->name('check_add_check_result_admin');
+Route::get('/admin/xem-don-thuoc/{schedule_id}',[AdminController::class, 'detail_pres'])->name('detail_pres_admin');
 //Admin - Manage Time_Frame
 Route::get('/admin/them-khung-gio',[AdminController::class, 'add_time_frame'])->name('add_time_frame');
 Route::post('/admin/kt-them-khung-gio',[AdminController::class, 'check_add_time_frame'])->name('check_add_time_frame');
@@ -98,7 +102,14 @@ Route::get('/admin/sua-lich-hen/{schedule_id}',[AdminController::class, 'edit_ap
 Route::post('/admin/kt-sua-lich-hen/{schedule_id}',[AdminController::class, 'check_edit_appointment'])->name('check_edit_appointment');
 Route::get('/admin/xoa-lich-hen/{schedule_id}',[AdminController::class, 'delete_appointment'])->name('delete_appointment');
 Route::post('/admin/trang-thai-lich-hen/{schedule_id}',[AdminController::class, 'status_appointment'])->name('status_appointment');
-
+Route::get('/admin/lich-chua-kham',[AdminController::class, 'waiting_appointment'])->name('waiting_appointment');
+Route::get('/admin/lich-da-kham',[AdminController::class, 'checked_appointment'])->name('checked_appointment');
+//Admin - Require Testing
+Route::get('/admin/yeu-cau-xet-nghiem/{schedule_id}',[AdminController::class, 'require_testing'])->name('require_testing_admin');
+Route::post('/admin/kt-yeu-cau-xet-nghiem/{schedule_id}',[AdminController::class, 'check_require_testing'])->name('check_require_testing_admin');
+Route::get('/admin/yeu-cau-xet-nghiem',[AdminController::class, 'test_result'])->name('test_result_admin');
+Route::get('/admin/nhap-ket-qua-xet-nghiem/{id_test}',[AdminController::class, 'add_test_result'])->name('add_test_result_test_admin');
+Route::post('/admin/kt-nhap-ket-qua-xet-nghiem/{id_test}',[AdminController::class, 'check_add_test_result'])->name('check_add_test_result_test_admin');
 //Doctor
 Route::get('/bac-si',[Doctorcontroller::class, 'index'])->name('doctor');
 //Doctor - Manage Appointment

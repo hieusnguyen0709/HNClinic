@@ -1,6 +1,6 @@
 @extends('user.index')
 @section('user_content')
-		<section class="ftco-section contact-section ftco-degree-bg">
+<section class="ftco-section contact-section ftco-degree-bg">
       <div class="container">
         <h1>Thông tin cá nhân</h1>
         <div class="row block-9">
@@ -74,12 +74,13 @@
                 </div>
             </div>
             <div class="form-group row">
-                <a href="{{URL::to('sua-tai-khoan/'.$pro->id)}}" class="btn btn-primary" style="margin-right:20px;">Sửa thông tin</a>
-                <a href="{{URL::to('lich-hen')}}" class="btn btn-danger" style="margin-right:20px;">Lịch hẹn</a>
-                <a href="" class="btn btn-success">Hồ sơ bệnh án</a>
+                <a href="{{URL::to('sua-tai-khoan/'.$pro->id)}}" class="btn btn-primary" style="margin-right:20px; width:130px;">Sửa thông tin</a>
+                <a href="{{URL::to('lich-hen')}}" class="btn btn-danger" style="margin-right:20px;width:130px;">Lịch hẹn</a>
+                <a href="{{URL::to('ho-so-benh-an')}}" class="btn btn-success" style="margin-right:20px;width:130px;">Hồ sơ bệnh án</a>
             </div>
             @endforeach
             </form>
           </div>
-
+    </div>
+</section>
 @endsection

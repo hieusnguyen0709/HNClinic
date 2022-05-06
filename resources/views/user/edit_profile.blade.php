@@ -85,7 +85,6 @@
             </div>
             <div class="form-group row">
                 <input type="submit" name="submit" value="Xác nhận" class="btn btn-primary" style="margin-right:20px;">
-                <a href="" class="btn btn-success">Hồ sơ bệnh án</a>
             </div>
            
             </form>
