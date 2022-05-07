@@ -288,53 +288,104 @@ class Admincontroller extends Controller
         ];
         DB::table('prescriptions')->insert($data);
       }
+
+      $arr = array();
+      $arr['doctor_id_medicine_prescription'] = $request->doctor_id;
+      $arr['patient_id_medicine_prescription'] = $request->patient_id;
+      $arr['date_medicine_prescription'] = $request->date;
+      $arr['pre_code_medicine_prescription'] = $pre_code;
+      DB::table('medicine_prescription')->insert($arr);
+
       Session::put('message','Thêm đơn thuốc thành công');
       return Redirect::to('/admin/them-don-thuoc');
     }
 
     public function show_list_pres()
     {
-      $show_list_pres = DB::table('prescriptions')
-      ->join('medicines','medicines.id','=','prescriptions.medicine_id')
-      ->join('users','users.id','=','prescriptions.patient_id')->orderBy('id_pres')->get();
-      $manager_list_pres = view('admin.mn_prescription.list_pres')->with('show_list_pres',$show_list_pres);
-      return view('admin.index')->with('admin.mn_prescription.list_pres',$manager_list_pres);
+      $medicine_prescription = DB::table('medicine_prescription')->get();
+      return view('admin.mn_prescription.list_pres')->with('medicine_prescription',$medicine_prescription);
+      // $show_list_pres = DB::table('prescriptions')
+      // ->join('medicines','medicines.id','=','prescriptions.medicine_id')
+      // ->join('users','users.id','=','prescriptions.patient_id')->orderBy('id_pres')->get();
+      // $manager_list_pres = view('admin.mn_prescription.list_pres')->with('show_list_pres',$show_list_pres);
+      // return view('admin.index')->with('admin.mn_prescription.list_pres',$manager_list_pres);
     }
 
-    public function delete_pres($id_pres)
+    public function delete_pres($pre_code_medicine_prescription)
     {
-      DB::table('prescriptions')->where('id_pres',$id_pres)->delete();
+      DB::table('medicine_prescription')->where('pre_code_medicine_prescription',$pre_code_medicine_prescription)->delete();
+      DB::table('prescriptions')->where('pre_code',$pre_code_medicine_prescription)->delete();
       Session::put('message','Xóa đơn thuốc thành công');
       return Redirect::back();
     }
 
-    public function edit_pres($id_pres)
+    public function edit_pres($pre_code_medicine_prescription)
     {
       $doctor = DB::table('users')->where('type','4')->orderby('id','desc')->get();
       $patient = DB::table('users')->where('type','0')->orderby('id','desc')->get();
       $medicine = DB::table('medicines')->orderby('id','desc')->get();
-      $edit_pres = DB::table('prescriptions')
+      // $edit_pres = DB::table('prescriptions')
+      // ->join('medicines','medicines.id','=','prescriptions.medicine_id')
+      // ->join('users','users.id','=','prescriptions.patient_id')
+      // ->where('id_pres',$id_pres)->get();
+      // $manager_edit_pres = view('admin.mn_prescription.edit_pres')->with('edit_pres',$edit_pres)->with('doctor',$doctor)->with('patient',$patient)->with('medicine',$medicine);
+      // return view('admin.index')->with('admin.mn_prescription.edit_pres',$manager_edit_pres);
+      $detail_pres_by_pres_code = DB::table('prescriptions')
+      ->join('medicine_prescription','medicine_prescription.pre_code_medicine_prescription','=','prescriptions.pre_code')
+      ->where('pre_code_medicine_prescription',$pre_code_medicine_prescription)
+      ->limit(1)->get();
+      $medicine_instruction =DB::table('prescriptions')
+      ->join('medicine_prescription','medicine_prescription.pre_code_medicine_prescription','=','prescriptions.pre_code')
       ->join('medicines','medicines.id','=','prescriptions.medicine_id')
-      ->join('users','users.id','=','prescriptions.patient_id')
-      ->where('id_pres',$id_pres)->get();
-      $manager_edit_pres = view('admin.mn_prescription.edit_pres')->with('edit_pres',$edit_pres)->with('doctor',$doctor)->with('patient',$patient)->with('medicine',$medicine);
-      return view('admin.index')->with('admin.mn_prescription.edit_pres',$manager_edit_pres);
-      // return view('admin.mn_prescription.edit_pres');
+      ->where('pre_code_medicine_prescription',$pre_code_medicine_prescription)
+      ->get();
+      return view('admin.mn_prescription.edit_pres')
+      ->with('detail_pres_by_pres_code',$detail_pres_by_pres_code)
+      ->with('medicine_instruction',$medicine_instruction)
+      ->with('doctor',$doctor)
+      ->with('patient',$patient)
+      ->with('medicine',$medicine);
     }
 
-    public function check_edit_pres(Request $request, $id_pres)
+    public function check_edit_pres(Request $request, $pre_code_medicine_prescription)
     {
-      $data = array();
-      $data['medicine_id'] = $request->medicine_id;
-      $data['doctor_id'] = $request->doctor_id;
-      $data['patient_id'] = $request->patient_id;
-      $data['symptoms'] = $request->symptoms;
-      $data['diagnosis'] = $request->diagnosis;
-      $data['advice'] = $request->advice;
-      $data['date'] = $request->date;
-      $data['pre_instruction'] = $request->instruction;
-      $data['appointment_id'] = '0';
-      DB::table('prescriptions')->where('id_pres',$id_pres)->update($data);
+      $medicine_id = $request->medicine_id;
+      $doctor_id = $request->doctor_id;
+      $patient_id = $request->patient_id;
+      $symptoms = $request->symptoms;
+      $diagnosis = $request->diagnosis;
+      $advice = $request->advice;
+      $date = $request->date;
+      $instruction = $request->instruction;
+      $count_medicine = count($medicine_id);
+      // dd($medicine_id);
+      $pre_code = $request->pre_code;
+      $appointment_id = '0';
+      for($i = 0; $i < $count_medicine; $i++)
+      {
+        $data = [
+          'medicine_id' => $medicine_id[$i],
+          'doctor_id' => $doctor_id,
+          'patient_id' => $patient_id,
+          'symptoms' => $symptoms,
+          'diagnosis' => $diagnosis,
+          'advice' => $advice,
+          'date' => $date,
+          'pre_instruction' => $instruction[$i],
+          'pre_code' => $pre_code,
+          'appointment_id' => $appointment_id
+        ];
+        // dd($data);
+        DB::table('prescriptions')->where('pre_code',$pre_code_medicine_prescription)->update($data);
+      }
+
+      $arr = array();
+      $arr['doctor_id_medicine_prescription'] = $request->doctor_id;
+      $arr['patient_id_medicine_prescription'] = $request->patient_id;
+      $arr['date_medicine_prescription'] = $request->date;
+      $arr['pre_code_medicine_prescription'] = $pre_code;
+      DB::table('medicine_prescription')->where('pre_code_medicine_prescription',$pre_code_medicine_prescription)->update($arr);
+
       Session::put('message','Sửa đơn thuốc thành công');
       return Redirect::back();
     }
@@ -351,6 +402,21 @@ class Admincontroller extends Controller
       return view('admin.mn_prescription.detail_pres')->with('detail_pres',$detail_pres)->with('medicine_instruction',$medicine_instruction);
     }
 
+    public function detail_pres_by_pres_code($pre_code_medicine_prescription)
+    {
+      $detail_pres_by_pres_code = DB::table('prescriptions')
+      ->join('medicine_prescription','medicine_prescription.pre_code_medicine_prescription','=','prescriptions.pre_code')
+      ->where('pre_code_medicine_prescription',$pre_code_medicine_prescription)
+      ->limit(1)->get();
+      $medicine_instruction =DB::table('prescriptions')
+      ->join('medicine_prescription','medicine_prescription.pre_code_medicine_prescription','=','prescriptions.pre_code')
+      ->join('medicines','medicines.id','=','prescriptions.medicine_id')
+      ->where('pre_code_medicine_prescription',$pre_code_medicine_prescription)
+      ->get();
+      return view('admin.mn_prescription.detail_pres_by_pres_code')
+      ->with('detail_pres_by_pres_code',$detail_pres_by_pres_code)
+      ->with('medicine_instruction',$medicine_instruction);
+    }
     //Manage Prescription
 
     //Manage Time_frame

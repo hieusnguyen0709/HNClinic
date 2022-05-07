@@ -36,8 +36,8 @@ Route::get('/sua-tai-khoan/{id}',[HomeController::class, 'edit_profile'])->name(
 Route::post('/kt-sua-tai-khoan/{id}',[HomeController::class, 'check_edit_profile'])->name('check_edit_profile');
 Route::get('/lich-bac-si',[HomeController::class, 'show_schedule_by_doctor_id'])->name('show_schedule_by_doctor_id');
 Route::get('/dat-lich-datepicker',[HomeController::class, 'appointment_datepicker'])->name('appointment_datepicker');
-Route::get('/ho-so-benh-an',[HomeController::class, 'case_histories'])->name('case_histories');
-
+Route::get('/lich-su-kham',[HomeController::class, 'case_histories'])->name('case_histories');
+Route::get('/chi-tiet-don-thuoc/{pre_code_medicine_prescription}',[HomeController::class, 'detail_pres_by_pres_code'])->name('detail_pres_by_pres_code');
 //Admin
 Route::get('/admin/tong-quan',[AdminController::class, 'index'])->name('admin');
 //Admin - Manage Users
@@ -66,12 +66,13 @@ Route::get('/admin/xoa-thuoc/{id}',[AdminController::class, 'delete_medicine'])-
 Route::get('/admin/them-don-thuoc',[AdminController::class, 'add_pres'])->name('add_pres');
 Route::post('/admin/kt-them-don-thuoc',[AdminController::class, 'check_add_pres'])->name('check_add_pres');
 Route::get('/admin/danh-sach-don-thuoc',[AdminController::class, 'show_list_pres'])->name('show_list_pres');
-Route::get('/admin/xoa-don-thuoc/{id_pres}',[AdminController::class, 'delete_pres'])->name('delete_pres');
-Route::get('/admin/sua-don-thuoc/{id_pres}',[AdminController::class, 'edit_pres'])->name('edit_pres');
-Route::post('/admin/kt-sua-don-thuoc/{id_pres}',[AdminController::class, 'check_edit_pres'])->name('check_edit_pres');
+Route::get('/admin/xoa-don-thuoc/{pre_code_medicine_prescription}',[AdminController::class, 'delete_pres'])->name('delete_pres');
+Route::get('/admin/sua-don-thuoc/{pre_code_medicine_prescription}',[AdminController::class, 'edit_pres'])->name('edit_pres');
+Route::post('/admin/kt-sua-don-thuoc/{pre_code_medicine_prescription}',[AdminController::class, 'check_edit_pres'])->name('check_edit_pres');
 Route::get('/admin/nhap-ket-qua-kham/{schedule_id}',[AdminController::class, 'add_check_result'])->name('add_check_result_admin');
 Route::post('/admin/kt-nhap-ket-qua-kham/{schedule_id}',[AdminController::class, 'check_add_check_result'])->name('check_add_check_result_admin');
 Route::get('/admin/xem-don-thuoc/{schedule_id}',[AdminController::class, 'detail_pres'])->name('detail_pres_admin');
+Route::get('/admin/chi-tiet-don-thuoc/{pre_code_medicine_prescription}',[AdminController::class, 'detail_pres_by_pres_code'])->name('detail_pres_by_pres_code_admin');
 //Admin - Manage Time_Frame
 Route::get('/admin/them-khung-gio',[AdminController::class, 'add_time_frame'])->name('add_time_frame');
 Route::post('/admin/kt-them-khung-gio',[AdminController::class, 'check_add_time_frame'])->name('check_add_time_frame');
@@ -123,12 +124,13 @@ Route::get('/bac-si/xem-lich-lam',[Doctorcontroller::class, 'show_list_schedule'
 Route::get('/bac-si/them-don-thuoc',[Doctorcontroller::class, 'add_pres'])->name('add_pres_doctor');
 Route::post('/bac-si/kt-them-don-thuoc',[Doctorcontroller::class, 'check_add_pres'])->name('check_add_pres_doctor');
 Route::get('/bac-si/danh-sach-don-thuoc',[Doctorcontroller::class, 'show_list_pres'])->name('show_list_pres_doctor');
-Route::get('/bac-si/xoa-don-thuoc/{id_pres}',[Doctorcontroller::class, 'delete_pres'])->name('delete_pres_doctor');
-Route::get('/bac-si/sua-don-thuoc/{id_pres}',[Doctorcontroller::class, 'edit_pres'])->name('edit_pres_doctor');
-Route::post('/bac-si/kt-sua-don-thuoc/{id_pres}',[Doctorcontroller::class, 'check_edit_pres'])->name('check_edit_pres_doctor');
+Route::get('/bac-si/xoa-don-thuoc/{pre_code_medicine_prescription}',[Doctorcontroller::class, 'delete_pres'])->name('delete_pres_doctor');
+Route::get('/bac-si/sua-don-thuoc/{pre_code_medicine_prescription}',[Doctorcontroller::class, 'edit_pres'])->name('edit_pres_doctor');
+Route::post('/bac-si/kt-sua-don-thuoc/{pre_code_medicine_prescription}',[Doctorcontroller::class, 'check_edit_pres'])->name('check_edit_pres_doctor');
 Route::get('/bac-si/nhap-ket-qua-kham/{schedule_id}',[Doctorcontroller::class, 'add_check_result'])->name('add_check_result_doctor');
 Route::post('/bac-si/kt-nhap-ket-qua-kham/{schedule_id}',[Doctorcontroller::class, 'check_add_check_result'])->name('check_add_check_result_doctor');
 Route::get('/bac-si/xem-don-thuoc/{schedule_id}',[Doctorcontroller::class, 'detail_pres'])->name('detail_pres_doctor');
+Route::get('/bac-si/chi-tiet-don-thuoc/{pre_code_medicine_prescription}',[Doctorcontroller::class, 'detail_pres_by_pres_code'])->name('detail_pres_by_pres_code_doctor');
 //Doctor - Require Testing
 Route::get('/bac-si/yeu-cau-xet-nghiem/{schedule_id}',[Doctorcontroller::class, 'require_testing'])->name('require_testing_doctor');
 Route::post('/bac-si/kt-yeu-cau-xet-nghiem/{schedule_id}',[Doctorcontroller::class, 'check_require_testing'])->name('check_require_testing_doctor');

@@ -21,9 +21,6 @@
                             Mã đơn thuốc
                         </th>
                         <th>
-                            Tên thuốc
-                        </th>
-                        <th>
                             Ngày
                         </th>
                           <th>
@@ -33,58 +30,24 @@
                             Bệnh nhân
                           </th>
                           <th>
-                            Triệu chứng
-                          </th>
-                          <th>
-                            Chẩn đoán
-                          </th>
-                          <th>
-                            Lời khuyên
-                          </th>
-                          <th>
-                            Cách dùng
-                          </th>
-                          <th>
                             Thao tác
                           </th>
                         </tr>
                       </thead>
                       <tbody>
-                        @foreach($show_list_pres as $key => $pres)
+                      @foreach($medicine_prescription as $key => $m_p)
                         <tr>
+                          <td>{{$m_p->pre_code_medicine_prescription}}</td>
+                          <td>{{$m_p->date_medicine_prescription}}</td>
+                          <td>{{App\Models\User::where('id',$m_p->doctor_id_medicine_prescription)->value('last_name')}}</td>
+                          <td>{{App\Models\User::where('id',$m_p->patient_id_medicine_prescription)->value('last_name')}}</td>
                           <td>
-                          {{$pres->pre_code}}
-                          </td>
-                          <td>
-                          {{$pres->name}}
-                          </td>
-                          <td>
-                          {{$pres->date}}
-                          </td>
-                            <td>
-                              {{App\Models\User::where('id',$pres->doctor_id)->value('last_name')}}
-                            </td>
-                          <td>
-                          {{$pres->last_name}}
-                          </td>
-                          <td>
-                          {{$pres->symptoms}}
-                          </td>
-                          <td>
-                          {{$pres->diagnosis}}
-                          </td>
-                          <td>
-                          {{$pres->advice}}
-                          </td>
-                          <td>
-                            <textarea readonly rows="5" cols="20">{{$pres->pre_instruction}}</textarea>
-                          </td>
-                          <td>
-                            <a href="{{URL::to('admin/sua-don-thuoc/'.$pres->id_pres)}}">Sửa</a> |
-                            <a href="{{URL::to('admin/xoa-don-thuoc/'.$pres->id_pres)}}">Xóa</a>
+                              <a href="{{URL::to('/admin/chi-tiet-don-thuoc/'.$m_p->pre_code_medicine_prescription)}}">Xem</a> |
+                              <a href="{{URL::to('/admin/sua-don-thuoc/'.$m_p->pre_code_medicine_prescription)}}">Sửa</a> |
+                              <a href="{{URL::to('/admin/xoa-don-thuoc/'.$m_p->pre_code_medicine_prescription)}}">Xóa</a>
                           </td>
                         </tr>
-                        @endforeach
+                      @endforeach
                       </tbody>
                     </table>
                   </div>

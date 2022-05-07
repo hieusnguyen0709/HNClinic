@@ -265,12 +265,35 @@ class Homecontroller extends Controller
         return view('user.appointment_booked')->with('appointment_booked',$appointment_booked);
     }
 
+    // public function case_histories()
+    // {
+    //     $id = Session::get('id');
+    //     $prescription = DB::table('prescriptions')
+    //     ->join('medicines','medicines.id','=','prescriptions.medicine_id')
+    //     ->where('patient_id',$id)->get();
+    //     return view('user.case_histories')->with('prescription',$prescription);
+    // }
+
     public function case_histories()
     {
-        $id = Session::get('id');
-        $prescription = DB::table('prescriptions')
-        ->join('medicines','medicines.id','=','prescriptions.medicine_id')
-        ->where('patient_id',$id)->get();
-        return view('user.case_histories')->with('prescription',$prescription);
+      $id = Session::get('id');
+      $medicine_prescription = DB::table('medicine_prescription')->where('patient_id_medicine_prescription',$id)->get();
+      return view('user.case_histories')->with('medicine_prescription',$medicine_prescription);
+    }
+
+    public function detail_pres_by_pres_code($pre_code_medicine_prescription)
+    {
+      $detail_pres_by_pres_code = DB::table('prescriptions')
+      ->join('medicine_prescription','medicine_prescription.pre_code_medicine_prescription','=','prescriptions.pre_code')
+      ->where('pre_code_medicine_prescription',$pre_code_medicine_prescription)
+      ->limit(1)->get();
+      $medicine_instruction =DB::table('prescriptions')
+      ->join('medicine_prescription','medicine_prescription.pre_code_medicine_prescription','=','prescriptions.pre_code')
+      ->join('medicines','medicines.id','=','prescriptions.medicine_id')
+      ->where('pre_code_medicine_prescription',$pre_code_medicine_prescription)
+      ->get();
+      return view('user.detail_pres_by_pres_code')
+      ->with('detail_pres_by_pres_code',$detail_pres_by_pres_code)
+      ->with('medicine_instruction',$medicine_instruction);
     }
 }

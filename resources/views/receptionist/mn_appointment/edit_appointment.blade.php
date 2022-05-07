@@ -168,24 +168,35 @@
                       <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Trạng thái</label>
                           <div class="col-sm-9">
-                              @if($appointment->status == 0)
+                          @if($appointment->status == 0)
                               <select class="form-control" name="status">
                                     <option value="0" selected>Chờ duyệt</option>
                                     <option value="1">Duyệt</option>
+                                    <option value="2">Đã khám</option>
+                                    <option value="3">Hủy</option>
                               </select>
                               @endif
                               @if($appointment->status == 1)
                               <select class="form-control" name="status">
-                                    <option value="1" selected>Đã duyệt</option>
+                                    <option value="0">Chờ duyệt</option>
+                                    <option value="1" selected>Duyệt</option>
+                                    <option value="2">Đã khám</option>
+                                    <option value="3">Hủy</option>
                               </select>
                               @endif
                               @if($appointment->status == 2)
                               <select class="form-control" name="status">
+                                    <option value="0">Chờ duyệt</option>
+                                    <option value="1">Duyệt</option>
                                     <option value="2" selected>Đã khám</option>
+                                    <option value="3">Hủy</option>
                               </select>
                               @endif
                               @if($appointment->status == 3)
                               <select class="form-control" name="status">
+                                    <option value="0">Chờ duyệt</option>
+                                    <option value="1">Duyệt</option>
+                                    <option value="2">Đã khám</option>
                                     <option value="3" selected>Hủy</option>
                               </select>
                               @endif
