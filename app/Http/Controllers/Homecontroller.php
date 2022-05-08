@@ -73,15 +73,15 @@ class Homecontroller extends Controller
             else if($type == '1')
             {
                 return Redirect::to('/admin/tong-quan');
-            }      
+            }
             else if($type == '2')
             {
                 return Redirect::to('/nhan-vien-y-te');
-            }   
+            }
             else if($type == '3')
             {
                 return Redirect::to('/bac-si-xet-nghiem');
-            }   
+            }
             else if($type == '4')
             {
                 Session::put('doctor_email',$result->email);
@@ -89,11 +89,11 @@ class Homecontroller extends Controller
                 Session::put('doctor_id',$result->id);
                 Session::put('doctor_password',$result->password);
                 return Redirect::to('/bac-si');
-            }   
+            }
             else if($type == '5')
             {
                 return Redirect::to('/duoc-si');
-            }     
+            }
         }
         else
         {
@@ -143,7 +143,6 @@ class Homecontroller extends Controller
         $id = Session::get('id');
         $profile = DB::table('users')->where('id',$id)->get();
         return view('user.profile')->with('profile',$profile);
-        // return view('user.index')->with('user.profile',$manager_profile);
     }
 
     public function book_appointment(Request $request)
@@ -203,8 +202,8 @@ class Homecontroller extends Controller
 
         $data = array
         (
-            "name" =>"Phòng khám HNClinic",
-            "body"=>"Thông tin lịch khám của bạn : Tên : ".$full_name." Số điện thoại : ".$phone."Ngày : ".$date."Thời gian : ".$time.""
+            "patient_name" => $full_name,
+            "qr_image" => $qr_image
         );
 
         Mail::send('user.send_mail',$data,function($message) use ($to_name,$to_email)
@@ -222,12 +221,16 @@ class Homecontroller extends Controller
         return view('user.book_appointment_datepicker');
     }
 
+    public function demo_mail()
+    {
+        return view('user.demo_mail');
+    }
+
     public function edit_profile($id)
     {
         $edit_profile = DB::table('users')->where('id',$id)->get();
         $manager_edit_profile = view('user.edit_profile')->with('edit_profile',$edit_profile);
         return view('user.index')->with('user.index.edit_profile',$manager_edit_profile);
-        // return view('user.edit_profile');
     }
 
     public function check_edit_profile(Request $request,$id)
@@ -263,40 +266,12 @@ class Homecontroller extends Controller
       return Redirect::to('/tai-khoan');
     }
 
-    public function show_schedule_by_doctor_id(Request $request)
-    {
-        //  if($request->ajax())
-        // {
-        //    $option = $request->get('option');
-        //    if(isset($option) && !empty($option))
-        //    {
-        //         echo $option;
-        //         $doctor_schedule = DB::table('time_schedules')->where('user_id',$option)->get();
-        //         var_dump($doctor_schedule);
-        //         $manage_info_appointment = view('user.include.content')
-        //         ->with('doctor_schedule',$doctor_schedule);
-        //         return view('user.index')->with('user.include.content',$manage_info_appointment);
-        //    }
-        // }
-        // $doctor_schedule = DB::table('time_schedules')->where('user_id','21')->get();
-        // return view('user.schedule')->with('doctor_schedule',$doctor_schedule);
-    }
-
     public function appointment_booked()
     {
         $id = Session::get('id');
-        $appointment_booked = DB::table('appointments')->where('patient_id',$id)->get();
+        $appointment_booked = DB::table('appointments')->where('patient_id',$id)->orderby('schedule_id','desc')->get();
         return view('user.appointment_booked')->with('appointment_booked',$appointment_booked);
     }
-
-    // public function case_histories()
-    // {
-    //     $id = Session::get('id');
-    //     $prescription = DB::table('prescriptions')
-    //     ->join('medicines','medicines.id','=','prescriptions.medicine_id')
-    //     ->where('patient_id',$id)->get();
-    //     return view('user.case_histories')->with('prescription',$prescription);
-    // }
 
     public function case_histories()
     {

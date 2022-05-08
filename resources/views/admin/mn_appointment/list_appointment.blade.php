@@ -39,9 +39,6 @@
                             Trạng thái
                           </th>
                           <th>
-                            Mã QR
-                          </th>
-                          <th>
                             Thao tác
                           </th>
                         </tr>
@@ -79,9 +76,6 @@
                                   <input type="button" value="Đã hủy" class="btn btn-danger" style="width:100px;"/>
                               </td>
                               @endif
-                              <td>
-                                  <img src="<?php echo url('/'); ?>/store_QR/{{ $appointment->qr_image }}" height="100px" width="100px">
-                              </td>
                               <td>
                                 <a href="{{URL::to('/admin/chi-tiet-lich-hen/'.$appointment->schedule_id)}}">Xem</a> | 
                                 <a href="{{URL::to('/admin/sua-lich-hen/'.$appointment->schedule_id)}}">Sửa</a> | 

@@ -24,6 +24,7 @@ Route::post('/',[HomeController::class, 'check_login'])->name('check_login');
 Route::post('/kt-dang-ky',[HomeController::class, 'check_register'])->name('check_register');
 Route::get('/dang-xuat',[HomeController::class, 'logout'])->name('logout');
 Route::get('/demo_qr',[HomeController::class, 'demo_qr'])->name('demo_qr');
+Route::get('/demo_mail',[HomeController::class, 'demo_mail'])->name('demo_mail');
 
 //User
 Route::get('/',[HomeController::class, 'index'])->name('home');
