@@ -21,14 +21,8 @@
                             Mã cuộc hẹn
                         </th>
                         <th>
-                            Họ tên bệnh nhân
+                            Bệnh nhân
                         </th>
-                          <th>
-                            Ngày sinh
-                          </th>
-                          <th>
-                            Giới tính
-                          </th>
                           <th>
                             Số điện thoại
                           </th>
@@ -42,10 +36,10 @@
                             Thời gian
                           </th>
                           <th>
-                            Triệu chứng
+                            Trạng thái
                           </th>
                           <th>
-                            Trạng thái
+                            Mã QR
                           </th>
                           <th>
                             Thao tác
@@ -61,17 +55,10 @@
                               @else
                                 <td>{{App\Models\User::where('id',$appointment->patient_id)->value('last_name')}}</td>
                               @endif
-                              <td>{{$appointment->birth_date}}</td>
-                              @if($appointment->gender == 0)
-                                <td>Nam</td>
-                              @else
-                                <td>Nữ</td>
-                              @endif
                               <td>{{$appointment->phone}}</td>
                               <td>{{App\Models\User::where('id',$appointment->doctor_id)->value('last_name')}}</td>
                               <td>{{$appointment->date}}</td>
                               <td>{{$appointment->time}}</td>
-                              <td>{{$appointment->symptoms}}</td>
                               @if($appointment->status == 0)
                               <td>
                                   <input type="button" value="Chờ duyệt" class="btn btn-primary" style="width:100px;"/>
@@ -92,77 +79,15 @@
                                   <input type="button" value="Đã hủy" class="btn btn-danger" style="width:100px;"/>
                               </td>
                               @endif
-                              <!-- @if($appointment->status == 0)
                               <td>
-                                  <select id="form_status" onchange="change_status()">
-                                    <option value="0" selected>Chờ duyệt</option>
-                                    <option value="1">Đã duyệt</option>
-                                    <option value="2">Đã khám</option>
-                                    <option value="3">Đã hủy</option>
-                                  </select>
+                                  <img src="<?php echo url('/'); ?>/store_QR/{{ $appointment->qr_image }}" height="100px" width="100px">
                               </td>
-                              @endif
-                              @if($appointment->status == 1)
                               <td>
-                              <select>
-                                    <option value="0">Chờ duyệt</option>
-                                    <option value="1" selected>Đã duyệt</option>
-                                    <option value="2">Đã khám</option>
-                                    <option value="3">Đã hủy</option>
-                                  </select>
-                              </td>
-                              @endif
-                              @if($appointment->status == 2)
-                              <td>
-                              <select>
-                                    <option value="0">Chờ duyệt</option>
-                                    <option value="1">Đã duyệt</option>
-                                    <option value="2" selected>Đã khám</option>
-                                    <option value="3">Đã hủy</option>
-                                  </select>
-                              </td>
-                              @endif
-                              @if($appointment->status == 3)
-                              <td>
-                              <select>
-                                    <option value="0">Chờ duyệt</option>
-                                    <option value="1">Đã duyệt</option>
-                                    <option value="2">Đã khám</option>
-                                    <option value="3" selected>Đã hủy</option>
-                                  </select>
-                              </td>
-                              @endif -->
-                              <td>
+                                <a href="{{URL::to('/nhan-vien-y-te/chi-tiet-lich-hen/'.$appointment->schedule_id)}}">Xem</a> | 
                                 <a href="{{URL::to('/nhan-vien-y-te/sua-lich-hen/'.$appointment->schedule_id)}}">Sửa</a> | 
                                 <a href="{{URL::to('/nhan-vien-y-te/xoa-lich-hen/'.$appointment->schedule_id)}}">Xóa</a>
                               </td>
                           </tr>
-                          <script>
-                                // function change_status()
-                                // {
-                                //   var select = document.getElementById('form_status');
-                                //   var value = select.options[select.selectedIndex].value;
-                                //   $.ajaxSetup({
-                                //     headers: {
-                                //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                //       }
-                                //     });
-                                //   $.ajax({
-                                //     url:"{{URL::to('/admin/trang-thai-lich-hen/'.$appointment->schedule_id)}}",
-                                //     type:"POST",
-                                //     data:{status:value},
-                                //     success:function(data)
-                                //     {
-                                //       // const value = JSON.parse(data);
-			                          //       // $("#namec").val(value.name);
-                                //       console.log(value);
-                                //       // console.log(data);
-                                //       // $("#show_schedule").html(data);
-                                //     }
-                                //     });
-                                  // document.getElementById('form_status').submit(value);
-                                }
-                              </script>
                         @endforeach
                       </tbody>
                     </table>

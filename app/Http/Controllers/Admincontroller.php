@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use DB;
 use Session;
+use QrCode;
 use Illuminate\Support\Facades\Redirect;
 session_start();
 
@@ -638,16 +639,6 @@ class Admincontroller extends Controller
 
     public function check_add_appointment(Request $request)
     {
-
-      // $info_patient_by_id = DB::table('users')->where('id',$request->patient_id)->get('first_name','last_name');
-      // foreach($info_patient_by_id as $patient)
-      // {
-      //   echo $patient['last_name'];
-      // }
-      // dd($info_patient_by_id);
-
-      // $full_name = DB::table('users')->where('id',$request->patient_id)->get();
-
       $appointment_code = 'AP-'.rand(0,10000);
       $data = array();
       $data['email'] = $request->email;
@@ -664,7 +655,29 @@ class Admincontroller extends Controller
       $data['symptoms'] = $request->symptoms;
       $data['status'] = '0';
       $data['require_testing'] = '0';
-      $data['QR_id'] = '0';
+
+      //Get patient's name
+      $patient_id = $request->patient_id;
+      $query_patient = DB::table('users')->where('id',$patient_id)->get('last_name');
+      $json_encode = json_decode($query_patient,true);
+      $patient_name = $json_encode['0']['last_name'];
+
+      //Get doctor's name
+      $doctor_id = $request->doctor_id;
+      $query_doctor = DB::table('users')->where('id',$doctor_id)->get('last_name');
+      $json_encode = json_decode($query_doctor,true);
+      $doctor_name = $json_encode['0']['last_name'];
+
+      //QR Generate
+      $qr_name =  $appointment_code;
+      // $appointment = 'Mã cuộc hẹn: '.$appointment_code."\n";
+      // $patient = ', Bệnh nhân: '.$patient_name."\n";
+      // $qr_content = $appointment.$patient;
+      $qr_content = 'Mã cuộc hẹn: '.$appointment_code.', Bệnh nhân: '.$patient_name.', Bác sĩ: '.$doctor_name.', Số điện thoại: '. $data['phone'].', Ngày khám: '. $data['date'].', Thời gian: '.$data['time'];
+      $qr_generate = QrCode::format('png')->encoding('UTF-8')->size(300)->generate($qr_content,public_path('store_QR/'.$qr_name.'.png'));
+      $qr_image = $qr_name.'.png';
+
+      $data['qr_image'] = $qr_image;
       DB::table('appointments')->insert($data);
       Session::put('message','Thêm lịch hẹn thành công');
     	return Redirect::to('/admin/them-lich-hen');
@@ -677,6 +690,11 @@ class Admincontroller extends Controller
       return view('admin.index')->with('admin.mn_appointment.list_appointment',$manager_show_list_appointment);
     }
 
+    public function detail_appointment($schedule_id)
+    {
+      $detail_appointment= DB::table('appointments')->where('schedule_id',$schedule_id)->get();
+      return view('admin.mn_appointment.detail_appointment')->with('detail_appointment',$detail_appointment);
+    }
     public function edit_appointment($schedule_id, Request $request)
     {
       if($request->ajax())

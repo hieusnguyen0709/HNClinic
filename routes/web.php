@@ -23,6 +23,7 @@ Route::get('/dang-ky',[HomeController::class, 'register'])->name('register');
 Route::post('/',[HomeController::class, 'check_login'])->name('check_login');
 Route::post('/kt-dang-ky',[HomeController::class, 'check_register'])->name('check_register');
 Route::get('/dang-xuat',[HomeController::class, 'logout'])->name('logout');
+Route::get('/demo_qr',[HomeController::class, 'demo_qr'])->name('demo_qr');
 
 //User
 Route::get('/',[HomeController::class, 'index'])->name('home');
@@ -99,6 +100,7 @@ Route::get('/admin/xoa-loai-xet-nghiem/{id_test_type}',[AdminController::class, 
 Route::get('/admin/them-lich-hen',[AdminController::class, 'add_appointment'])->name('add_appointment');
 Route::post('/admin/kt-them-lich-hen',[AdminController::class, 'check_add_appointment'])->name('check_add_appointment');
 Route::get('/admin/danh-sach-lich-hen',[AdminController::class, 'show_list_appointment'])->name('show_list_appointment');
+Route::get('/admin/chi-tiet-lich-hen/{schedule_id}',[AdminController::class, 'detail_appointment'])->name('detail_appointment');
 Route::get('/admin/sua-lich-hen/{schedule_id}',[AdminController::class, 'edit_appointment'])->name('edit_appointment');
 Route::post('/admin/kt-sua-lich-hen/{schedule_id}',[AdminController::class, 'check_edit_appointment'])->name('check_edit_appointment');
 Route::get('/admin/xoa-lich-hen/{schedule_id}',[AdminController::class, 'delete_appointment'])->name('delete_appointment');
@@ -152,6 +154,7 @@ Route::get('/nhan-vien-y-te',[Receptionistcontroller::class, 'index'])->name('re
 Route::get('/nhan-vien-y-te/them-lich-hen',[Receptionistcontroller::class, 'add_appointment'])->name('add_appointment_receptionist');
 Route::post('/nhan-vien-y-te/kt-them-lich-hen',[Receptionistcontroller::class, 'check_add_appointment'])->name('check_add_appointment_receptionist');
 Route::get('/nhan-vien-y-te/danh-sach-lich-hen',[Receptionistcontroller::class, 'show_list_appointment'])->name('show_list_appointment_receptionist');
+Route::get('/nhan-vien-y-te/chi-tiet-lich-hen/{schedule_id}',[Receptionistcontroller::class, 'detail_appointment'])->name('detail_appointment_receptionist');
 Route::get('/nhan-vien-y-te/sua-lich-hen/{schedule_id}',[Receptionistcontroller::class, 'edit_appointment'])->name('edit_appointment_receptionist');
 Route::post('/nhan-vien-y-te/kt-sua-lich-hen/{schedule_id}',[Receptionistcontroller::class, 'check_edit_appointment'])->name('check_edit_appointment_receptionist');
 Route::get('/nhan-vien-y-te/xoa-lich-hen/{schedule_id}',[Receptionistcontroller::class, 'delete_appointment'])->name('delete_appointment_receptionist');

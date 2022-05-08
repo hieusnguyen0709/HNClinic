@@ -24,7 +24,7 @@
                           <div class="col-sm-9">
                           <select class="form-control" name="patient_id">
                               @foreach($info_patient as $key => $patient)
-                                <option value="{{$patient->id}}">{{$patient->first_name}} {{$patient->last_name}}</option>
+                                <option value="{{$patient->id}}">{{$patient->last_name}}</option>
                               @endforeach
                           </select>
                           </div>
@@ -92,7 +92,7 @@
                           <div class="col-sm-9">
                           <select class="form-control" name="doctor_id" id="get_schedule" onchange="scheduleFunction()" required>
                               @foreach($info_doctor as $key => $doctor)
-                                <option value="{{$doctor->id}}">{{$doctor->first_name}} {{$doctor->last_name}}</option>
+                                <option value="{{$doctor->id}}">{{$doctor->last_name}}</option>
                               @endforeach
                           </select>
                           </div>
