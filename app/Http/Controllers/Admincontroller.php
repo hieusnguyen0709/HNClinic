@@ -262,6 +262,22 @@ class Admincontroller extends Controller
 
     public function check_add_pres(Request $request)
     {
+      $recheck = $request->recheck;
+      $total_days = $request->total_days;
+      $morning = $request->morning;
+      $noon = $request->noon;
+      $afternoon = $request->afternoon;
+      $night = $request->night;
+      if(isset($recheck))
+      {
+        $recheck = $request->recheck;
+      }
+      else
+      {
+        $recheck = '0';
+      }
+
+      $quantity = $request->quantity;
       $medicine_id = $request->medicine_id;
       $doctor_id = $request->doctor_id;
       $patient_id = $request->patient_id;
@@ -272,44 +288,79 @@ class Admincontroller extends Controller
       $instruction = $request->instruction;
       $count_medicine = count($medicine_id);
       $pre_code = 'PR-'.rand(0,10000);
-      $appointment_id = '0';
-      for($i = 0; $i < $count_medicine; $i++)
+
+        for($i = 0; $i < $count_medicine; $i++)
+        {
+              $query_medicines = DB::table('medicines')->where('id',$medicine_id[$i])->get();
+              $json_encode = json_decode($query_medicines,true);
+              $quantity_in_stock = $json_encode['0']['quantity'];
+              if($quantity_in_stock >= $quantity[$i])
+              {
+                $update_quantity = $quantity_in_stock - $quantity[$i];
+                $quan =
+                [
+                  'quantity' => $update_quantity
+                ];
+                DB::table('medicines')->where('id',$medicine_id[$i])->update($quan);
+              }
+              else
+              {
+                Session::put('message_quantity','Số lượng thuốc trong kho không đủ');
+              }
+
+              $message_quantity = Session::get('message_quantity');
+              if(isset($message_quantity))
+              {
+                return Redirect::back();
+              }
+              else
+              {
+                $data = [
+                  'medicine_id' => $medicine_id[$i],
+                  'doctor_id' => $doctor_id,
+                  'patient_id' => $patient_id,
+                  'symptoms' => $symptoms,
+                  'diagnosis' => $diagnosis,
+                  'advice' => $advice,
+                  'date' => $date,
+                  'pre_instruction' => $instruction[$i],
+                  'pre_code' => $pre_code,
+                  'appointment_id' => '0',
+                  'pre_quantity' => $quantity[$i],
+                  'morning' => $morning[$i],
+                  'noon' => $noon[$i],
+                  'afternoon' => $afternoon[$i],
+                  'night' => $night[$i],
+                  'total_days' => $total_days[$i],
+                  'recheck' => $recheck
+                ];
+                DB::table('prescriptions')->insert($data);
+              }
+        }
+
+      $message_quantity = Session::get('message_quantity');
+      if(isset($message_quantity))
       {
-        $data = [
-          'medicine_id' => $medicine_id[$i],
-          'doctor_id' => $doctor_id,
-          'patient_id' => $patient_id,
-          'symptoms' => $symptoms,
-          'diagnosis' => $diagnosis,
-          'advice' => $advice,
-          'date' => $date,
-          'pre_instruction' => $instruction[$i],
-          'pre_code' => $pre_code,
-          'appointment_id' => $appointment_id
-        ];
-        DB::table('prescriptions')->insert($data);
+        return Redirect::back();
       }
+      else
+      {
+        $m_p = array();
+        $m_p['doctor_id_medicine_prescription'] = $request->doctor_id;
+        $m_p['patient_id_medicine_prescription'] = $request->patient_id;
+        $m_p['date_medicine_prescription'] = $request->date;
+        $m_p['pre_code_medicine_prescription'] = $pre_code;
+        DB::table('medicine_prescription')->insert($m_p);
 
-      $arr = array();
-      $arr['doctor_id_medicine_prescription'] = $request->doctor_id;
-      $arr['patient_id_medicine_prescription'] = $request->patient_id;
-      $arr['date_medicine_prescription'] = $request->date;
-      $arr['pre_code_medicine_prescription'] = $pre_code;
-      DB::table('medicine_prescription')->insert($arr);
-
-      Session::put('message','Thêm đơn thuốc thành công');
-      return Redirect::to('/admin/them-don-thuoc');
+        Session::put('message','Thêm đơn thuốc thành công');
+        return Redirect::to('/admin/them-don-thuoc');
+      }
     }
 
     public function show_list_pres()
     {
       $medicine_prescription = DB::table('medicine_prescription')->get();
       return view('admin.mn_prescription.list_pres')->with('medicine_prescription',$medicine_prescription);
-      // $show_list_pres = DB::table('prescriptions')
-      // ->join('medicines','medicines.id','=','prescriptions.medicine_id')
-      // ->join('users','users.id','=','prescriptions.patient_id')->orderBy('id_pres')->get();
-      // $manager_list_pres = view('admin.mn_prescription.list_pres')->with('show_list_pres',$show_list_pres);
-      // return view('admin.index')->with('admin.mn_prescription.list_pres',$manager_list_pres);
     }
 
     public function delete_pres($pre_code_medicine_prescription)
@@ -350,6 +401,22 @@ class Admincontroller extends Controller
 
     public function check_edit_pres(Request $request, $pre_code_medicine_prescription)
     {
+      $recheck = $request->recheck;
+      $total_days = $request->total_days;
+      $morning = $request->morning;
+      $noon = $request->noon;
+      $afternoon = $request->afternoon;
+      $night = $request->night;
+      if(isset($recheck))
+      {
+        $recheck = $request->recheck;
+      }
+      else
+      {
+        $recheck = '0';
+      }
+
+      $quantity = $request->quantity;
       $medicine_id = $request->medicine_id;
       $doctor_id = $request->doctor_id;
       $patient_id = $request->patient_id;
@@ -359,40 +426,82 @@ class Admincontroller extends Controller
       $date = $request->date;
       $instruction = $request->instruction;
       $count_medicine = count($medicine_id);
-      // dd($medicine_id);
       $pre_code = $request->pre_code;
-      $appointment_id = '0';
-      for($i = 0; $i < $count_medicine; $i++)
+
+        for($i = 0; $i < $count_medicine; $i++)
+        {
+              $query_medicines = DB::table('medicines')->where('id',$medicine_id[$i])->get();
+              $json_encode = json_decode($query_medicines,true);
+              $quantity_in_stock = $json_encode['0']['quantity'];
+              if($quantity_in_stock >= $quantity[$i])
+              {
+                $update_quantity = $quantity_in_stock - $quantity[$i];
+                $quan =
+                [
+                  'quantity' => $update_quantity
+                ];
+                DB::table('medicines')->where('id',$medicine_id[$i])->update($quan);
+              }
+              else
+              {
+                Session::put('message_quantity','Số lượng thuốc trong kho không đủ');
+              }
+
+              $message_quantity = Session::get('message_quantity');
+              if(isset($message_quantity))
+              {
+                return Redirect::back();
+              }
+              else
+              {
+                $data = [
+                  'medicine_id' => $medicine_id[$i],
+                  'doctor_id' => $doctor_id,
+                  'patient_id' => $patient_id,
+                  'symptoms' => $symptoms,
+                  'diagnosis' => $diagnosis,
+                  'advice' => $advice,
+                  'date' => $date,
+                  'pre_instruction' => $instruction[$i],
+                  'pre_code' => $pre_code,
+                  'appointment_id' => '0',
+                  'pre_quantity' => $quantity[$i],
+                  'morning' => $morning[$i],
+                  'noon' => $noon[$i],
+                  'afternoon' => $afternoon[$i],
+                  'night' => $night[$i],
+                  'total_days' => $total_days[$i],
+                  'recheck' => $recheck
+                ];
+                DB::table('prescriptions')->where('pre_code',$pre_code_medicine_prescription)->update($data);
+              }
+        }
+
+      $message_quantity = Session::get('message_quantity');
+      if(isset($message_quantity))
       {
-        $data = [
-          'medicine_id' => $medicine_id[$i],
-          'doctor_id' => $doctor_id,
-          'patient_id' => $patient_id,
-          'symptoms' => $symptoms,
-          'diagnosis' => $diagnosis,
-          'advice' => $advice,
-          'date' => $date,
-          'pre_instruction' => $instruction[$i],
-          'pre_code' => $pre_code,
-          'appointment_id' => $appointment_id
-        ];
-        // dd($data);
-        DB::table('prescriptions')->where('pre_code',$pre_code_medicine_prescription)->update($data);
+        return Redirect::back();
       }
+      else
+      {
+        $m_p = array();
+        $m_p['doctor_id_medicine_prescription'] = $request->doctor_id;
+        $m_p['patient_id_medicine_prescription'] = $request->patient_id;
+        $m_p['date_medicine_prescription'] = $request->date;
+        $m_p['pre_code_medicine_prescription'] = $pre_code;
+        DB::table('medicine_prescription')->where('pre_code_medicine_prescription',$pre_code_medicine_prescription)->update($m_p);
 
-      $arr = array();
-      $arr['doctor_id_medicine_prescription'] = $request->doctor_id;
-      $arr['patient_id_medicine_prescription'] = $request->patient_id;
-      $arr['date_medicine_prescription'] = $request->date;
-      $arr['pre_code_medicine_prescription'] = $pre_code;
-      DB::table('medicine_prescription')->where('pre_code_medicine_prescription',$pre_code_medicine_prescription)->update($arr);
-
-      Session::put('message','Sửa đơn thuốc thành công');
-      return Redirect::back();
+        Session::put('message','Sửa đơn thuốc thành công');
+        return Redirect::to('/admin/danh-sach-don-thuoc');
+      }
     }
 
     public function detail_pres($schedule_id)
     {
+      $info_patient = DB::table('users')
+      ->join('appointments','appointments.patient_id','=','users.id')
+      ->where('schedule_id',$schedule_id)
+      ->limit(1)->get();
       $detail_pres = DB::table('prescriptions')->where('appointment_id',$schedule_id)
       ->join('appointments','appointments.schedule_id','=','prescriptions.appointment_id')
       ->limit(1)->get();
@@ -400,7 +509,15 @@ class Admincontroller extends Controller
       ->join('medicines','medicines.id','=','prescriptions.medicine_id')
       ->where('appointment_id',$schedule_id)
       ->get();
-      return view('admin.mn_prescription.detail_pres')->with('detail_pres',$detail_pres)->with('medicine_instruction',$medicine_instruction);
+      $detail_test = DB::table('test')->where('id_appointment',$schedule_id)
+      ->join('appointments','appointments.schedule_id','=','test.id_appointment')
+      ->join('test_type','test.id_test_type','=','test_type.id_test_type')
+      ->get();
+      return view('admin.mn_prescription.detail_pres')
+      ->with('info_patient',$info_patient)
+      ->with('detail_pres',$detail_pres)
+      ->with('medicine_instruction',$medicine_instruction)
+      ->with('detail_test',$detail_test);
     }
 
     public function detail_pres_by_pres_code($pre_code_medicine_prescription)
@@ -670,9 +787,6 @@ class Admincontroller extends Controller
 
       //QR Generate
       $qr_name =  $appointment_code;
-      // $appointment = 'Mã cuộc hẹn: '.$appointment_code."\n";
-      // $patient = ', Bệnh nhân: '.$patient_name."\n";
-      // $qr_content = $appointment.$patient;
       $qr_content = 'Mã cuộc hẹn: '.$appointment_code.', Bệnh nhân: '.$patient_name.', Bác sĩ: '.$doctor_name.', Số điện thoại: '. $data['phone'].', Ngày khám: '. $data['date'].', Thời gian: '.$data['time'];
       $qr_generate = QrCode::format('png')->encoding('UTF-8')->size(300)->generate($qr_content,public_path('store_QR/'.$qr_name.'.png'));
       $qr_image = $qr_name.'.png';
@@ -777,11 +891,6 @@ class Admincontroller extends Controller
          }
       }
       return Redirect::to('/admin/danh-sach-lich-hen');
-      // $data = array();
-      // $data['status'] = $status;
-      // DB::table('appointments')->where('schedule_id',$schedule_id)->update($data);
-      // Session::put('message','Cập nhật trạng thái thành công');
-      // return Redirect::to('/admin/danh-sach-lich-hen');
     }
 
     public function add_check_result($schedule_id, Request $request)
@@ -795,6 +904,22 @@ class Admincontroller extends Controller
 
     public function check_add_check_result($schedule_id, Request $request)
     {
+      $recheck = $request->recheck;
+      $total_days = $request->total_days;
+      $morning = $request->morning;
+      $noon = $request->noon;
+      $afternoon = $request->afternoon;
+      $night = $request->night;
+      if(isset($recheck))
+      {
+        $recheck = $request->recheck;
+      }
+      else
+      {
+        $recheck = '0';
+      }
+
+      $quantity = $request->quantity;
       $medicine_id = $request->medicine_id;
       $doctor_id = $request->doctor_id;
       $patient_id = $request->patient_id;
@@ -805,27 +930,77 @@ class Admincontroller extends Controller
       $instruction = $request->instruction;
       $count_medicine = count($medicine_id);
       $pre_code = 'PR-'.rand(0,10000);
-      for($i = 0; $i < $count_medicine; $i++)
+
+        for($i = 0; $i < $count_medicine; $i++)
+        {
+              $query_medicines = DB::table('medicines')->where('id',$medicine_id[$i])->get();
+              $json_encode = json_decode($query_medicines,true);
+              $quantity_in_stock = $json_encode['0']['quantity'];
+              if($quantity_in_stock >= $quantity[$i])
+              {
+                $update_quantity = $quantity_in_stock - $quantity[$i];
+                $quan =
+                [
+                  'quantity' => $update_quantity
+                ];
+                DB::table('medicines')->where('id',$medicine_id[$i])->update($quan);
+              }
+              else
+              {
+                Session::put('message_quantity','Số lượng thuốc trong kho không đủ');
+              }
+
+              $message_quantity = Session::get('message_quantity');
+              if(isset($message_quantity))
+              {
+                return Redirect::back();
+              }
+              else
+              {
+                $data = [
+                  'medicine_id' => $medicine_id[$i],
+                  'doctor_id' => $doctor_id,
+                  'patient_id' => $patient_id,
+                  'symptoms' => $symptoms,
+                  'diagnosis' => $diagnosis,
+                  'advice' => $advice,
+                  'date' => $date,
+                  'pre_instruction' => $instruction[$i],
+                  'pre_code' => $pre_code,
+                  'appointment_id' => $schedule_id,
+                  'pre_quantity' => $quantity[$i],
+                  'morning' => $morning[$i],
+                  'noon' => $noon[$i],
+                  'afternoon' => $afternoon[$i],
+                  'night' => $night[$i],
+                  'total_days' => $total_days[$i],
+                  'recheck' => $recheck
+                ];
+                DB::table('prescriptions')->insert($data);
+              }
+        }
+
+      $message_quantity = Session::get('message_quantity');
+      if(isset($message_quantity))
       {
-        $data = [
-          'medicine_id' => $medicine_id[$i],
-          'doctor_id' => $doctor_id,
-          'patient_id' => $patient_id,
-          'symptoms' => $symptoms,
-          'diagnosis' => $diagnosis,
-          'advice' => $advice,
-          'date' => $date,
-          'pre_instruction' => $instruction[$i],
-          'pre_code' => $pre_code,
-          'appointment_id' => $schedule_id
-        ];
-        DB::table('prescriptions')->insert($data);
+        return Redirect::back();
       }
-      $arr = array();
-      $arr['status'] = '2';
-      DB::table('appointments')->where('schedule_id',$schedule_id)->update($arr);
-      Session::put('message','Thêm đơn thuốc thành công');
-      return Redirect::to('/admin/lich-da-kham');
+      else
+      {
+        $m_p = array();
+        $m_p['doctor_id_medicine_prescription'] = $request->doctor_id;
+        $m_p['patient_id_medicine_prescription'] = $request->patient_id;
+        $m_p['date_medicine_prescription'] = $request->date;
+        $m_p['pre_code_medicine_prescription'] = $pre_code;
+        DB::table('medicine_prescription')->insert($m_p);
+
+        $arr = array();
+        $arr['status'] = '2';
+        DB::table('appointments')->where('schedule_id',$schedule_id)->update($arr);
+
+        Session::put('message','Thêm đơn thuốc thành công');
+        return Redirect::to('/admin/lich-da-kham');
+      }
     }
     //Manage Appointment
 
@@ -870,8 +1045,51 @@ class Admincontroller extends Controller
           DB::table('appointments')->where('schedule_id',$schedule_id)->update($arr);
     
           Session::put('message','Yêu cầu xét nghiệm thành công');
-          return Redirect::to('/admin/lich-chua-kham');
+          return Redirect::to('/admin/nhap-ket-qua-kham/'.$schedule_id);
         }
+
+        public function require_testing_pres($schedule_id)
+        {
+            $info_appointment= DB::table('appointments')->where('schedule_id',$schedule_id)->get();
+            $test_type= DB::table('test_type')->orderby('id_test_type','desc')->get();
+            return view('admin.mn_test.require_testing_pres')
+            ->with('info_appointment',$info_appointment)
+            ->with('test_type',$test_type);
+        }
+        
+            public function check_require_testing_pres($schedule_id,Request $request)
+            {
+              $id_doctor = $request->id_doctor;
+              $schedule_id = $request->schedule_id;
+              $id_patient = $request->id_patient;
+              $id_test_type = $request->id_test_type;
+              $note = $request->note;
+              $result = '0';
+              $test_status = '0';
+              $count_test_type = count($id_test_type);
+        
+              for($i = 0; $i < $count_test_type; $i++)
+              {
+                $data =
+                [
+                  'id_test_type' => $id_test_type[$i],
+                  'id_patient' => $id_patient,
+                  'id_appointment' => $schedule_id,
+                  'note' => $note[$i],
+                  'result' => $result,
+                  'test_status' => $test_status,
+                  'id_doctor' => $id_doctor
+                ];
+                DB::table('test')->insert($data);
+              }
+        
+              $arr = array();
+              $arr['require_testing'] = '1';
+              DB::table('appointments')->where('schedule_id',$schedule_id)->update($arr);
+        
+              Session::put('message','Yêu cầu xét nghiệm thành công');
+              return Redirect::to('/admin/xem-don-thuoc/'.$schedule_id);
+            }
     
         public function test_result()
         {
@@ -896,13 +1114,22 @@ class Admincontroller extends Controller
     public function check_add_test_result($id_test, Request $request)
     {
       $data = array();
+      $get_file_result = $request->file('result');
+    	if($get_file_result)
+    	{
+    		$get_name_file_result = $get_file_result->getClientOriginalName();
+    		$name_result = current(explode('.',$get_name_file_result));
+    		$new_result = $name_result.'.'.$get_file_result->getClientOriginalExtension();
+    		$get_file_result->move('upload_file_test_result',$new_result);
+        echo $new_result;
+    		$data['result'] = $new_result;
+    	}
       $data['id_appointment'] = $request->id_appointment;
       $data['id_patient'] = $request->id_patient;
       $data['id_doctor'] = $request->id_doctor;
       $data['id_test_type'] = $request->id_test_type;
       $data['note'] = $request->note;
       $data['test_status'] = '1';
-      $data['result'] = $request->result;
       DB::table('test')->where('id_test',$id_test)->update($data);
       Session::put('message','Nhập kết quả xét nghiệm thành công');
       return Redirect::to('/admin/yeu-cau-xet-nghiem');

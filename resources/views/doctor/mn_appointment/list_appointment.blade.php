@@ -45,10 +45,7 @@
                             Triệu chứng
                           </th>
                           <th>
-                            Trạng thái
-                          </th>
-                          <th>
-                            Xét nghiệm
+                            Thao tác
                           </th>
                         </tr>
                       </thead>
@@ -75,23 +72,7 @@
                               @if($appointment->status == 1)
                               <td>
                                   <!-- <input type="button" value="Nhập kết quả" class="btn btn-primary" style="width:150px;"/> -->
-                                  <a href="{{URL::to('/bac-si/nhap-ket-qua-kham/'.$appointment->schedule_id)}}" class="btn btn-primary" style="width:150px;">Nhập kết quả</a>
-                              </td>
-                              @endif
-                              @if($appointment->status == 2)
-                              <td>
-                                  <input type="button" value="Đã khám" class="btn btn-secondary" style="width:100px;color:white"/>
-                              </td>
-                              @endif
-
-                              @if($appointment->require_testing == 0)
-                              <td>
-                                <a href="{{URL::to('/bac-si/yeu-cau-xet-nghiem/'.$appointment->schedule_id)}}" class="btn btn-dark" style="width:100px;">Yêu cầu</a>
-                              </td>
-                              @endif
-                              @if($appointment->require_testing == 1)
-                              <td>
-                                <input type="button" value="Đã yêu cầu" class="btn btn-light" style="color:gray" style="width:100px;"/>
+                                  <a href="{{URL::to('/bac-si/nhap-ket-qua-kham/'.$appointment->schedule_id)}}" class="btn btn-primary" style="width:100px;">Khám</a>
                               </td>
                               @endif
                           </tr>

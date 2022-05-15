@@ -38,17 +38,17 @@
 
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
-	          <li class="nav-item active"><a href="{{URL::to('/trang-chu')}}" class="nav-link" style="color:black; font-size:20px; font-weight:bold">Trang chủ</a></li>
-	          <li class="nav-item"><a href="about.html" class="nav-link" style="color:black; font-size:20px; font-weight:bold">Về chúng tôi</a></li>
-	          <li class="nav-item"><a href="doctors.html" class="nav-link" style="color:black; font-size:20px; font-weight:bold">Bác sĩ</a></li>
-	          <li class="nav-item"><a href="blog.html" class="nav-link" style="color:black; font-size:20px; font-weight:bold">Bài viết</a></li>
+	          <li class="nav-item active"><a href="{{URL::to('/trang-chu')}}" class="nav-link" style="color:black; font-size:15px; font-weight:bold">Trang chủ</a></li>
+	          <li class="nav-item"><a href="about.html" class="nav-link" style="color:black; font-size:15px; font-weight:bold">Về chúng tôi</a></li>
+	          <li class="nav-item"><a href="doctors.html" class="nav-link" style="color:black; font-size:15px; font-weight:bold">Bác sĩ</a></li>
+	          <li class="nav-item"><a href="blog.html" class="nav-link" style="color:black; font-size:15px; font-weight:bold">Bài viết</a></li>
 	          <!-- <li class="nav-item"><a href="{{route('appointment_datepicker')}}" class="nav-link">Đặt lịch DatePicker</a></li> -->
             @php
                  $name = Session::get('last_name')
             @endphp
             @if($name)
-              <li class="nav-item"><a href="{{URL::to('/tai-khoan')}}" class="nav-link" style="color:black; font-size:20px; font-weight:bold">Tài khoản</a></li>
-              <li class="nav-item"><a style="color:black; font-size:20px; font-weight:bold" href="" class="nav-link" data-toggle="modal" data-target="#modalRequest"><span>Đặt lịch khám</span></a></li>  
+              <li class="nav-item"><a href="{{URL::to('/tai-khoan')}}" class="nav-link" style="color:black; font-size:15px; font-weight:bold">Quản lý tài khoản</a></li>
+              <li class="nav-item"><a style="color:black; font-size:15px; font-weight:bold" href="" class="nav-link" data-toggle="modal" data-target="#modalRequest"><span>Đặt lịch khám</span></a></li>  
               @endif
 	         
             <?php
@@ -56,13 +56,13 @@
               if($name)
                 {
             ?>
-            <li class="nav-item"><a style="color:black; font-size:20px; font-weight:bold" href="{{URL::to('/dang-xuat')}}" class="nav-link" style="margin-left:18px;"><span>Đăng xuất</span></a></li> 
+            <li class="nav-item"><a style="color:black; font-size:15px; font-weight:bold" href="{{URL::to('/dang-xuat')}}" class="nav-link" style="margin-left:18px;"><span>Đăng xuất</span></a></li> 
             <?php
                 }
                 else
                 {
             ?>
-            <li class="nav-item"><a style="color:black; font-size:20px; font-weight:bold" href="{{URL::to('/dang-nhap')}}" class="nav-link" style="margin-left:18px;"><span>Đăng nhập</span></a></li> 
+            <li class="nav-item"><a style="color:black; font-size:15px; font-weight:bold" href="{{URL::to('/dang-nhap')}}" class="nav-link" style="margin-left:18px;"><span>Đăng nhập</span></a></li> 
             <?php
                 }
             ?>

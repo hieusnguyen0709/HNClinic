@@ -36,7 +36,7 @@
                             Trạng thái
                           </th>
                           <th>
-                            Xét nghiệm
+                            Kết quả xét nghiệm
                           </th>
                         </tr>
                       </thead>
@@ -60,7 +60,7 @@
                               <td>
                                   <input type="button" value="Đã xét nghiệm" class="btn btn-success" style="width:150px;"/>
                               </td>
-                              <td><textarea readonly rows="5">{{$require_testing->result}}</textarea></td>
+                              <td><a href="{{URL::to('/download/'.$require_testing->result)}}" class="btn btn-light" style="width:150px; border:1px solid black">Tải về</a></td>
                             @endif
                          </tr>
                         @endforeach

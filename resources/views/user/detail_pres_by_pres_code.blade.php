@@ -6,10 +6,10 @@
 <br>
 <br>
 <center>
-<div class="col-10 grid-margin">
+<div class="col-8 grid-margin" style="border:3px solid black">
               <div class="card">
                 <div class="card-body">
-                  <h1 class="card-title" style="float:left">Chi tiết đơn thuốc</h1>
+                  <h1 class="card-title" style="float:left;color:blue">Chi tiết đơn thuốc</h1>
                   {{ csrf_field() }}
                     <p class="card-description">
                     <?php
@@ -88,28 +88,96 @@
                       </div>
                     </div>
                     @endforeach
+                    <hr>
+                    <center><h4 class="card-title" style="color:green">Thuốc</h4></center>
+                    @foreach($medicine_instruction as $key => $m_i)
+                  <div id="more_medicine">
+                    <div style="border:1px solid black; padding:10px; border-radius:10px; margin:10px;" id="add_medicine">
+
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group row" >
+                              <label class="col-sm-3 col-form-label" >Thuốc</label>
+                              <div class="col-sm-9">
+                                <input type="text" class="form-control timepicker" value="{{$m_i->name}}" readonly/>
+                              </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                              <label class="col-sm-3 col-form-label">Cách dùng</label>
+                              <div class="col-sm-9">
+                                <input type="text" class="form-control timepicker" value="{{$m_i->pre_instruction}}" readonly/>
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group row" >
+                              <label class="col-sm-3 col-form-label">Số lượng</label>
+                              <div class="col-sm-9">
+                                <input type="text" class="form-control timepicker" value="{{$m_i->pre_quantity}}" readonly/>
+                              </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                              <label class="col-sm-3 col-form-label">Số ngày uống</label>
+                              <div class="col-sm-9">
+                              <input type="text" class="form-control timepicker" value="{{$m_i->total_days}}" readonly/>
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="row"  id="avg">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                              <label class="col-sm-3 col-form-label">Ca uống thuốc</label>
+                              <div class="col-sm-9">
+                              <label class="col-sm-3 col-form-label">Sáng</label>
+                              <input type="text" style="padding:15px;width: 40px;display:inline" class="form-control" value="{{$m_i->morning}}" readonly/>
+                              <label class="col-sm-3 col-form-label" style="margin-left:3px">Trưa</label>
+                              <input type="text" style="padding:15px;width: 40px;display:inline" class="form-control" value="{{$m_i->noon}}" readonly/>
+                              <label class="col-sm-3 col-form-label" style="margin-left:1px">Chiều</label>
+                              <input type="text" style="padding:15px;width: 40px;display:inline" class="form-control" value="{{$m_i->afternoon}}" readonly/>
+                              <label class="col-sm-3 col-form-label" style="margin-left:2px">Tối</label>
+                              <input type="text" style="padding:15px;width: 40px;display:inline" class="form-control" value="{{$m_i->night}}" readonly/>
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  @endforeach
+                  <hr>
+                  <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Xét nghiệm</h4>
+                    @foreach($detail_test as $key => $test)
                     <div id="more_medicine">
-                    @foreach($medicine_instruction as $key =>$m_i)
-                    <div class="row" id="add_medicine">
-                      <div class="col-md-6">
-                      <div class="form-group row" >
-                          <label class="col-sm-3 col-form-label">Thuốc</label>
-                          <div class="col-sm-9">
-                            <input type="text" class="form-control timepicker" value="{{$m_i->name}}" readonly/>
+                      <div class="row" id="add_medicine">
+                        <div class="col-md-6">
+                          <div class="form-group row" >
+                              <label class="col-sm-3 col-form-label">Loại xét nghiệm</label>
+                              <div class="col-sm-9">
+                                <input type="text" class="form-control timepicker" value="{{$test->name_type}}" readonly/>
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                      <div class="form-group row" >
-                          <label class="col-sm-3 col-form-label">Cách dùng</label>
-                          <div class="col-sm-9">
-                          <input type="text" class="form-control timepicker" value="{{$pres->pre_instruction}}" readonly/>
+                          <div class="col-md-6">
+                            <div class="form-group row">
+                              <label class="col-sm-3 col-form-label">Kết quả</label>
+                              <div class="col-sm-9">
+                                  <a href="{{URL::to('/download/'.$test->result)}}" class="btn btn-light" style="width:150px; border:1px solid black">Tải về</a>
+                              </div>
+                            </div>
                           </div>
-                        </div>
                       </div>
-                    </div>
-                    </div>
                     @endforeach
+                    </div>
+                  </div>
+                </div><br>
                     <center><a href="{{URL::to('/lich-su-kham')}}" class="btn btn-primary">Quay lại</a></center>
                     <br>
                 </div>

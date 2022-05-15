@@ -24,7 +24,7 @@
                             Đơn vị
                         </th>
                           <th>
-                            số lượng
+                            Số lượng
                           </th>
                           <th>
                             Loại

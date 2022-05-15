@@ -36,7 +36,6 @@
                               <option value="Lọ">Lọ</option>
                               <option value="Viên">Viên</option>
                           </select>
-                            
                           </div>
                         </div>
                       </div>

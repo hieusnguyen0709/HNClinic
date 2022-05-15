@@ -45,21 +45,12 @@
               <div class="form-group last mb-4">
                 <label for="password">Mật khẩu</label>
                 <input type="password" class="form-control" id="password" name="password" Required>
-                
               </div>
-              
-              <div class="d-flex mb-5 align-items-center">
-                <label class="control control--checkbox mb-0"><span class="caption">Ghi nhớ tài khoản</span>
-                  <input type="checkbox" checked="checked"/>
-                  <div class="control__indicator"></div>
-                </label>
-                <span class="ml-auto"><a href="#" class="forgot-pass">Quên mật khẩu</a></span> 
-              </div>
+
 
               <input type="submit" name="login "value="Đăng nhập" class="btn btn-block btn-primary">
 
               <span class="d-block text-left my-4 text-muted">&mdash; Bạn có thể đăng nhập với &mdash;</span>
-              
               <div class="social-login">
                 <a href="#" class="facebook">
                   <span class="icon-facebook mr-3"></span> 
@@ -75,9 +66,7 @@
             </form>
             </div>
           </div>
-          
         </div>
-        
       </div>
     </div>
   </div>

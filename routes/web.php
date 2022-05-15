@@ -25,6 +25,13 @@ Route::post('/kt-dang-ky',[HomeController::class, 'check_register'])->name('chec
 Route::get('/dang-xuat',[HomeController::class, 'logout'])->name('logout');
 Route::get('/demo_qr',[HomeController::class, 'demo_qr'])->name('demo_qr');
 Route::get('/demo_mail',[HomeController::class, 'demo_mail'])->name('demo_mail');
+Route::get('/download/{result}',[HomeController::class, 'download'])->name('download');
+
+Route::group(['middleware' => ['auth']], function() {
+Route::get('/email/verify', 'VerificationController@show')->name('verification.notice');
+Route::get('/email/verify/{id}/{hash}', 'VerificationController@verify')->name('verification.verify')->middleware(['signed']);
+Route::post('/email/resend', 'VerificationController@resend')->name('verification.resend');
+});
 
 //User
 Route::get('/',[HomeController::class, 'index'])->name('home');
@@ -111,6 +118,8 @@ Route::get('/admin/lich-da-kham',[AdminController::class, 'checked_appointment']
 //Admin - Require Testing
 Route::get('/admin/yeu-cau-xet-nghiem/{schedule_id}',[AdminController::class, 'require_testing'])->name('require_testing_admin');
 Route::post('/admin/kt-yeu-cau-xet-nghiem/{schedule_id}',[AdminController::class, 'check_require_testing'])->name('check_require_testing_admin');
+Route::get('/admin/yeu-cau-xet-nghiem-don-thuoc/{schedule_id}',[AdminController::class, 'require_testing_pres'])->name('require_testing_pres_admin');
+Route::post('/admin/kt-yeu-cau-xet-nghiem-don-thuoc/{schedule_id}',[AdminController::class, 'check_require_testing_pres'])->name('check_require_testing_pres_admin');
 Route::get('/admin/yeu-cau-xet-nghiem',[AdminController::class, 'test_result'])->name('test_result_admin');
 Route::get('/admin/nhap-ket-qua-xet-nghiem/{id_test}',[AdminController::class, 'add_test_result'])->name('add_test_result_test_admin');
 Route::post('/admin/kt-nhap-ket-qua-xet-nghiem/{id_test}',[AdminController::class, 'check_add_test_result'])->name('check_add_test_result_test_admin');
@@ -138,6 +147,8 @@ Route::get('/bac-si/chi-tiet-don-thuoc/{pre_code_medicine_prescription}',[Doctor
 Route::get('/bac-si/yeu-cau-xet-nghiem/{schedule_id}',[Doctorcontroller::class, 'require_testing'])->name('require_testing_doctor');
 Route::post('/bac-si/kt-yeu-cau-xet-nghiem/{schedule_id}',[Doctorcontroller::class, 'check_require_testing'])->name('check_require_testing_doctor');
 Route::get('/bac-si/ket-qua-xet-nghiem',[Doctorcontroller::class, 'test_result'])->name('test_result_doctor');
+Route::get('/bac-si/yeu-cau-xet-nghiem-don-thuoc/{schedule_id}',[Doctorcontroller::class, 'require_testing_pres'])->name('require_testing_pres_doctor');
+Route::post('/bac-si/kt-yeu-cau-xet-nghiem-don-thuoc/{schedule_id}',[Doctorcontroller::class, 'check_require_testing_pres'])->name('check_require_testing_pres_doctor');
 
 //Phamarcist
 Route::get('/duoc-si',[Phamarcistcontroller::class, 'index'])->name('phamarcist');

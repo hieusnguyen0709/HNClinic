@@ -282,6 +282,7 @@ class Homecontroller extends Controller
 
     public function detail_pres_by_pres_code($pre_code_medicine_prescription)
     {
+      $id_patient = Session::get('id');
       $detail_pres_by_pres_code = DB::table('prescriptions')
       ->join('medicine_prescription','medicine_prescription.pre_code_medicine_prescription','=','prescriptions.pre_code')
       ->where('pre_code_medicine_prescription',$pre_code_medicine_prescription)
@@ -291,14 +292,23 @@ class Homecontroller extends Controller
       ->join('medicines','medicines.id','=','prescriptions.medicine_id')
       ->where('pre_code_medicine_prescription',$pre_code_medicine_prescription)
       ->get();
+      $detail_test = DB::table('test')->where('id_patient',$id_patient)
+      ->join('test_type','test.id_test_type','=','test_type.id_test_type')
+      ->get();
       return view('user.detail_pres_by_pres_code')
       ->with('detail_pres_by_pres_code',$detail_pres_by_pres_code)
-      ->with('medicine_instruction',$medicine_instruction);
+      ->with('medicine_instruction',$medicine_instruction)
+      ->with('detail_test',$detail_test);
     }
 
     public function demo_qr()
     {
         QrCode::format('png')->size(200)->generate('Hello Hieu Rose',public_path('store_QR/code.png'));
         return view('demo_qr');
+    }
+
+    public function download(Request $request, $result)
+    {
+        return response()->download(public_path('upload_file_test_result/'.$result));
     }
 }

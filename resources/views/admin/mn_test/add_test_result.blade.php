@@ -5,7 +5,7 @@
                 <div class="card-body">
                   <h4 class="card-title">Nhập kết quả xét nghiệm</h4>
                   @foreach($show_require_testing as $key => $require_testing)
-                  <form class="forms-sample"  method="POST" action="{{URL::to('/admin/kt-nhap-ket-qua-xet-nghiem/'.$require_testing->id_test)}}">
+                  <form class="forms-sample"  method="POST" action="{{URL::to('/admin/kt-nhap-ket-qua-xet-nghiem/'.$require_testing->id_test)}}" enctype="multipart/form-data">
                     {{csrf_field()}}
                   <div class="form-group row">
                       <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Mã cuộc hẹn</label>
@@ -44,7 +44,7 @@
                     <div class="form-group row">
                       <label for="exampleInputPassword2" class="col-sm-3 col-form-label">Kết quả</label>
                       <div class="col-sm-9">
-                        <textarea name="result" class="form-control"></textarea>
+                        <input type="file" class="form-control" name="result">
                       </div>
                     </div>
                     <center>

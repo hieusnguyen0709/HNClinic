@@ -90,13 +90,22 @@ class Test_Doctorcontroller extends Controller
     public function check_add_test_result($id_test, Request $request)
     {
       $data = array();
+      $get_file_result = $request->file('result');
+    	if($get_file_result)
+    	{
+    		$get_name_file_result = $get_file_result->getClientOriginalName();
+    		$name_result = current(explode('.',$get_name_file_result));
+    		$new_result = $name_result.'.'.$get_file_result->getClientOriginalExtension();
+    		$get_file_result->move('upload_file_test_result',$new_result);
+        echo $new_result;
+    		$data['result'] = $new_result;
+    	}
       $data['id_appointment'] = $request->id_appointment;
       $data['id_patient'] = $request->id_patient;
       $data['id_doctor'] = $request->id_doctor;
       $data['id_test_type'] = $request->id_test_type;
       $data['note'] = $request->note;
       $data['test_status'] = '1';
-      $data['result'] = $request->result;
       DB::table('test')->where('id_test',$id_test)->update($data);
       Session::put('message','Nhập kết quả xét nghiệm thành công');
       return Redirect::to('/bac-si-xet-nghiem/yeu-cau-xet-nghiem');
