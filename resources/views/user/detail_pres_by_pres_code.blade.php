@@ -5,7 +5,11 @@
 <br>
 <br>
 <br>
+<a href="" class="btn btn-danger" style="margin-left:250px;">Export PDF</a>
+<br>
+<br>
 <center>
+
 <div class="col-8 grid-margin" style="border:3px solid black">
               <div class="card">
                 <div class="card-body">
@@ -250,12 +254,13 @@
                     </div>
                   </div>
                 </div><br>
-                    <center><a href="{{URL::to('/lich-su-kham')}}" class="btn btn-primary">Quay lại</a></center>
                     <br>
                 </div>
               </div>
             </div>
 </center>
+<br>
+<center><a href="{{URL::to('/lich-su-kham')}}" class="btn btn-primary">Quay lại</a></center>
 <br>
 <br>
 @endsection
