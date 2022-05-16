@@ -9,7 +9,7 @@
 <div class="col-8 grid-margin" style="border:3px solid black">
               <div class="card">
                 <div class="card-body">
-                  <h1 class="card-title" style="float:left;color:blue">Chi tiết đơn thuốc</h1>
+                  <h1 class="card-title" style="float:left;color:blue">CHI TIẾT ĐƠN THUỐC</h1>
                   {{ csrf_field() }}
                     <p class="card-description">
                     <?php
@@ -21,6 +21,70 @@
                          }
                       ?>
                     </p>
+                    @foreach($info_patient as $key => $patient)
+                    <hr style="clear:both">
+                    <center><h4 class="card-title" style="color:green">THÔNG TIN BỆNH NHÂN</h4></center>
+                    <div class="row" style="clear:both">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Tên</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control timepicker" value="{{$patient->last_name}}" readonly/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Mã bệnh nhân</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control timepicker" value="PT-1999" readonly/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Ngày sinh</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control timepicker" value="{{$patient->birth_date}}" readonly/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Giới tính</label>
+                          <div class="col-sm-9">
+                            @if($patient->gender == 0)
+                              <input type="text" class="form-control timepicker" value="Nam" readonly/>
+                            @else
+                              <input type="text" class="form-control timepicker" value="Nữ" readonly/>
+                            @endif
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Địa chỉ</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control timepicker" value="{{$patient->address}}" readonly/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Email</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control timepicker" value="{{$patient->email}}" readonly/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    @endforeach
+                    <hr>
+                    <center><h4 class="card-title" style="color:green">THÔNG TIN ĐƠN THUỐC</h4></center>
                     @foreach($detail_pres_by_pres_code as $key =>$pres)
                     <div class="row" style="clear:both">
                       <div class="col-md-6">
@@ -28,6 +92,14 @@
                           <label class="col-sm-3 col-form-label">Mã đơn thuốc</label>
                           <div class="col-sm-9">
                             <input type="text" class="form-control timepicker" value="{{$pres->pre_code}}" readonly/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Tái khám</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control timepicker" value="{{$pres->recheck}}" readonly/>
                           </div>
                         </div>
                       </div>
@@ -54,9 +126,9 @@
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-sm-3 col-form-label">Ngày</label>
+                          <label class="col-sm-3 col-form-label">Ngày khám</label>
                           <div class="col-sm-9">
-                            <input type="date" class="form-control timepicker" value="{{$pres->date}}" readonly/>
+                            <input type="text" class="form-control timepicker" value="{{$pres->date}}" readonly/>
                           </div>
                         </div>
                       </div>
@@ -89,7 +161,7 @@
                     </div>
                     @endforeach
                     <hr>
-                    <center><h4 class="card-title" style="color:green">Thuốc</h4></center>
+                    <center><h4 class="card-title" style="color:green">THUỐC</h4></center>
                     @foreach($medicine_instruction as $key => $m_i)
                   <div id="more_medicine">
                     <div style="border:1px solid black; padding:10px; border-radius:10px; margin:10px;" id="add_medicine">
@@ -153,13 +225,13 @@
                   <hr>
                   <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Xét nghiệm</h4>
+                    <h1 class="card-title" style="float:left; color:blue">XÉT NGHIỆM</h1>
                     @foreach($detail_test as $key => $test)
-                    <div id="more_medicine">
+                    <div id="more_medicine" style="clear:both">
                       <div class="row" id="add_medicine">
                         <div class="col-md-6">
                           <div class="form-group row" >
-                              <label class="col-sm-3 col-form-label">Loại xét nghiệm</label>
+                              <label class="col-sm-3 col-form-label">Loại</label>
                               <div class="col-sm-9">
                                 <input type="text" class="form-control timepicker" value="{{$test->name_type}}" readonly/>
                               </div>

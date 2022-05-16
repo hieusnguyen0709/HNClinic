@@ -178,9 +178,6 @@ class Homecontroller extends Controller
 
         //QR Generate
         $qr_name =  $appointment_code;
-        // $appointment = 'Mã cuộc hẹn: '.$appointment_code."\n";
-        // $patient = ', Bệnh nhân: '.$patient_name."\n";
-        // $qr_content = $appointment.$patient;
         $qr_content = 'Mã cuộc hẹn: '.$appointment_code.', Bệnh nhân: '.$patient_name.', Bác sĩ: '.$doctor_name.', Số điện thoại: '. $data['phone'].', Ngày khám: '. $data['date'].', Thời gian: '.$data['time'];
         $qr_generate = QrCode::format('png')->encoding('UTF-8')->size(300)->generate($qr_content,public_path('store_QR/'.$qr_name.'.png'));
         $qr_image = $qr_name.'.png';
@@ -283,22 +280,30 @@ class Homecontroller extends Controller
     public function detail_pres_by_pres_code($pre_code_medicine_prescription)
     {
       $id_patient = Session::get('id');
+      $info_patient = DB::table('users')->where('id',$id_patient)->get();
       $detail_pres_by_pres_code = DB::table('prescriptions')
       ->join('medicine_prescription','medicine_prescription.pre_code_medicine_prescription','=','prescriptions.pre_code')
       ->where('pre_code_medicine_prescription',$pre_code_medicine_prescription)
       ->limit(1)->get();
-      $medicine_instruction =DB::table('prescriptions')
+      $medicine_instruction = DB::table('prescriptions')
       ->join('medicine_prescription','medicine_prescription.pre_code_medicine_prescription','=','prescriptions.pre_code')
       ->join('medicines','medicines.id','=','prescriptions.medicine_id')
       ->where('pre_code_medicine_prescription',$pre_code_medicine_prescription)
       ->get();
-      $detail_test = DB::table('test')->where('id_patient',$id_patient)
+
+      $query_appointment_id = DB::table('prescriptions')->where('pre_code',$pre_code_medicine_prescription)->get();
+      $json_encode = json_decode($query_appointment_id,true);
+      $appointment_id = $json_encode['0']['appointment_id'];
+
+      $detail_test = DB::table('test')
       ->join('test_type','test.id_test_type','=','test_type.id_test_type')
+      ->where('id_appointment',$appointment_id)
       ->get();
       return view('user.detail_pres_by_pres_code')
       ->with('detail_pres_by_pres_code',$detail_pres_by_pres_code)
       ->with('medicine_instruction',$medicine_instruction)
-      ->with('detail_test',$detail_test);
+      ->with('detail_test',$detail_test)
+      ->with('info_patient',$info_patient);
     }
 
     public function demo_qr()
