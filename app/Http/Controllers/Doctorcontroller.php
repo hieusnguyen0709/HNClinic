@@ -162,7 +162,16 @@ class Doctorcontroller extends Controller
 
     public function check_add_schedule(Request $request)
     {
+      $query_date = DB::table('time_schedules')
+      ->where('user_id',$request->type)
+      ->where('date',$request->date)
+      ->first();
 
+      if(isset($query_date))
+      {
+        Session::put('message','Đăng kí lịch không thành công, lịch bị trùng !');
+        return Redirect::back();
+      }
       $date = $request->date;
       $frame_name = 'none';
       $duration = '30m';

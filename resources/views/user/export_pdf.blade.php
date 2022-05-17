@@ -1,15 +1,33 @@
-@extends('user.index')
-@section('user_content')
-<br>
-<br>
-<br>
-<br>
-<br>
-@foreach($detail_pres_by_pres_code as $key =>$pres)
-<a href="{{URL::to('/export_pdf/'.$pres->pre_code)}}" class="btn btn-danger" style="margin-left:250px;">Export PDF</a>
-@endforeach
-<br>
-<br>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>HNClinic</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link type="image/png" rel="shortcut icon" href="/images_user/logo.jpg"/>
+
+    <link rel="stylesheet" href="/css_user/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/css_user/animate.css">
+    
+    <link rel="stylesheet" href="/css_user/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css_user/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/css_user/magnific-popup.css">
+
+    <link rel="stylesheet" href="/css_user/aos.css">
+
+    <link rel="stylesheet" href="/css_user/ionicons.min.css">
+
+    <link rel="stylesheet" href="/css_user/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/css_user/jquery.timepicker.css">
+
+    
+    <link rel="stylesheet" href="/css_user/flaticon.css">
+    <link rel="stylesheet" href="/css_user/icomoon.css">
+    <link rel="stylesheet" href="/css_user/style.css">
+
+</head>
+<body style="font-family: DejaVu Sans;">
 <center>
 
 <div class="col-8 grid-margin" style="border:3px solid black">
@@ -228,33 +246,6 @@
                     </div>
                   </div>
                   @endforeach
-                  <hr>
-                  <div class="card">
-                  <div class="card-body">
-                    <h1 class="card-title" style="float:left; color:blue">XÉT NGHIỆM</h1>
-                    @foreach($detail_test as $key => $test)
-                    <div id="more_medicine" style="clear:both">
-                      <div class="row" id="add_medicine">
-                        <div class="col-md-6">
-                          <div class="form-group row" >
-                              <label class="col-sm-3 col-form-label">Loại</label>
-                              <div class="col-sm-9">
-                                <input type="text" class="form-control timepicker" value="{{$test->name_type}}" readonly/>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="form-group row">
-                              <label class="col-sm-3 col-form-label">Kết quả</label>
-                              <div class="col-sm-9">
-                                  <a href="{{URL::to('/download/'.$test->result)}}" class="btn btn-light" style="width:150px; border:1px solid black">Tải về</a>
-                              </div>
-                            </div>
-                          </div>
-                      </div>
-                    @endforeach
-                    </div>
-                  </div>
                 </div><br>
                     <br>
                 </div>
@@ -262,7 +253,24 @@
             </div>
 </center>
 <br>
-<center><a href="{{URL::to('/lich-su-kham')}}" class="btn btn-primary">Quay lại</a></center>
 <br>
-<br>
-@endsection
+<script src="/js_user/jquery.min.js"></script>
+<script src="/js_user/jquery-migrate-3.0.1.min.js"></script>
+<script src="/js_user/popper.min.js"></script>
+<script src="/js_user/bootstrap.min.js"></script>
+<script src="/js_user/jquery.easing.1.3.js"></script>
+<script src="/js_user/jquery.waypoints.min.js"></script>
+<script src="/js_user/jquery.stellar.min.js"></script>
+<script src="/js_user/owl.carousel.min.js"></script>
+<script src="/js_user/jquery.magnific-popup.min.js"></script>
+<script src="/js_user/aos.js"></script>
+<script src="/js_user/jquery.animateNumber.min.js"></script>
+<script src="/js_user/bootstrap-datepicker.js"></script>
+<script src="/js_user/jquery.timepicker.min.js"></script>
+<script src="/js_user/scrollax.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+<script src="/js_user/google-map.js"></script>
+<script src="/js_user/main.js"></script>
+
+</body>
+</html>

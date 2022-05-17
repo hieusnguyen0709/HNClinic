@@ -111,14 +111,14 @@
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <!-- <div class="col-md-6">
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Tình trạng</label>
                           <div class="col-sm-9">
                             <input type="text" class="form-control" name="emergency"/>
                           </div>
                         </div>
-                      </div>
+                      </div> -->
                     </div>
 
                     <div class="row">
@@ -145,7 +145,7 @@
                       </div>
                     </div>
 
-                    <div class="row">
+                    <!-- <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Chuyên khoa</label>
@@ -157,7 +157,7 @@
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> -->
                     <center><button type="submit" name="submit" class="btn btn-primary me-2">Thêm người dùng</button></center>
                   </form>
                 </div>

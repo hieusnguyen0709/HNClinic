@@ -41,49 +41,76 @@ class Receptionistcontroller extends Controller
 
     public function check_add_appointment(Request $request)
     {
-      $appointment_code = 'AP-'.rand(0,10000);
-      $data = array();
-      $data['email'] = $request->email;
-      $data['patient_id'] = $request->patient_id;
-      $data['full_name'] = '0';
-      $data['birth_date'] = $request->birth_date;
-      $data['gender'] = $request->gender;
-      $data['phone'] = $request->phone;
-      $data['doctor_id'] = $request->doctor_id;
-      $data['appointment_code'] = $appointment_code;
-      $data['department_id'] = '0';
-      $data['date'] = $request->date;
-      $data['time'] = $request->time;
-      $data['symptoms'] = $request->symptoms;
-      $data['status'] = '0';
-      $data['require_testing'] = '0';
+      $query_appointment = DB::table('appointments')
+      ->where('patient_id',$request->patient_id)
+      ->where('doctor_id',$request->doctor_id)
+      ->where('date',$request->date)
+      ->where('time',$request->time)
+      ->where('status','0')
+      ->first();
+      $query_appointment_2 = DB::table('appointments')
+      ->where('doctor_id',$request->doctor_id)
+      ->where('date',$request->date)
+      ->where('time',$request->time)
+      ->where('status','1')
+      ->first();
 
-      //Get patient's name
-      $patient_id = $request->patient_id;
-      $query_patient = DB::table('users')->where('id',$patient_id)->get('last_name');
-      $json_encode = json_decode($query_patient,true);
-      $patient_name = $json_encode['0']['last_name'];
-      
-      //Get doctor's name
-      $doctor_id = $request->doctor_id;
-      $query_doctor = DB::table('users')->where('id',$doctor_id)->get('last_name');
-      $json_encode = json_decode($query_doctor,true);
-      $doctor_name = $json_encode['0']['last_name'];
-
-      //QR Generate
-      $qr_name =  $appointment_code;
-      // // $appointment = 'Mã cuộc hẹn: '.$appointment_code."\n";
-      // // $patient = ', Bệnh nhân: '.$patient_name."\n";
-      // // $qr_content = $appointment.$patient;
-      $qr_content = 'Mã cuộc hẹn: '.$appointment_code.', Bệnh nhân: '.$patient_name.', Bác sĩ: '.$doctor_name.', Số điện thoại: '. $data['phone'].', Ngày khám: '. $data['date'].', Thời gian: '.$data['time'];
-      $qr_generate = QrCode::format('png')->encoding('UTF-8')->size(300)->generate($qr_content,public_path('store_QR/'.$qr_name.'.png'));
-      $qr_image = $qr_name.'.png';
-      // dd($qr_content);
-
-      $data['qr_image'] = $qr_image;
-      DB::table('appointments')->insert($data);
-      Session::put('message','Thêm lịch hẹn thành công');
-      return Redirect::to('/nhan-vien-y-te/them-lich-hen');
+      if(isset($query_appointment))
+      {
+          Session::put('message','Thêm không thành công, bệnh nhân đã đặt lịch này !');
+          return Redirect::back();
+      }
+      else if(isset($query_appointment_2))
+      {
+          Session::put('message','Thêm không thành công, lịch bạn chọn đã có người đặt !');
+          return Redirect::back();
+      }
+      else
+      {
+        $appointment_code = 'AP-'.rand(0,10000);
+        $data = array();
+        $data['email'] = $request->email;
+        $data['patient_id'] = $request->patient_id;
+        $data['full_name'] = '0';
+        $data['birth_date'] = $request->birth_date;
+        $data['gender'] = $request->gender;
+        $data['phone'] = $request->phone;
+        $data['doctor_id'] = $request->doctor_id;
+        $data['appointment_code'] = $appointment_code;
+        $data['department_id'] = '0';
+        $data['date'] = $request->date;
+        $data['time'] = $request->time;
+        $data['symptoms'] = $request->symptoms;
+        $data['status'] = '0';
+        $data['require_testing'] = '0';
+  
+        //Get patient's name
+        $patient_id = $request->patient_id;
+        $query_patient = DB::table('users')->where('id',$patient_id)->get('last_name');
+        $json_encode = json_decode($query_patient,true);
+        $patient_name = $json_encode['0']['last_name'];
+        
+        //Get doctor's name
+        $doctor_id = $request->doctor_id;
+        $query_doctor = DB::table('users')->where('id',$doctor_id)->get('last_name');
+        $json_encode = json_decode($query_doctor,true);
+        $doctor_name = $json_encode['0']['last_name'];
+  
+        //QR Generate
+        $qr_name =  $appointment_code;
+        // // $appointment = 'Mã cuộc hẹn: '.$appointment_code."\n";
+        // // $patient = ', Bệnh nhân: '.$patient_name."\n";
+        // // $qr_content = $appointment.$patient;
+        $qr_content = 'Mã cuộc hẹn: '.$appointment_code.', Bệnh nhân: '.$patient_name.', Bác sĩ: '.$doctor_name.', Số điện thoại: '. $data['phone'].', Ngày khám: '. $data['date'].', Thời gian: '.$data['time'];
+        $qr_generate = QrCode::format('png')->encoding('UTF-8')->size(300)->generate($qr_content,public_path('store_QR/'.$qr_name.'.png'));
+        $qr_image = $qr_name.'.png';
+        // dd($qr_content);
+  
+        $data['qr_image'] = $qr_image;
+        DB::table('appointments')->insert($data);
+        Session::put('message','Thêm lịch hẹn thành công');
+        return Redirect::to('/nhan-vien-y-te/them-lich-hen');
+      }
     }
 
     public function show_list_appointment()

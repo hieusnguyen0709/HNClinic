@@ -23,9 +23,9 @@ Route::get('/dang-ky',[HomeController::class, 'register'])->name('register');
 Route::post('/',[HomeController::class, 'check_login'])->name('check_login');
 Route::post('/kt-dang-ky',[HomeController::class, 'check_register'])->name('check_register');
 Route::get('/dang-xuat',[HomeController::class, 'logout'])->name('logout');
-Route::get('/demo_qr',[HomeController::class, 'demo_qr'])->name('demo_qr');
 Route::get('/demo_mail',[HomeController::class, 'demo_mail'])->name('demo_mail');
 Route::get('/download/{result}',[HomeController::class, 'download'])->name('download');
+Route::get('/export_pdf/{pre_code}',[HomeController::class, 'export_pdf'])->name('export_pdf');
 
 Route::group(['middleware' => ['auth']], function() {
 Route::get('/email/verify', 'VerificationController@show')->name('verification.notice');

@@ -109,14 +109,14 @@
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <!-- <div class="col-md-6">
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Tình trạng</label>
                           <div class="col-sm-9">
                             <input type="text" class="form-control" name="emergency"/>
                           </div>
                         </div>
-                      </div>
+                      </div> -->
                     </div>
 
                     <div class="row">

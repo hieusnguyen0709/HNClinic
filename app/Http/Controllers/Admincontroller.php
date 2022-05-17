@@ -16,20 +16,35 @@ session_start();
 
 class Admincontroller extends Controller
 {
+    public function AuthLogin()
+    {
+        $admin_id = Session::get('admin_id');
+        if($admin_id)
+        {
+            return Redirect::to('home');
+        }
+        else
+        {
+            return Redirect::to('/dang-nhap')->send();
+        }
+    }
     public function index()
     {
       // $role = User::ROLE_ADMIN;
+       $this->AuthLogin();
        return view('admin.home');
     }
 
    //Manage_User
     public function add_user()
     {
-       return view('admin.mn_user.add_user');
+      $this->AuthLogin();
+      return view('admin.mn_user.add_user');
     }
 
     public function check_add_user(Request $request)
     {
+      $this->AuthLogin();
       $data = array();
       $data['email'] = $request->email;
       $data['password'] = $request->password;
@@ -65,6 +80,7 @@ class Admincontroller extends Controller
 
     public function show_list_user()
     {
+       $this->AuthLogin();
        $show_list_user = DB::table('users')->get();
        $manager_list_user = view('admin.mn_user.list_user')->with('show_list_user',$show_list_user);
        return view('admin.index')->with('admin.mn_user.list_user',$manager_list_user);
@@ -72,6 +88,7 @@ class Admincontroller extends Controller
 
     public function detail_user($id)
     {
+      $this->AuthLogin();
       $detail_user = DB::table('users')->where('id',$id)->get();
       $manager_detail_user = view('admin.mn_user.detail_user')->with('detail_user',$detail_user);
       return view('admin.index')->with('admin.mn_user.detail_user',$manager_detail_user);
@@ -79,6 +96,7 @@ class Admincontroller extends Controller
 
     public function edit_user($id)
     {
+      $this->AuthLogin();
       $edit_user = DB::table('users')->where('id',$id)->get();
       $manager_edit_user = view('admin.mn_user.edit_user')->with('edit_user',$edit_user);
       return view('admin.index')->with('admin.mn_user.edit_user',$manager_edit_user);
@@ -86,6 +104,7 @@ class Admincontroller extends Controller
 
     public function check_edit_user(Request $request, $id)
     {
+      $this->AuthLogin();
       $data = array();
       $data['email'] = $request->email;
       $data['password'] = $request->password;
@@ -119,6 +138,7 @@ class Admincontroller extends Controller
 
     public function delete_user($id)
     {
+      $this->AuthLogin();
       DB::table('users')->where('id',$id)->delete();
       Session::put('message','Xóa Người dùng thành công');
       return Redirect::back();
@@ -128,6 +148,7 @@ class Admincontroller extends Controller
     //Manage_Schedule
     public function add_schedule()
     {
+      $this->AuthLogin();
       $time_frame = DB::table('time_frame')->orderby('id','desc')->get();
       $show_list_user = DB::table('users')->where('type','4')->orderby('id','desc')->get();
       return view('admin.mn_schedule.add_schedule')->with('show_list_user',$show_list_user)->with('time_frame',$time_frame);
@@ -135,32 +156,47 @@ class Admincontroller extends Controller
 
     public function check_add_schedule(Request $request)
     {
-      $date = $request->date;
-      $frame_name = 'none';
-      $duration = '30m';
-      $user_id = $request->type;
-      $count_date = count($date);
-      // $count_frame = count($frame_name);
-      for($i = 0; $i < $count_date; $i++)
+      $this->AuthLogin();
+      $query_date = DB::table('time_schedules')
+      ->where('user_id',$request->type)
+      ->where('date',$request->date)
+      ->first();
+
+      if(isset($query_date))
       {
-          // for($u = 0; $u < $count_frame; $u++)
-          // {
-            $data =
-            [
-              'date' => $date[$i],
-              'user_id' => $user_id,
-              'frame_name' => $frame_name,
-              'duration' => $duration,
-            ];
-            DB::table('time_schedules')->insert($data);
-          // }
+        Session::put('message','Thêm lịch không thành công, lịch bị trùng !');
+        return Redirect::back();
       }
-      Session::put('message','Thêm lịch làm thành công');
-      return Redirect::to('/admin/them-lich-lam');
+      else
+      {
+        $date = $request->date;
+        $frame_name = 'none';
+        $duration = '30m';
+        $user_id = $request->type;
+        $count_date = count($date);
+        // $count_frame = count($frame_name);
+        for($i = 0; $i < $count_date; $i++)
+        {
+            // for($u = 0; $u < $count_frame; $u++)
+            // {
+              $data =
+              [
+                'date' => $date[$i],
+                'user_id' => $user_id,
+                'frame_name' => $frame_name,
+                'duration' => $duration,
+              ];
+              DB::table('time_schedules')->insert($data);
+            // }
+        }
+        Session::put('message','Thêm lịch làm thành công');
+        return Redirect::to('/admin/them-lich-lam');
+      }
     }
 
     public function show_list_schedule()
     {
+      $this->AuthLogin();
        $show_list_schedule = DB::table('time_schedules')
       //  ->join('time_frame','time_frame.frame_name','=','time_schedules.frame_name')
        ->join('users','time_schedules.user_id','=','users.id')->get();
@@ -170,6 +206,7 @@ class Admincontroller extends Controller
 
     public function edit_schedule($id_time)
     {
+      $this->AuthLogin();
       $time_frame = DB::table('time_frame')->orderby('id','desc')->get();
       $edit_schedule = DB::table('time_schedules')
       ->join('users','time_schedules.user_id','=','users.id')
@@ -181,6 +218,7 @@ class Admincontroller extends Controller
 
     public function check_edit_schedule(Request $request, $id_time)
     {
+      $this->AuthLogin();
       $data = array();
       $data['date'] = $request->date;
       $data['frame_name'] = $request->frame_name;
@@ -191,6 +229,7 @@ class Admincontroller extends Controller
 
     public function delete_schedule($id_time)
     {
+      $this->AuthLogin();
       DB::table('time_schedules')->where('id_time',$id_time)->delete();
       Session::put('message','Xóa lịch làm thành công');
       return Redirect::back();
@@ -200,11 +239,13 @@ class Admincontroller extends Controller
     //Manage_medicine
     public function add_medicine()
     {
+      $this->AuthLogin();
       return view('admin.mn_medicine.add_medicine');
     }
 
     public function check_add_medicine(Request $request)
     {
+      $this->AuthLogin();
       $data = array();
       $data['name'] = $request->name;
       $data['instruction'] = $request->instruction;
@@ -218,6 +259,7 @@ class Admincontroller extends Controller
 
     public function show_list_medicine()
     {
+      $this->AuthLogin();
       $show_list_medicine = DB::table('medicines')->orderby('id','asc')->get();
       $manager_list_medicine = view('admin.mn_medicine.list_medicine')->with('show_list_medicine',$show_list_medicine);
       return view('admin.index')->with('admin.mn_medicine.list_medicine',$manager_list_medicine);
@@ -225,6 +267,7 @@ class Admincontroller extends Controller
 
     public function edit_medicine($id)
     {
+      $this->AuthLogin();
       $edit_medicine = DB::table('medicines')->where('id',$id)->get();
       $manager_edit_medicine = view('admin.mn_medicine.edit_medicine')->with('edit_medicine',$edit_medicine);
       return view('admin.index')->with('admin.mn_medicine.edit_medicine',$manager_edit_medicine);
@@ -232,6 +275,7 @@ class Admincontroller extends Controller
 
     public function check_edit_medicine(Request $request,$id)
     {
+      $this->AuthLogin();
       $data = array();
       $data['name'] = $request->name;
       $data['instruction'] = $request->instruction;
@@ -245,6 +289,7 @@ class Admincontroller extends Controller
 
     public function delete_medicine($id)
     {
+      $this->AuthLogin();
       DB::table('medicines')->where('id',$id)->delete();
       Session::put('message','Xóa thuốc thành công');
       return Redirect::back();
@@ -254,6 +299,7 @@ class Admincontroller extends Controller
     //Manage Prescription
     public function add_pres()
     {
+      $this->AuthLogin();
       $doctor = DB::table('users')->where('type','4')->orderby('id','desc')->get();
       $patient = DB::table('users')->where('type','0')->orderby('id','desc')->get();
       $medicine = DB::table('medicines')->orderby('id','desc')->get();
@@ -262,6 +308,7 @@ class Admincontroller extends Controller
 
     public function check_add_pres(Request $request)
     {
+      $this->AuthLogin();
       $recheck = $request->recheck;
       $total_days = $request->total_days;
       $morning = $request->morning;
@@ -359,12 +406,14 @@ class Admincontroller extends Controller
 
     public function show_list_pres()
     {
+      $this->AuthLogin();
       $medicine_prescription = DB::table('medicine_prescription')->get();
       return view('admin.mn_prescription.list_pres')->with('medicine_prescription',$medicine_prescription);
     }
 
     public function delete_pres($pre_code_medicine_prescription)
     {
+      $this->AuthLogin();
       DB::table('medicine_prescription')->where('pre_code_medicine_prescription',$pre_code_medicine_prescription)->delete();
       DB::table('prescriptions')->where('pre_code',$pre_code_medicine_prescription)->delete();
       Session::put('message','Xóa đơn thuốc thành công');
@@ -373,15 +422,10 @@ class Admincontroller extends Controller
 
     public function edit_pres($pre_code_medicine_prescription)
     {
+      $this->AuthLogin();
       $doctor = DB::table('users')->where('type','4')->orderby('id','desc')->get();
       $patient = DB::table('users')->where('type','0')->orderby('id','desc')->get();
       $medicine = DB::table('medicines')->orderby('id','desc')->get();
-      // $edit_pres = DB::table('prescriptions')
-      // ->join('medicines','medicines.id','=','prescriptions.medicine_id')
-      // ->join('users','users.id','=','prescriptions.patient_id')
-      // ->where('id_pres',$id_pres)->get();
-      // $manager_edit_pres = view('admin.mn_prescription.edit_pres')->with('edit_pres',$edit_pres)->with('doctor',$doctor)->with('patient',$patient)->with('medicine',$medicine);
-      // return view('admin.index')->with('admin.mn_prescription.edit_pres',$manager_edit_pres);
       $detail_pres_by_pres_code = DB::table('prescriptions')
       ->join('medicine_prescription','medicine_prescription.pre_code_medicine_prescription','=','prescriptions.pre_code')
       ->where('pre_code_medicine_prescription',$pre_code_medicine_prescription)
@@ -401,6 +445,7 @@ class Admincontroller extends Controller
 
     public function check_edit_pres(Request $request, $pre_code_medicine_prescription)
     {
+      $this->AuthLogin();
       $recheck = $request->recheck;
       $total_days = $request->total_days;
       $morning = $request->morning;
@@ -498,6 +543,7 @@ class Admincontroller extends Controller
 
     public function detail_pres($schedule_id)
     {
+      $this->AuthLogin();
       $info_patient = DB::table('users')
       ->join('appointments','appointments.patient_id','=','users.id')
       ->where('schedule_id',$schedule_id)
@@ -522,6 +568,7 @@ class Admincontroller extends Controller
 
     public function detail_pres_by_pres_code($pre_code_medicine_prescription)
     {
+      $this->AuthLogin();
       $detail_pres_by_pres_code = DB::table('prescriptions')
       ->join('medicine_prescription','medicine_prescription.pre_code_medicine_prescription','=','prescriptions.pre_code')
       ->where('pre_code_medicine_prescription',$pre_code_medicine_prescription)
@@ -540,11 +587,13 @@ class Admincontroller extends Controller
     //Manage Time_frame
     public function add_time_frame()
     {
+      $this->AuthLogin();
       return view('admin.mn_time_frame.add_time_frame');
     }
 
     public function check_add_time_frame(request $request)
     {
+      $this->AuthLogin();
       $data = array();
       $data['frame_name'] = $request->frame_name;
       $data['start_time'] = $request->start_time;
@@ -556,6 +605,7 @@ class Admincontroller extends Controller
 
     public function show_list_time_frame()
     {
+      $this->AuthLogin();
       $show_list_time_frame = DB::table('time_frame')->orderby('id','asc')->get();
       $manager_list_time_frame = view('admin.mn_time_frame.list_time_frame')->with('show_list_time_frame',$show_list_time_frame);
       return view('admin.index')->with('admin.mn_time_frame.list_time_frame',$manager_list_time_frame);
@@ -563,6 +613,7 @@ class Admincontroller extends Controller
 
     public function edit_time_frame($id)
     {
+      $this->AuthLogin();
       $edit_time_frame = DB::table('time_frame')->where('id',$id)->get();
       $manager_edit_time_frame = view('admin.mn_time_frame.edit_time_frame')->with('edit_time_frame',$edit_time_frame);
       return view('admin.index')->with('admin.mn_time_frame.edit_time_frame',$manager_edit_time_frame);
@@ -570,6 +621,7 @@ class Admincontroller extends Controller
 
     public function check_edit_time_frame($id, request $request)
     {
+      $this->AuthLogin();
       $data = array();
       $data['frame_name'] = $request->frame_name;
       $data['start_time'] = $request->start_time;
@@ -581,6 +633,7 @@ class Admincontroller extends Controller
 
     public function delete_time_frame($id)
     {
+      $this->AuthLogin();
       DB::table('time_frame')->where('id',$id)->delete();
       Session::put('message','Xóa khung giờ thành công');
       return Redirect::back();
@@ -590,11 +643,13 @@ class Admincontroller extends Controller
     //Manage Patient
     public function add_patient()
     {
+      $this->AuthLogin();
       return view('admin.mn_patient.add_patient');
     }
 
     public function check_add_patient(request $request)
     {
+      $this->AuthLogin();
       $data = array();
       $data['email'] = $request->email;
       $data['password'] = $request->password;
@@ -629,6 +684,7 @@ class Admincontroller extends Controller
 
     public function show_list_patient()
     {
+      $this->AuthLogin();
       $show_list_patient= DB::table('users')->where('type','0')->get();
       $manager_list_patient = view('admin.mn_patient.list_patient')->with('show_list_patient',$show_list_patient);
       return view('admin.index')->with('admin.mn_patient.list_patient',$manager_list_patient);
@@ -636,6 +692,7 @@ class Admincontroller extends Controller
 
     public function detail_patient($id)
     {
+      $this->AuthLogin();
       $detail_patient = DB::table('users')->where('id',$id)->get();
       $manager_detail_patient = view('admin.mn_patient.detail_patient')->with('detail_patient',$detail_patient);
       return view('admin.index')->with('admin.mn_patient.detail_patient',$manager_detail_patient);
@@ -643,6 +700,7 @@ class Admincontroller extends Controller
 
     public function edit_patient($id)
     {
+      $this->AuthLogin();
       $edit_patient= DB::table('users')->where('id',$id)->get();
       $manager_edit_patient = view('admin.mn_patient.edit_patient')->with('edit_patient',$edit_patient);
       return view('admin.index')->with('admin.mn_patient.edit_patient',$manager_edit_patient);
@@ -650,6 +708,7 @@ class Admincontroller extends Controller
 
     public function check_edit_patient($id, request $request)
     {
+      $this->AuthLogin();
       $data = array();
       $data['email'] = $request->email;
       $data['password'] = $request->password;
@@ -683,6 +742,7 @@ class Admincontroller extends Controller
 
     public function delete_patient($id)
     {
+      $this->AuthLogin();
       DB::table('users')->where('id',$id)->delete();
       Session::put('message','Xóa bệnh nhân thành công');
       return Redirect::back();
@@ -692,11 +752,13 @@ class Admincontroller extends Controller
     //Manage Test type
     public function add_test_type()
     {
+      $this->AuthLogin();
       return view('admin.mn_test_type.add_test_type');
     }
 
     public function check_add_test_type(request $request)
     {
+      $this->AuthLogin();
       $data = array();
       $data['name_type'] = $request->name_type;
       DB::table('test_type')->insert($data);
@@ -706,6 +768,7 @@ class Admincontroller extends Controller
 
     public function show_list_test_type()
     {
+      $this->AuthLogin();
       $show_list_test_type= DB::table('test_type')->orderby('id_test_type','desc')->get();
       $manager_list_test_type = view('admin.mn_test_type.list_test_type')->with('show_list_test_type',$show_list_test_type);
       return view('admin.index')->with('admin.mn_test_type.list_test_type',$manager_list_test_type);
@@ -713,6 +776,7 @@ class Admincontroller extends Controller
 
     public function edit_test_type($id_test_type)
     {
+      $this->AuthLogin();
       $edit_test_type= DB::table('test_type')->where('id_test_type',$id_test_type)->get();
       $manager_edit_test_type = view('admin.mn_test_type.edit_test_type')->with('edit_test_type',$edit_test_type);
       return view('admin.index')->with('admin.mn_test_type.edit_test_type',$manager_edit_test_type);
@@ -720,6 +784,7 @@ class Admincontroller extends Controller
 
     public function check_edit_test_type($id_test_type, request $request)
     {
+      $this->AuthLogin();
       $data = array();
       $data['name_type'] = $request->name_type;
       DB::table('test_type')->where('id_test_type',$id_test_type)->update($data);
@@ -729,6 +794,7 @@ class Admincontroller extends Controller
 
     public function delete_test_type($id_test_type)
     {
+      $this->AuthLogin();
       DB::table('test_type')->where('id_test_type',$id_test_type)->delete();
       Session::put('message','Xóa loại xét nghiệm thành công');
       return Redirect::back();
@@ -738,6 +804,7 @@ class Admincontroller extends Controller
     //Manage Appointment
     public function add_appointment(Request $request)
     {
+      $this->AuthLogin();
       if($request->ajax())
       {
          $option = $request->get('option');
@@ -756,49 +823,79 @@ class Admincontroller extends Controller
 
     public function check_add_appointment(Request $request)
     {
-      $appointment_code = 'AP-'.rand(0,10000);
-      $data = array();
-      $data['email'] = $request->email;
-      $data['patient_id'] = $request->patient_id;
-      $data['full_name'] = '0';
-      $data['birth_date'] = $request->birth_date;
-      $data['gender'] = $request->gender;
-      $data['phone'] = $request->phone;
-      $data['doctor_id'] = $request->doctor_id;
-      $data['appointment_code'] = $appointment_code;
-      $data['department_id'] = '0';
-      $data['date'] = $request->date;
-      $data['time'] = $request->time;
-      $data['symptoms'] = $request->symptoms;
-      $data['status'] = '0';
-      $data['require_testing'] = '0';
+      $this->AuthLogin();
+      $query_appointment = DB::table('appointments')
+      ->where('patient_id',$request->patient_id)
+      ->where('doctor_id',$request->doctor_id)
+      ->where('date',$request->date)
+      ->where('time',$request->time)
+      ->where('status','0')
+      ->first();
+      $query_appointment_2 = DB::table('appointments')
+      ->where('doctor_id',$request->doctor_id)
+      ->where('date',$request->date)
+      ->where('time',$request->time)
+      ->where('status','1')
+      ->first();
 
-      //Get patient's name
-      $patient_id = $request->patient_id;
-      $query_patient = DB::table('users')->where('id',$patient_id)->get('last_name');
-      $json_encode = json_decode($query_patient,true);
-      $patient_name = $json_encode['0']['last_name'];
+      if(isset($query_appointment))
+      {
+          Session::put('message','Thêm không thành công, bệnh nhân đã đặt lịch này !');
+          return Redirect::back();
+      }
+      else if(isset($query_appointment_2))
+      {
+          Session::put('message','Thêm không thành công, lịch bạn chọn đã có người đặt !');
+          return Redirect::back();
+      }
+      else
+      {
+        $appointment_code = 'AP-'.rand(0,10000);
+        $data = array();
+        $data['email'] = $request->email;
+        $data['patient_id'] = $request->patient_id;
+        $data['full_name'] = '0';
+        $data['birth_date'] = $request->birth_date;
+        $data['gender'] = $request->gender;
+        $data['phone'] = $request->phone;
+        $data['doctor_id'] = $request->doctor_id;
+        $data['appointment_code'] = $appointment_code;
+        $data['department_id'] = '0';
+        $data['date'] = $request->date;
+        $data['time'] = $request->time;
+        $data['symptoms'] = $request->symptoms;
+        $data['status'] = '0';
+        $data['require_testing'] = '0';
+  
+        //Get patient's name
+        $patient_id = $request->patient_id;
+        $query_patient = DB::table('users')->where('id',$patient_id)->get('last_name');
+        $json_encode = json_decode($query_patient,true);
+        $patient_name = $json_encode['0']['last_name'];
+  
+        //Get doctor's name
+        $doctor_id = $request->doctor_id;
+        $query_doctor = DB::table('users')->where('id',$doctor_id)->get('last_name');
+        $json_encode = json_decode($query_doctor,true);
+        $doctor_name = $json_encode['0']['last_name'];
+  
+        //QR Generate
+        $qr_name =  $appointment_code;
+        $qr_content = 'Mã cuộc hẹn: '.$appointment_code.', Bệnh nhân: '.$patient_name.', Bác sĩ: '.$doctor_name.', Số điện thoại: '. $data['phone'].', Ngày khám: '. $data['date'].', Thời gian: '.$data['time'];
+        $qr_generate = QrCode::format('png')->encoding('UTF-8')->size(300)->generate($qr_content,public_path('store_QR/'.$qr_name.'.png'));
+        $qr_image = $qr_name.'.png';
+  
+        $data['qr_image'] = $qr_image;
+        DB::table('appointments')->insert($data);
+        Session::put('message','Thêm lịch hẹn thành công');
+        return Redirect::to('/admin/them-lich-hen');
+      }
 
-      //Get doctor's name
-      $doctor_id = $request->doctor_id;
-      $query_doctor = DB::table('users')->where('id',$doctor_id)->get('last_name');
-      $json_encode = json_decode($query_doctor,true);
-      $doctor_name = $json_encode['0']['last_name'];
-
-      //QR Generate
-      $qr_name =  $appointment_code;
-      $qr_content = 'Mã cuộc hẹn: '.$appointment_code.', Bệnh nhân: '.$patient_name.', Bác sĩ: '.$doctor_name.', Số điện thoại: '. $data['phone'].', Ngày khám: '. $data['date'].', Thời gian: '.$data['time'];
-      $qr_generate = QrCode::format('png')->encoding('UTF-8')->size(300)->generate($qr_content,public_path('store_QR/'.$qr_name.'.png'));
-      $qr_image = $qr_name.'.png';
-
-      $data['qr_image'] = $qr_image;
-      DB::table('appointments')->insert($data);
-      Session::put('message','Thêm lịch hẹn thành công');
-    	return Redirect::to('/admin/them-lich-hen');
     }
 
     public function show_list_appointment()
     {
+      $this->AuthLogin();
       $show_list_appointment= DB::table('appointments')->orderby('schedule_id','desc')->get();
       $manager_show_list_appointment = view('admin.mn_appointment.list_appointment')->with('show_list_appointment',$show_list_appointment);
       return view('admin.index')->with('admin.mn_appointment.list_appointment',$manager_show_list_appointment);
@@ -806,11 +903,13 @@ class Admincontroller extends Controller
 
     public function detail_appointment($schedule_id)
     {
+      $this->AuthLogin();
       $detail_appointment= DB::table('appointments')->where('schedule_id',$schedule_id)->get();
       return view('admin.mn_appointment.detail_appointment')->with('detail_appointment',$detail_appointment);
     }
     public function edit_appointment($schedule_id, Request $request)
     {
+      $this->AuthLogin();
       if($request->ajax())
       {
          $option = $request->get('option');
@@ -835,6 +934,7 @@ class Admincontroller extends Controller
 
     public function check_edit_appointment(Request $request, $schedule_id)
     {
+      $this->AuthLogin();
       $data = array();
       $data['email'] = $request->email;
       $data['patient_id'] = $request->patient_id;
@@ -856,6 +956,7 @@ class Admincontroller extends Controller
 
     public function delete_appointment($schedule_id)
     {
+      $this->AuthLogin();
       DB::table('appointments')->where('schedule_id',$schedule_id)->delete();
       Session::put('message','Xóa lịch hẹn thành công');
       return Redirect::back();
@@ -863,6 +964,7 @@ class Admincontroller extends Controller
 
     public function waiting_appointment()
     {
+      $this->AuthLogin();
       $show_list_appointment= DB::table('appointments')->join('users','users.id','=','appointments.doctor_id')
       ->where('status','1')->orderby('schedule_id','desc')->get();
       $manager_show_list_appointment = view('admin.mn_appointment.waiting_appointment')->with('show_list_appointment',$show_list_appointment);
@@ -871,6 +973,7 @@ class Admincontroller extends Controller
 
     public function checked_appointment()
     {
+      $this->AuthLogin();
       $show_list_appointment= DB::table('appointments')->join('users','users.id','=','appointments.doctor_id')
       ->where('status','2')->orderby('schedule_id','desc')->get();
       $manager_show_list_appointment = view('admin.mn_appointment.checked_appointment')->with('show_list_appointment',$show_list_appointment);
@@ -879,6 +982,7 @@ class Admincontroller extends Controller
 
     public function status_appointment($schedule_id, Request $request)
     {
+      $this->AuthLogin();
       if($request->ajax())
       {
          $status = $request->get('status');
@@ -895,6 +999,7 @@ class Admincontroller extends Controller
 
     public function add_check_result($schedule_id, Request $request)
     {
+      $this->AuthLogin();
       $show_detail_appointment = DB::table('appointments')->where('schedule_id',$schedule_id)->get();
       $medicine = DB::table('medicines')->orderby('id','desc')->get();
       return view('admin.mn_appointment.add_check_result')
@@ -904,6 +1009,7 @@ class Admincontroller extends Controller
 
     public function check_add_check_result($schedule_id, Request $request)
     {
+      $this->AuthLogin();
       $recheck = $request->recheck;
       $total_days = $request->total_days;
       $morning = $request->morning;
@@ -1007,6 +1113,7 @@ class Admincontroller extends Controller
     //Manage Require testing
     public function require_testing($schedule_id)
     {
+        $this->AuthLogin();
         $info_appointment= DB::table('appointments')->where('schedule_id',$schedule_id)->get();
         $test_type= DB::table('test_type')->orderby('id_test_type','desc')->get();
         return view('admin.mn_test.require_testing')
@@ -1016,6 +1123,7 @@ class Admincontroller extends Controller
     
         public function check_require_testing($schedule_id,Request $request)
         {
+          $this->AuthLogin();
           $id_doctor = $request->id_doctor;
           $schedule_id = $request->schedule_id;
           $id_patient = $request->id_patient;
@@ -1050,6 +1158,7 @@ class Admincontroller extends Controller
 
         public function require_testing_pres($schedule_id)
         {
+          $this->AuthLogin();
             $info_appointment= DB::table('appointments')->where('schedule_id',$schedule_id)->get();
             $test_type= DB::table('test_type')->orderby('id_test_type','desc')->get();
             return view('admin.mn_test.require_testing_pres')
@@ -1059,6 +1168,7 @@ class Admincontroller extends Controller
         
             public function check_require_testing_pres($schedule_id,Request $request)
             {
+              $this->AuthLogin();
               $id_doctor = $request->id_doctor;
               $schedule_id = $request->schedule_id;
               $id_patient = $request->id_patient;
@@ -1093,6 +1203,7 @@ class Admincontroller extends Controller
     
         public function test_result()
         {
+          $this->AuthLogin();
           $show_require_testing = DB::table('test')
           ->join('users','test.id_patient','=','users.id')
           ->join('appointments','appointments.schedule_id','=','test.id_appointment')
@@ -1103,6 +1214,7 @@ class Admincontroller extends Controller
 
     public function add_test_result($id_test, Request $request)
     {
+      $this->AuthLogin();
       $show_require_testing = DB::table('test')
       ->join('users','test.id_patient','=','users.id')
       ->join('appointments','appointments.schedule_id','=','test.id_appointment')
@@ -1113,6 +1225,7 @@ class Admincontroller extends Controller
 
     public function check_add_test_result($id_test, Request $request)
     {
+      $this->AuthLogin();
       $data = array();
       $get_file_result = $request->file('result');
     	if($get_file_result)

@@ -37,6 +37,14 @@
             </div>
             <form action="{{URL::to('/')}}" method="post">
               {{ csrf_field() }}
+              <?php
+                         $message = Session::get('message');
+                         if($message)
+                         {
+                             echo '<center><span class="text-danger">'.$message.'</span></center><br>';
+                             Session::put('message',null);
+                         }
+              ?>
               <div class="form-group first">
                 <label for="username">Tên đăng nhập</label>
                 <input type="email" class="form-control" id="email" name="email" Required>

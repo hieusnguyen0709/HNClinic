@@ -30,38 +30,6 @@
           </li>
           <!-- Quản lý người dùng -->
 
-           <!-- Quản lý khoa -->
-           <!-- <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
-              <i class="menu-icon mdi mdi-card-text-outline"></i>
-              <span class="menu-title">Quản lý khoa</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="form-elements">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="../pages/forms/basic_elements.html">Thêm khoa</a></li>
-                <li class="nav-item"><a class="nav-link" href="../pages/forms/basic_elements.html">Danh sách khoa</a></li>
-              </ul>
-            </div>
-          </li> -->
-          <!-- Quản lý khoa -->
-
-           <!-- Quản lý bác sĩ -->
-           <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#form-elements-2" aria-expanded="false" aria-controls="form-elements-2">
-              <i class="mdi mdi-plus-circle" style="font-size: 22px;line-height: 1;margin-right: 1rem;"></i>
-              <span class="menu-title">Quản lý bác sĩ</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="form-elements-2">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="{{URL::to('/admin/them-bac-si')}}">Thêm bác sĩ</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{URL::to('/admin/danh-sach-bac-si')}}">Danh sách bác sĩ</a></li>
-              </ul>
-            </div>
-          </li>
-          <!-- Quản lý bác sĩ -->
-
            <!-- Quản lý bệnh nhân -->
            <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#form-elements-3" aria-expanded="false" aria-controls="form-elements-3">
@@ -136,7 +104,7 @@
           <!-- Quản lý lịch làm -->
 
           <!-- Quản lý khung giờ -->
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#form-elements-7" aria-expanded="false" aria-controls="form-elements-7">
               <i class="mdi mdi-timer" style="font-size: 22px;line-height: 1;margin-right: 1rem;"></i>
               <span class="menu-title">Quản lý khung giờ</span>
@@ -148,7 +116,7 @@
                 <li class="nav-item"><a class="nav-link" href="{{URL::to('admin/danh-sach-khung-gio')}}">Danh sách khung giờ</a></li>                
               </ul>
             </div>
-          </li>
+          </li> -->
           <!-- Quản lý khung giờ -->
 
           <!-- Quản lý thuốc -->
@@ -162,15 +130,6 @@
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"><a class="nav-link" href="{{URL::to('admin/them-thuoc')}}">Thêm thuốc</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{URL::to('admin/danh-sach-thuoc')}}">Danh sách thuốc</a></li>
-                <!-- <li class="nav-item">
-                  <a class="nav-link" href="../pages/forms/basic_elements.html">Loại thuốc</a>
-                  <div class="collapse" id="form-elements">
-                    <ul class="nav flex-column sub-menu">
-                      <li><a class="nav-link" href="../pages/forms/basic_elements.html"> - Thêm loại thuốc</a></li>
-                      <li><a class="nav-link" href="../pages/forms/basic_elements.html"> - Danh sách loại thuốc</a></li>
-                    </ul>
-                  </div>
-                </li> -->
               </ul>
             </div>
           </li>

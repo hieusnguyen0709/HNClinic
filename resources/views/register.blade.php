@@ -41,10 +41,16 @@
                          $message = Session::get('message');
                          if($message)
                          {
-                             echo '<center><span class="text-success">'.$message.'</span></center>';
+                             echo '<center><span class="text-success">'.$message.'</span></center><br>';
                              Session::put('message',null);
                          }
-                      ?>
+                         $check_email_message = Session::get('check_email_message');
+                         if($check_email_message)
+                         {
+                             echo '<center><span class="text-danger">'.$check_email_message.'</span></center><br>';
+                             Session::put('check_email_message',null);
+                         }
+              ?>
               <div class="form-group last mb-4">
                 <label for="username">Tên đăng nhập</label>
                 <input type="email" class="form-control" id="email" name="email" Required>
