@@ -90,15 +90,20 @@ class Homecontroller extends Controller
                 Session::put('admin_email',$result->email);
                 Session::put('admin_last_name',$result->last_name);
                 Session::put('admin_id',$result->id);
-                Session::put('admin_password',$result->password);
                 return Redirect::to('/admin/tong-quan');
             }
             else if($type == '2')
             {
+                Session::put('receptionist_email',$result->email);
+                Session::put('receptionist_last_name',$result->last_name);
+                Session::put('receptionist_id',$result->id);
                 return Redirect::to('/nhan-vien-y-te');
             }
             else if($type == '3')
             {
+                Session::put('test_doctor_email',$result->email);
+                Session::put('test_doctor_last_name',$result->last_name);
+                Session::put('test_doctor_id',$result->id);
                 return Redirect::to('/bac-si-xet-nghiem');
             }
             else if($type == '4')
@@ -106,11 +111,13 @@ class Homecontroller extends Controller
                 Session::put('doctor_email',$result->email);
                 Session::put('doctor_last_name',$result->last_name);
                 Session::put('doctor_id',$result->id);
-                Session::put('doctor_password',$result->password);
                 return Redirect::to('/bac-si');
             }
             else if($type == '5')
             {
+                Session::put('phamarcist_email',$result->email);
+                Session::put('phamarcist_last_name',$result->last_name);
+                Session::put('phamarcist_id',$result->id);
                 return Redirect::to('/duoc-si');
             }
         }
@@ -160,15 +167,30 @@ class Homecontroller extends Controller
 
     public function logout()
     {
+        //User
         Session::put('email',null);
         Session::put('id',null);
         Session::put('last_name',null);
+        //Admin
         Session::put('admin_email',null);
         Session::put('admin_id',null);
         Session::put('admin_last_name',null);
+        //Doctor
         Session::put('doctor_email',null);
         Session::put('doctor_id',null);
         Session::put('doctor_last_name',null);
+        //Receptionist
+        Session::put('receptionist_email',null);
+        Session::put('receptionist_id',null);
+        Session::put('receptionist_last_name',null);
+        //Test Doctor
+        Session::put('test_doctor_email',null);
+        Session::put('test_doctor_last_name',null);
+        Session::put('test_doctor_id',null);
+        //Phamarcist
+        Session::put('phamarcist_email',null);
+        Session::put('phamarcist_last_name',null);
+        Session::put('phamarcist_id',null);
         return Redirect::to('/dang-nhap');
     }
 

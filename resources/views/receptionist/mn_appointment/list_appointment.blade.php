@@ -77,9 +77,13 @@
                               </td>
                               @endif
                               <td>
-                                <a href="{{URL::to('/nhan-vien-y-te/chi-tiet-lich-hen/'.$appointment->schedule_id)}}">Xem</a> | 
-                                <a href="{{URL::to('/nhan-vien-y-te/sua-lich-hen/'.$appointment->schedule_id)}}">Sửa</a> | 
-                                <a href="{{URL::to('/nhan-vien-y-te/xoa-lich-hen/'.$appointment->schedule_id)}}">Xóa</a>
+                                <a href="{{URL::to('/nhan-vien-y-te/chi-tiet-lich-hen/'.$appointment->schedule_id)}}">Xem</a>
+                                @if($appointment->status == 2)
+
+                                @else
+                                  | <a href="{{URL::to('/admin/sua-lich-hen/'.$appointment->schedule_id)}}">Sửa</a> |
+                                  <a href="{{URL::to('/admin/xoa-lich-hen/'.$appointment->schedule_id)}}">Xóa</a>
+                                @endif
                               </td>
                           </tr>
                         @endforeach

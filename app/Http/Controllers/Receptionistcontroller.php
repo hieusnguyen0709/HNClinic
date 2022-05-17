@@ -11,18 +11,34 @@ use Illuminate\Http\Request;
 use DB;
 use Session;
 use QrCode;
+use Mail;
 use Illuminate\Support\Facades\Redirect;
 session_start();
 
 class Receptionistcontroller extends Controller
 {
+    public function AuthLogin()
+    {
+        $receptionist_id = Session::get('receptionist_id');
+        if($receptionist_id)
+        {
+            return Redirect::to('/nhan-vien-y-te');
+        }
+        else
+        {
+            return Redirect::to('/dang-nhap')->send();
+        }
+    }
+
     public function index()
     {
+       $this->AuthLogin();
        return view('receptionist.index');
     }
     //Manage Appointment
     public function add_appointment(Request $request)
     {
+      $this->AuthLogin();
       if($request->ajax())
       {
          $option = $request->get('option');
@@ -41,6 +57,7 @@ class Receptionistcontroller extends Controller
 
     public function check_add_appointment(Request $request)
     {
+      $this->AuthLogin();
       $query_appointment = DB::table('appointments')
       ->where('patient_id',$request->patient_id)
       ->where('doctor_id',$request->doctor_id)
@@ -71,7 +88,7 @@ class Receptionistcontroller extends Controller
         $data = array();
         $data['email'] = $request->email;
         $data['patient_id'] = $request->patient_id;
-        $data['full_name'] = '0';
+        
         $data['birth_date'] = $request->birth_date;
         $data['gender'] = $request->gender;
         $data['phone'] = $request->phone;
@@ -89,6 +106,7 @@ class Receptionistcontroller extends Controller
         $query_patient = DB::table('users')->where('id',$patient_id)->get('last_name');
         $json_encode = json_decode($query_patient,true);
         $patient_name = $json_encode['0']['last_name'];
+        $data['full_name'] = $patient_name;
         
         //Get doctor's name
         $doctor_id = $request->doctor_id;
@@ -115,6 +133,7 @@ class Receptionistcontroller extends Controller
 
     public function show_list_appointment()
     {
+      $this->AuthLogin();
       $show_list_appointment= DB::table('appointments')->orderby('schedule_id','desc')->get();
       $manager_show_list_appointment = view('receptionist.mn_appointment.list_appointment')->with('show_list_appointment',$show_list_appointment);
       return view('receptionist.index')->with('receptionist.mn_appointment.list_appointment',$manager_show_list_appointment);
@@ -122,12 +141,14 @@ class Receptionistcontroller extends Controller
 
     public function detail_appointment($schedule_id)
     {
+      $this->AuthLogin();
       $detail_appointment= DB::table('appointments')->where('schedule_id',$schedule_id)->get();
       return view('receptionist.mn_appointment.detail_appointment')->with('detail_appointment',$detail_appointment);
     }
 
     public function edit_appointment($schedule_id, Request $request)
     {
+      $this->AuthLogin();
       if($request->ajax())
       {
          $option = $request->get('option');
@@ -153,10 +174,18 @@ class Receptionistcontroller extends Controller
 
     public function check_edit_appointment(Request $request, $schedule_id)
     {
+      $this->AuthLogin();
       $data = array();
       $data['email'] = $request->email;
       $data['patient_id'] = $request->patient_id;
-      $data['full_name'] = '0';
+
+      //Get patient's name
+      $patient_id = $request->patient_id;
+      $query_patient = DB::table('users')->where('id',$patient_id)->get('last_name');
+      $json_encode = json_decode($query_patient,true);
+      $patient_name = $json_encode['0']['last_name'];
+      $data['full_name'] = $patient_name;
+
       $data['birth_date'] = $request->birth_date;
       $data['gender'] = $request->gender;
       $data['phone'] = $request->phone;
@@ -168,12 +197,36 @@ class Receptionistcontroller extends Controller
       $data['symptoms'] = $request->symptoms;
       $data['status'] = $request->status;
       DB::table('appointments')->where('schedule_id',$schedule_id)->update($data);
+
+      //Send mail
+      $to_name = "Phòng khám HNClinic";
+      $to_email = $request->email;
+      $full_name = $request->full_name;
+      $birth_date = $request->birth_date;
+      $gender = $request->gender;
+      $phone = $request->phone;
+      $date = $request->date;
+      $time = $request->time;
+      $symptoms = $request->symptoms;
+
+      $data = array
+      (
+          "patient_name" => $patient_name,
+      );
+
+      Mail::send('receptionist.send_mail',$data,function($message) use ($to_name,$to_email)
+      {
+          $message->to($to_email)->subject('Đã có thay đổi về lịch tại phòng khám HNClinic');
+          $message->from($to_email,$to_name);
+      });
+
       Session::put('message','Cập nhật lịch hẹn thành công');
       return Redirect::to('/nhan-vien-y-te/danh-sach-lich-hen');
     }
 
     public function delete_appointment($schedule_id)
     {
+      $this->AuthLogin();
       DB::table('appointments')->where('schedule_id',$schedule_id)->delete();
       Session::put('message','Xóa lịch hẹn thành công');
       return Redirect::back();
@@ -181,6 +234,7 @@ class Receptionistcontroller extends Controller
 
     public function status_appointment($schedule_id, Request $request)
     {
+      $this->AuthLogin();
       if($request->ajax())
       {
          $status = $request->get('status');

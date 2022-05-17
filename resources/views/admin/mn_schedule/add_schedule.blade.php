@@ -87,8 +87,8 @@
                   month = 1;
                   year = year +1;
                 }
-                date = month+'/'+day;
-                dat = year+'/'+month+'/'+day;
+                date = month+'-'+day;
+                dat = year+'-'+month+'-'+day;
                 text += '<li style="margin:10px; border:1px solid black;border-radius:5px"" class="list-group-item list-group-item-action w-auto p-3 day" date="">'+date+'<center><input style="display:block;" type="checkbox" name="date[]" value="'+dat+'"></center></li>';
                 day = day + 1;
               }
@@ -101,8 +101,8 @@
                   month = 1;
                   year = year +1;
                 }
-                date = month+'/'+day;
-                dat = year+'/'+month+'/'+day;
+                date = month+'-'+day;
+                dat = year+'-'+month+'-'+day;
                 text += '<li style="margin:10px; border:1px solid black;border-radius:5px"" class="list-group-item list-group-item-action w-auto p-3 day" date="">'+date+'<center><input style="display:block;" type="checkbox" name="date[]" value="'+dat+'"></center></li>';
                 day= day +1;
               }

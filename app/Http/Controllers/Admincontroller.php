@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use DB;
 use Session;
 use QrCode;
+use Mail;
 use Illuminate\Support\Facades\Redirect;
 session_start();
 
@@ -854,7 +855,7 @@ class Admincontroller extends Controller
         $data = array();
         $data['email'] = $request->email;
         $data['patient_id'] = $request->patient_id;
-        $data['full_name'] = '0';
+        
         $data['birth_date'] = $request->birth_date;
         $data['gender'] = $request->gender;
         $data['phone'] = $request->phone;
@@ -872,7 +873,9 @@ class Admincontroller extends Controller
         $query_patient = DB::table('users')->where('id',$patient_id)->get('last_name');
         $json_encode = json_decode($query_patient,true);
         $patient_name = $json_encode['0']['last_name'];
-  
+
+        $data['full_name'] =  $patient_name;
+
         //Get doctor's name
         $doctor_id = $request->doctor_id;
         $query_doctor = DB::table('users')->where('id',$doctor_id)->get('last_name');
@@ -938,7 +941,13 @@ class Admincontroller extends Controller
       $data = array();
       $data['email'] = $request->email;
       $data['patient_id'] = $request->patient_id;
-      $data['full_name'] = '0';
+
+      $patient_id = $request->patient_id;
+      $query_patient = DB::table('users')->where('id',$patient_id)->get('last_name');
+      $json_encode = json_decode($query_patient,true);
+      $patient_name = $json_encode['0']['last_name'];
+
+      $data['full_name'] = $patient_name;
       $data['birth_date'] = $request->birth_date;
       $data['gender'] = $request->gender;
       $data['phone'] = $request->phone;
@@ -950,6 +959,28 @@ class Admincontroller extends Controller
       $data['symptoms'] = $request->symptoms;
       $data['status'] = $request->status;
       DB::table('appointments')->where('schedule_id',$schedule_id)->update($data);
+
+      //Send mail
+      $to_name = "Phòng khám HNClinic";
+      $to_email = $request->email;
+      $full_name = $request->full_name;
+      $birth_date = $request->birth_date;
+      $gender = $request->gender;
+      $phone = $request->phone;
+      $date = $request->date;
+      $time = $request->time;
+      $symptoms = $request->symptoms;
+
+      $data = array
+      (
+          "patient_name" => $patient_name,
+      );
+
+      Mail::send('admin.send_mail',$data,function($message) use ($to_name,$to_email)
+      {
+          $message->to($to_email)->subject('Đã có thay đổi về lịch tại phòng khám HNClinic');
+          $message->from($to_email,$to_name);
+      });
       Session::put('message','Cập nhật lịch hẹn thành công');
     	return Redirect::to('/admin/danh-sach-lich-hen');
     }
