@@ -171,6 +171,14 @@ Route::get('/nhan-vien-y-te/sua-lich-hen/{schedule_id}',[Receptionistcontroller:
 Route::post('/nhan-vien-y-te/kt-sua-lich-hen/{schedule_id}',[Receptionistcontroller::class, 'check_edit_appointment'])->name('check_edit_appointment_receptionist');
 Route::get('/nhan-vien-y-te/xoa-lich-hen/{schedule_id}',[Receptionistcontroller::class, 'delete_appointment'])->name('delete_appointment_receptionist');
 Route::post('/nhan-vien-y-te/trang-thai-lich-hen/{schedule_id}',[Receptionistcontroller::class, 'status_appointment'])->name('status_appointment_receptionist');
+//Receptionist - Manage Patient
+Route::get('/nhan-vien-y-te/them-benh-nhan',[Receptionistcontroller::class, 'add_patient'])->name('add_patient');
+Route::post('/nhan-vien-y-te/kt-them-benh-nhan',[Receptionistcontroller::class, 'check_add_patient'])->name('check_add_patient');
+Route::get('/nhan-vien-y-te/danh-sach-benh-nhan',[Receptionistcontroller::class, 'show_list_patient'])->name('show_list_patient');
+Route::get('/nhan-vien-y-te/chi-tiet-benh-nhan/{id}',[Receptionistcontroller::class, 'detail_patient'])->name('detail_patient');
+Route::get('/nhan-vien-y-te/sua-benh-nhan/{id}',[Receptionistcontroller::class, 'edit_patient'])->name('edit_patient');
+Route::post('/nhan-vien-y-te/kt-sua-benh-nhan/{id}',[Receptionistcontroller::class, 'check_edit_patient'])->name('check_edit_patient');
+Route::get('/nhan-vien-y-te/xoa-benh-nhan/{id}',[Receptionistcontroller::class, 'delete_patient'])->name('delete_patient');
 
 //Test Doctor
 Route::get('/bac-si-xet-nghiem',[Test_Doctorcontroller::class, 'index'])->name('test_doctor');

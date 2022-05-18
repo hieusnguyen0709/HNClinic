@@ -1,10 +1,10 @@
-@extends('admin.index')
-@section('admin_content')
+@extends('receptionist.index')
+@section('receptionist_content')
 <div class="col-12 grid-margin">
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Thêm bệnh nhân</h4>
-                  <form method="post" role="form" action="{{URL::to('/admin/kt-them-benh-nhan')}}" enctype="multipart/form-data" class="form-sample">
+                  <form method="post" role="form" action="{{URL::to('/nhan-vien-y-te/kt-them-benh-nhan')}}" enctype="multipart/form-data" class="form-sample">
                   {{ csrf_field() }}
                     <p class="card-description">
                       <?php

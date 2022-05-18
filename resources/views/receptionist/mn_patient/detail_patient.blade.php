@@ -1,5 +1,5 @@
-@extends('admin.index')
-@section('admin_content')
+@extends('receptionist.index')
+@section('receptionist_content')
 <div class="col-md-6 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">

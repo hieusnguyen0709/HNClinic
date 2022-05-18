@@ -54,26 +54,6 @@
                 </div>
             </div>
             <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Tình trạng</label>
-                <div class="col-sm-9">
-                    <input type="text" class="form-control" name="first_name" placeholder="{{$pro->emergency}}" readonly/>
-                </div>
-            </div>
-            <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Nhóm máu</label>
-                <div class="col-sm-9">
-                @if($pro->blood_group == 0)
-                    <input type="text" class="form-control" name="first_name" placeholder="A" readonly/>
-                @elseif($pro->blood_group == 1)
-                    <input type="text" class="form-control" name="first_name" placeholder="B" readonly/>
-                @elseif($pro->blood_group == 2)
-                    <input type="text" class="form-control" name="first_name" placeholder="AB" readonly/>
-                @elseif($pro->blood_group == 3)
-                    <input type="text" class="form-control" name="first_name" placeholder="O" readonly/>
-                @endif
-                </div>
-            </div>
-            <div class="form-group row">
                 <a href="{{URL::to('sua-tai-khoan/'.$pro->id)}}" class="btn btn-primary" style="margin-right:20px; width:130px;">Sửa thông tin</a>
                 <a href="{{URL::to('lich-hen')}}" class="btn btn-danger" style="margin-right:20px;width:130px;">Lịch hẹn</a>
                 <a href="{{URL::to('lich-su-kham')}}" class="btn btn-success" style="margin-right:20px;width:130px;">Lịch sử khám</a>

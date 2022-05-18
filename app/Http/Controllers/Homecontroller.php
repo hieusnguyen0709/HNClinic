@@ -320,7 +320,11 @@ class Homecontroller extends Controller
     {
       $this->AuthLogin();
       $email = Session::get('email');
-      $password = '';
+
+      $query_patient = DB::table('users')->where('email',$email)->get('password');
+      $json_encode = json_decode($query_patient,true);
+      $password = $json_encode['0']['password'];
+
       $data = array();
       $data['email'] = $email;
       $data['password'] = $password;
@@ -330,10 +334,10 @@ class Homecontroller extends Controller
       $data['birth_date'] = $request->birth_date;
       $data['gender'] = $request->gender;
       $data['phone'] = $request->phone;
-      $data['emergency'] = $request->emergency;
+      $data['emergency'] = '0';
       $data['type'] = '0';
-      $data['specialist'] = $request->specialist;
-      $data['blood_group'] = $request->blood_group;
+      $data['specialist'] = '0';
+      $data['blood_group'] = '0';
 
       $get_image = $request->file('image');
       if($get_image)

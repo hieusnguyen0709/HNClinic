@@ -42,19 +42,6 @@
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"><a class="nav-link" href="{{URL::to('/nhan-vien-y-te/them-benh-nhan')}}">Thêm bệnh nhân</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{URL::to('/nhan-vien-y-te/danh-sach-benh-nhan')}}">Danh sách bệnh nhân</a></li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{{URL::to('/admin/ket-qua-xet-nghiem')}}">Kết quả xét nghiệm</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="">Hồ sơ bệnh án</a>
-                  <div class="collapse" id="form-elements">
-                    <ul class="nav flex-column sub-menu">
-                      <li><a class="nav-link" href="{{URL::to('/admin/them-ho-so-benh-an')}}"> - Thêm hồ sơ</a></li>
-                      <li><a class="nav-link" href="{{URL::to('/admin/danh-sach-ho-so-benh-an')}}"> - Danh sách hồ sơ</a></li>
-                    </ul>
-                  </div>
-                </li>
-               
               </ul>
             </div>
           </li>

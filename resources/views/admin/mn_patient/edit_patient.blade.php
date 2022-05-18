@@ -101,53 +101,14 @@
                         </div>
                       </div>
                       <div class="col-md-6">
-                        <div class="form-group row">
-                        <div class="form-group row">
-                          <label class="col-sm-3 col-form-label">Nhóm máu</label>
+                      <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Ảnh đại diện</label>
                           <div class="col-sm-9">
-                          <select class="form-control" name="blood_group">
-                          <?php
-                                if($patient->blood_group == 0)
-                                {
-                            ?>
-                            <option value="3">O</option>
-                            <option value="2">AB</option>
-                            <option value="1">B</option>
-                            <option selected value="0">A</option>
-                            <?php
-                                }
-                                elseif($patient->blood_group == 1)
-                                {
-                            ?>
-                            <option value="3">O</option>
-                            <option value="2">AB</option>
-                            <option selected value="1">B</option>
-                            <option value="0">A</option>
-                            <?php  
-                                }
-                                elseif($patient->blood_group == 2)
-                                {
-                            ?>
-                            <option value="3">O</option>
-                            <option selected value="2">AB</option>
-                            <option value="1">B</option>
-                            <option value="0">A</option>
-                             <?php  
-                                }
-                                elseif($patient->blood_group == 3)
-                                {
-                            ?>
-                            <option selected value="3">O</option>
-                            <option value="2">AB</option>
-                            <option value="1">B</option>
-                            <option value="0">A</option>
-                            <?php
-                                }
-                            ?>
-                            </select>
+                          <img src="<?php echo url('/'); ?>/upload_images/{{ $patient->picture }}" width="50px" height="50"></br>
+                          <input type="file" class="form-control" name="image" value=""/>
                           </div>
                         </div>
-                        </div>
+                      </div>
                     </div>
                     <div class="row">
                       <div class="col-md-6">
@@ -158,36 +119,8 @@
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-3 col-form-label">Tình trạng</label>
-                          <div class="col-sm-9">
-                            <input type="text" class="form-control" name="emergency" value="{{ $patient->emergency }}"/>
-                          </div>
-                        </div>
-                      </div>
                     </div>
-
-                    <div class="row">
-                      <div class="col-md-6">
-                      <div class="form-group row">
-                          <label class="col-sm-3 col-form-label">Ảnh đại diện</label>
-                          <div class="col-sm-9">
-                          <img src="<?php echo url('/'); ?>/upload_images/{{ $patient->picture }}" width="50px" height="50"></br>
-                          <input type="file" class="form-control" name="image" value=""/>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-md-6">
-                      </div>
-                    </div>
-                    <center><button type="submit" name="submit" class="btn btn-primary me-2">Sửa người dùng</button></center>
+                    <center><button type="submit" name="submit" class="btn btn-primary me-2">Sửa bệnh nhân</button></center>
                   </form>
                   @endforeach
                 </div>

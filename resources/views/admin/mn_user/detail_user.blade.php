@@ -100,50 +100,6 @@
                         <input type="text" class="form-control" name="phone" value="{{ $detail_value->phone }}" readonly>
                       </div>
                     </div>
-                    <div class="form-group row">
-                      <label for="exampleInputConfirmPassword2" class="col-sm-3 col-form-label">Tình trạng</label>
-                      <div class="col-sm-9">
-                        <input type="text" class="form-control" name="emergency" value="{{ $detail_value->emergency }}" readonly>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label for="exampleInputConfirmPassword2" class="col-sm-3 col-form-label">Nhóm máu</label>
-                      <div class="col-sm-9">
-                        <input type="text" class="form-control" name="blood_group" value="<?php 
-                          if($detail_value->blood_group == 0) 
-                          {
-                            echo 'A';
-                          }
-                          else if($detail_value->blood_group == 1) 
-                          {
-                            echo'B';
-                          }
-                          else if($detail_value->blood_group == 2) 
-                          {
-                            echo'AB';
-                          }
-                          else if($detail_value->blood_group == 3) 
-                          {
-                            echo'0';
-                          }
-                        ?>" readonly>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label for="exampleInputConfirmPassword2" class="col-sm-3 col-form-label">Chuyên khoa</label>
-                      <div class="col-sm-9">
-                        <input type="text" class="form-control" placeholder="Password" value="<?php 
-                          if($detail_value->specialist == 0) 
-                          {
-                            echo 'Da liễu';
-                          }
-                          else if($detail_value->specialist == 1) 
-                          {
-                            echo'Thần kinh';
-                          }
-                        ?>" readonly>
-                      </div>
-                    </div>
                   </form>
                   @endforeach
                 </div>

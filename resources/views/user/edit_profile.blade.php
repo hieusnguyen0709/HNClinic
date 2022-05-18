@@ -50,37 +50,30 @@
             <div class="form-group row">
             <label class="col-sm-3 col-form-label">Giới tính</label>
                 <div class="col-sm-9">
-                    @if($pro->gender == 0)
-                        <input type="text" class="form-control" name="gender" value="Nam" />
-                    @else
-                        <input type="text" class="form-control" name="gender" value="Nữ" />
-                    @endif
+                <select class="form-control" name="gender">
+                            <?php
+                                if($pro->gender == 0)
+                                {
+                            ?>
+                            <option value="1">Nữ</option>
+                            <option selected value="0">Nam</option>
+                            <?php
+                                }
+                                elseif($pro->gender == 1)
+                                {
+                            ?>
+                            <option selected value="1">Nữ</option>
+                            <option value="0">Nam</option>
+                            <?php  
+                                }
+                            ?>
+                            </select>
                 </div>
             </div>
             <div class="form-group row">
             <label class="col-sm-3 col-form-label">Số điện thoại</label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control" name="phone" value="{{$pro->phone}}" />
-                </div>
-            </div>
-            <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Tình trạng</label>
-                <div class="col-sm-9">
-                    <input type="text" class="form-control" name="emergency" value="{{$pro->emergency}}" />
-                </div>
-            </div>
-            <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Nhóm máu</label>
-                <div class="col-sm-9">
-                @if($pro->blood_group == 0)
-                    <input type="text" class="form-control" name="blood_group" value="A" />
-                @elseif($pro->blood_group == 1)
-                    <input type="text" class="form-control" name="blood_group" value="B" />
-                @elseif($pro->blood_group == 2)
-                    <input type="text" class="form-control" name="blood_group" value="AB" />
-                @elseif($pro->blood_group == 3)
-                    <input type="text" class="form-control" name="blood_group" value="O" />
-                @endif
                 </div>
             </div>
             <div class="form-group row">

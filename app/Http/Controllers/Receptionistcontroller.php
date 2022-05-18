@@ -247,11 +247,115 @@ class Receptionistcontroller extends Controller
          }
       }
       return Redirect::to('/admin/danh-sach-lich-hen');
-      // $data = array();
-      // $data['status'] = $status;
-      // DB::table('appointments')->where('schedule_id',$schedule_id)->update($data);
-      // Session::put('message','Cập nhật trạng thái thành công');
-      // return Redirect::to('/admin/danh-sach-lich-hen');
     }
     //Manage Appointment
+
+    //Manage Patient
+    public function add_patient()
+    {
+      $this->AuthLogin();
+      return view('receptionist.mn_patient.add_patient');
+    }
+
+    public function check_add_patient(request $request)
+    {
+      $this->AuthLogin();
+      $data = array();
+      $data['email'] = $request->email;
+      $data['password'] = $request->password;
+      $data['first_name'] = $request->first_name;
+      $data['last_name'] = $request->last_name;
+      $data['address'] = $request->address;
+      $data['birth_date'] = $request->birth_date;
+      $data['gender'] = $request->gender;
+      $data['phone'] = $request->phone;
+      $data['emergency'] = '0';
+      $data['type'] = '0';
+      $data['specialist'] = '0';
+      $data['blood_group'] = '0';
+
+    	$get_image = $request->file('image');
+    	if($get_image)
+    	{
+    		$get_name_image = $get_image->getClientOriginalName();
+    		$name_image = current(explode('.',$get_name_image));
+    		$new_image = $name_image.rand(0,99).'.'.$get_image->getClientOriginalExtension();
+    		$get_image->move('upload_images',$new_image);
+    		$data['picture'] = $new_image;
+    		DB::table('users')->insert($data);
+	    	Session::put('message','Thêm bệnh nhân thành công');
+	    	return Redirect::to('/admin/them-benh-nhan');
+    	}
+      $data['picture'] = '0';
+      DB::table('users')->insert($data);
+      Session::put('message','Thêm bệnh nhân thành công');
+      return Redirect::to('/nhan-vien-y-te/them-benh-nhan');;
+    }
+
+    public function show_list_patient()
+    {
+      $this->AuthLogin();
+      $show_list_patient= DB::table('users')->where('type','0')->get();
+      $manager_list_patient = view('receptionist.mn_patient.list_patient')->with('show_list_patient',$show_list_patient);
+      return view('receptionist.index')->with('receptionist.mn_patient.list_patient',$manager_list_patient);
+    }
+
+    public function detail_patient($id)
+    {
+      $this->AuthLogin();
+      $detail_patient = DB::table('users')->where('id',$id)->get();
+      $manager_detail_patient = view('receptionist.mn_patient.detail_patient')->with('detail_patient',$detail_patient);
+      return view('receptionist.index')->with('receptionist.mn_patient.detail_patient',$manager_detail_patient);
+    }
+
+    public function edit_patient($id)
+    {
+      $this->AuthLogin();
+      $edit_patient= DB::table('users')->where('id',$id)->get();
+      $manager_edit_patient = view('receptionist.mn_patient.edit_patient')->with('edit_patient',$edit_patient);
+      return view('receptionist.index')->with('receptionist.mn_patient.edit_patient',$manager_edit_patient);
+    }
+
+    public function check_edit_patient($id, request $request)
+    {
+      $this->AuthLogin();
+      $data = array();
+      $data['email'] = $request->email;
+      $data['password'] = $request->password;
+      $data['first_name'] = $request->first_name;
+      $data['last_name'] = $request->last_name;
+      $data['address'] = $request->address;
+      $data['birth_date'] = $request->birth_date;
+      $data['gender'] = $request->gender;
+      $data['phone'] = $request->phone;
+      $data['emergency'] = '0';
+      $data['type'] = '0';
+      $data['specialist'] = '0';
+      $data['blood_group'] = '0';
+
+      $get_image = $request->file('image');
+      if($get_image)
+      {
+         $get_name_image = $get_image->getClientOriginalName();
+         $name_image = current(explode('.',$get_name_image));
+         $new_image = $name_image.rand(0,99).'.'.$get_image->getClientOriginalExtension();
+         $get_image->move('upload_images',$new_image);
+         $data['picture'] = $new_image;
+         DB::table('users')->where('id',$id)->update($data);
+         Session::put('message','Sửa bệnh nhân thành công');
+         return Redirect::back();
+      }
+      DB::table('users')->where('id',$id)->update($data);
+      Session::put('message','Sửa bệnh nhân thành công');
+      return Redirect::back();
+    }
+
+    public function delete_patient($id)
+    {
+      $this->AuthLogin();
+      DB::table('users')->where('id',$id)->delete();
+      Session::put('message','Xóa bệnh nhân thành công');
+      return Redirect::back();
+    }
+    //Manage Patient
 }

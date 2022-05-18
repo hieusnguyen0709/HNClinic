@@ -119,10 +119,18 @@
                           </div>
                         </div>
                       </div> -->
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Ảnh đại diện</label>
+                          <div class="col-sm-9">
+                          <input type="file" class="form-control" name="image">
+                          </div>
+                        </div>
+                      </div>
                     </div>
 
                     <div class="row">
-                      <div class="col-md-6">
+                      <!-- <div class="col-md-6">
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Nhóm máu</label>
                           <div class="col-sm-9">
@@ -134,15 +142,8 @@
                             </select>
                           </div>
                         </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-3 col-form-label">Ảnh đại diện</label>
-                          <div class="col-sm-9">
-                          <input type="file" class="form-control" name="image">
-                          </div>
-                        </div>
-                      </div>
+                      </div> -->
+                    
                     </div>
 
                     <!-- <div class="row">

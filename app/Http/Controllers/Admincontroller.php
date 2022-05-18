@@ -55,10 +55,10 @@ class Admincontroller extends Controller
       $data['birth_date'] = $request->birth_date;
       $data['gender'] = $request->gender;
       $data['phone'] = $request->phone;
-      $data['emergency'] = $request->emergency;
+      $data['emergency'] = '0';
       $data['type'] = $request->type;
-      $data['specialist'] = $request->specialist;
-      $data['blood_group'] = $request->blood_group;
+      $data['specialist'] = '0';
+      $data['blood_group'] = '0';
 
     	$get_image = $request->file('image');
     	if($get_image)
@@ -115,10 +115,10 @@ class Admincontroller extends Controller
       $data['birth_date'] = $request->birth_date;
       $data['gender'] = $request->gender;
       $data['phone'] = $request->phone;
-      $data['emergency'] = $request->emergency;
+      $data['emergency'] = '0';
       $data['type'] = $request->type;
-      $data['specialist'] = 'Chưa cập nhật';
-      $data['blood_group'] = $request->blood_group;
+      $data['specialist'] = '0';
+      $data['blood_group'] = '0';
 
       $get_image = $request->file('image');
       if($get_image)
@@ -130,7 +130,7 @@ class Admincontroller extends Controller
          $data['picture'] = $new_image;
          DB::table('users')->where('id',$id)->update($data);
          Session::put('message','Sửa người dùng thành công');
-         return Redirect::to('user.profile');
+         return Redirect::back();
       }
       DB::table('users')->where('id',$id)->update($data);
       Session::put('message','Sửa người dùng thành công');
@@ -660,10 +660,10 @@ class Admincontroller extends Controller
       $data['birth_date'] = $request->birth_date;
       $data['gender'] = $request->gender;
       $data['phone'] = $request->phone;
-      $data['emergency'] = $request->emergency;
+      $data['emergency'] = '0';
       $data['type'] = '0';
       $data['specialist'] = '0';
-      $data['blood_group'] = $request->blood_group;
+      $data['blood_group'] = '0';
 
     	$get_image = $request->file('image');
     	if($get_image)
@@ -719,10 +719,10 @@ class Admincontroller extends Controller
       $data['birth_date'] = $request->birth_date;
       $data['gender'] = $request->gender;
       $data['phone'] = $request->phone;
-      $data['emergency'] = $request->emergency;
+      $data['emergency'] = '0';
       $data['type'] = '0';
       $data['specialist'] = '0';
-      $data['blood_group'] = $request->blood_group;
+      $data['blood_group'] = '0';
 
       $get_image = $request->file('image');
       if($get_image)
