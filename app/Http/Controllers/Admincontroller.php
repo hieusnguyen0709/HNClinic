@@ -79,10 +79,22 @@ class Admincontroller extends Controller
 
     }
 
-    public function show_list_user()
+    public function show_list_user(Request $request)
     {
        $this->AuthLogin();
-       $show_list_user = DB::table('users')->get();
+       if($request->ajax())
+       {
+          $option = $request->get('option');
+          if(isset($option) && !empty($option))
+          {
+              $show_list_user = DB::table('users')->where('type', $request->get('option'))->get();
+              return view('admin.mn_user.filter_list_user')->with('show_list_user',$show_list_user);
+          }
+       }
+       else
+       {
+        $show_list_user = DB::table('users')->get();
+       }
        $manager_list_user = view('admin.mn_user.list_user')->with('show_list_user',$show_list_user);
        return view('admin.index')->with('admin.mn_user.list_user',$manager_list_user);
     }
