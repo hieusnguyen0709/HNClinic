@@ -4,7 +4,6 @@
   <div class="card">
     <div class="card-body">
                   <h4 class="card-title">Danh sách tài khoản</h4>
-                    Lọc theo :
                     <select class="form-control" style="width:150px;display:inline" name="filter" id="filter" onchange="filterFunction()">
                       <option disabled selected hidden>Toàn bộ</option>
                       <option value="Khách hàng">Khách hàng</option>

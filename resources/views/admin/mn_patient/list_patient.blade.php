@@ -12,6 +12,9 @@
                       <thead>
                         <tr>
                           <th>
+                            Mã bệnh nhân
+                          </th>
+                          <th>
                             Ảnh đại diện
                           </th>
                           <th>
@@ -34,6 +37,7 @@
                       <tbody>
                      @foreach($show_list_patient as $key => $patient)
                         <tr>
+                          <td>PT-{{$patient->id}}</td>
                           <td class="py-1">
                           <img src="<?php echo url('/'); ?>/upload_images/{{$patient->picture }}" width="50px" height="50">
                           </td>

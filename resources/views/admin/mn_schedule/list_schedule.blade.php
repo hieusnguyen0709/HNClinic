@@ -13,46 +13,40 @@
                          }
                       ?>
                     </p>
-                  <div class="table-responsive">
-                    <table class="table table-striped">
-                      <thead>
-                        <tr>
-                        <th>
-                            Tên
-                        </th>
-                          <th>
-                            Ngày làm
-                          </th>
-                          <!-- <th>
-                            Ca làm
-                          </th> -->
-                          <th>
-                            Thao tác
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        @foreach($show_list_schedule as $key => $schedule)
-                        <tr>
-                          <td>
-                              {{$schedule->last_name}}
-                          </td>
-                            <td>
-                                {{$schedule->date}}
-                            </td>
-                          <!-- <td>
-                            
-                          </td> -->
-                          <td>
-                            <a href="{{URL::to('/admin/sua-lich-lam/'.$schedule->id_time)}}">Sửa</a> |
-                            <a href="{{URL::to('/admin/xoa-lich-lam/'.$schedule->id_time)}}">Xóa</a>
-                          </td>
-                        </tr>
-                        @endforeach
-                      </tbody>
-                    </table>
-                  </div>
+                    <select class="form-control" style="width:150px;display:inline" name="filter" id="filter" onchange="filterFunction()">
+                      <option disabled selected hidden>Toàn bộ</option>
+                      @foreach($show_list_doctor as $key => $doctor)
+                        <option value="{{$doctor->id}}">{{$doctor->last_name}}</option>
+                      @endforeach
+                    </select>
+                  <div id="show_filter">
+                         @include('admin.mn_schedule.filter_list_schedule')
+                    </div>
                 </div>
               </div>
             </div>
+    <script>
+
+    function filterFunction()
+    {
+      var select = document.getElementById('filter');
+      var value = select.options[select.selectedIndex].value;
+      $.ajaxSetup({
+        headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+        });
+      $.ajax({
+        url:"{{URL::to('/admin/danh-sach-lich-lam')}}",
+        type:"GET",
+        data:{option:value},
+        success:function(data)
+        {
+          // console.log(value);
+          $("#show_filter").html(data);
+        }
+        });
+
+    }
+    </script>
 @endsection

@@ -13,58 +13,38 @@
                          }
                       ?>
                     </p>
-                  <div class="table-responsive">
-                    <table class="table table-striped">
-                      <thead>
-                        <tr>
-                        <th>
-                            Tên thuốc
-                        </th>
-                        <th>
-                            Đơn vị
-                        </th>
-                          <th>
-                            Số lượng
-                          </th>
-                          <th>
-                            Loại
-                          </th>
-                          <th>
-                            Cách dùng
-                          </th>
-                          <th>
-                            Thao tác
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        @foreach($show_list_medicine as $key => $medicine)
-                        <tr>
-                          <td class="py-1">
-                            {{$medicine->name}}
-                          </td>
-                          <td>
-                            {{$medicine->unit}}
-                          </td>
-                            <td>
-                            {{$medicine->quantity}}
-                            </td>
-                          <td>
-                            {{$medicine->category}}
-                          </td>
-                          <td>
-                            {{$medicine->instruction}}
-                          </td>
-                          <td>
-                            <a href="{{URL::to('/admin/sua-thuoc/'.$medicine->id)}}">Sửa</a> |
-                            <a href="{{URL::to('/admin/xoa-thuoc/'.$medicine->id)}}">Xóa</a>
-                          </td>
-                        </tr>
-                        @endforeach
-                      </tbody>
-                    </table>
-                  </div>
+                    <select class="form-control" style="width:150px;display:inline" name="filter" id="filter" onchange="filterFunction()">
+                      <option disabled selected hidden>Toàn bộ</option>
+                      <option value="Bôi">Bôi</option>
+                      <option value="Uống">Uống</option>
+                    </select>
+                    <div id="show_filter">
+                         @include('admin.mn_medicine.filter_list_medicine')
+                    </div>
                 </div>
               </div>
             </div>
+      <script>
+      function filterFunction()
+      {
+        var select = document.getElementById('filter');
+        var value = select.options[select.selectedIndex].value;
+        $.ajaxSetup({
+          headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+          });
+        $.ajax({
+          url:"{{URL::to('/admin/danh-sach-thuoc')}}",
+          type:"GET",
+          data:{option:value},
+          success:function(data)
+          {
+            console.log(value);
+            $("#show_filter").html(data);
+          }
+          });
+
+      }
+      </script>
 @endsection

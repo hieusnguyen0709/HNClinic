@@ -207,13 +207,27 @@ class Admincontroller extends Controller
       }
     }
 
-    public function show_list_schedule()
+    public function show_list_schedule(Request $request)
     {
       $this->AuthLogin();
+      if($request->ajax())
+      {
+         $option = $request->get('option');
+         if(isset($option) && !empty($option))
+         {
+          $show_list_schedule = DB::table('time_schedules')
+          //  ->join('time_frame','time_frame.frame_name','=','time_schedules.frame_name')
+           ->join('users','time_schedules.user_id','=','users.id')->where('users.id',$option)->get();
+              return view('admin.mn_schedule.filter_list_schedule')->with('show_list_schedule',$show_list_schedule);
+         }
+      }
+       $show_list_doctor = DB::table('users')->where('type','4')->get();
        $show_list_schedule = DB::table('time_schedules')
       //  ->join('time_frame','time_frame.frame_name','=','time_schedules.frame_name')
        ->join('users','time_schedules.user_id','=','users.id')->get();
-       $manager_list_schedule = view('admin.mn_schedule.list_schedule')->with('show_list_schedule',$show_list_schedule);
+       $manager_list_schedule = view('admin.mn_schedule.list_schedule')
+       ->with('show_list_schedule',$show_list_schedule)
+       ->with('show_list_doctor',$show_list_doctor);
        return view('admin.index')->with('admin.mn_schedule.list_schedule',$manager_list_schedule);
     }
 
@@ -270,9 +284,18 @@ class Admincontroller extends Controller
       return Redirect::to('/admin/them-thuoc');
     }
 
-    public function show_list_medicine()
+    public function show_list_medicine(Request $request)
     {
       $this->AuthLogin();
+      if($request->ajax())
+      {
+         $option = $request->get('option');
+         if(isset($option) && !empty($option))
+         {
+              $show_list_medicine = DB::table('medicines')->where('category',$option)->orderby('id','asc')->get();
+              return view('admin.mn_medicine.filter_list_medicine')->with('show_list_medicine',$show_list_medicine);
+         }
+      }
       $show_list_medicine = DB::table('medicines')->orderby('id','asc')->get();
       $manager_list_medicine = view('admin.mn_medicine.list_medicine')->with('show_list_medicine',$show_list_medicine);
       return view('admin.index')->with('admin.mn_medicine.list_medicine',$manager_list_medicine);
@@ -1244,14 +1267,31 @@ class Admincontroller extends Controller
               return Redirect::to('/admin/xem-don-thuoc/'.$schedule_id);
             }
     
-        public function test_result()
+        public function test_result(Request $request)
         {
           $this->AuthLogin();
+          $show_all_test_type = DB::table('test_type')->get();
+          if($request->ajax())
+          {
+             $option = $request->get('option');
+             if(isset($option) && !empty($option))
+             {
+                $show_require_testing = DB::table('test')
+                ->join('users','test.id_patient','=','users.id')
+                ->join('appointments','appointments.schedule_id','=','test.id_appointment')
+                ->join('test_type','test_type.id_test_type','=','test.id_test_type')
+                ->where('test.id_test_type',$option)
+                ->get();
+                return view('admin.mn_test.filter_list_test_result')->with('show_require_testing',$show_require_testing);
+             }
+          }
           $show_require_testing = DB::table('test')
           ->join('users','test.id_patient','=','users.id')
           ->join('appointments','appointments.schedule_id','=','test.id_appointment')
           ->join('test_type','test_type.id_test_type','=','test.id_test_type')->get();
-          $manager_show_require_testing = view('admin.mn_test.list_test_result')->with('show_require_testing',$show_require_testing);
+          $manager_show_require_testing = view('admin.mn_test.list_test_result')
+          ->with('show_require_testing',$show_require_testing)
+          ->with('show_all_test_type',$show_all_test_type);
           return view('admin.index')->with('admin.mn_test.list_test_result',$manager_show_require_testing);
         }
 
