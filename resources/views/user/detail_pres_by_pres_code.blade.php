@@ -177,7 +177,7 @@
                           <div class="form-group row" >
                               <label class="col-sm-3 col-form-label" >Thuốc</label>
                               <div class="col-sm-9">
-                                <input type="text" class="form-control timepicker" value="{{$m_i->name}}" readonly/>
+                                <input type="text" class="form-control timepicker" value="{{$m_i->name}} ({{$m_i->unit}})" readonly/>
                               </div>
                           </div>
                         </div>

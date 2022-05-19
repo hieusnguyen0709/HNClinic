@@ -11,10 +11,59 @@ use Illuminate\Support\Facades\Redirect;
 use Mail;
 use QrCode;
 use PDF;
+use Socialite;
 session_start();
 
 class Homecontroller extends Controller
 {
+    public function facebookRedirect()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    public function loginWithFacebook()
+    {
+        $user = Socialite::driver('facebook')->user();
+        $isUser = DB::table('user')->where('id',$user->id)->first();
+        if(isset($isUser))
+        {
+            Auth::login($isUser);
+            return redirect('/trang-chu');
+        }
+        else
+        {
+            Auth::login($isUser);
+            return redirect('/trang-chu');
+        }
+        // return 'thanh cong';
+        // try {
+    
+        //     $user = Socialite::driver('facebook')->user();
+        //     $isUser = User::where('id', $user->id)->first();
+     
+        //     if($isUser)
+        //     {
+        //         Auth::login($isUser);
+        //         return redirect('/trang-chu');
+        //     }
+        //     else
+        //     {
+        //         $createUser = User::create([
+        //             'name' => $user->name,
+        //             'email' => $user->email,
+        //             'fb_id' => $user->id,
+        //             'password' => encrypt('admin@123')
+        //         ]);
+    
+        //         Auth::login($createUser);
+        //         return redirect('/trang-chu');
+        //     }
+    
+        // } catch (Exception $exception) {
+        //     dd($exception->getMessage());
+        // }
+    }
+
     public function AuthLogin()
     {
         $user_id = Session::get('id');

@@ -107,7 +107,7 @@
                               <div class="col-sm-9">
                                 <select class="form-control" name="medicine_id[]">
                                   @foreach($medicine as $key => $md)
-                                    <option value="{{$md->id}}" >{{$md->name}}</option>
+                                    <option value="{{$md->id}}" >{{$md->name}} ({{$md->unit}})</option>
                                   @endforeach
                                 </select>
                               </div>

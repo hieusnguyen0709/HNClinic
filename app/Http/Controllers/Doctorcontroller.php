@@ -396,10 +396,18 @@ class Doctorcontroller extends Controller
       $diagnosis = $request->diagnosis;
       $advice = $request->advice;
       $date = $request->date;
+      $recheck = $request->recheck;
+      $total_days = $request->total_days;
+      $morning = $request->morning;
+      $noon = $request->noon;
+      $afternoon = $request->afternoon;
+      $night = $request->night;
+      $quantity = $request->quantity;
       $instruction = $request->instruction;
       $count_medicine = count($medicine_id);
-      // dd($medicine_id);
-      $pre_code = $request->pre_code;
+      // dd($count_medicine);
+      $pre_code = $pre_code_medicine_prescription;
+      $id_pres = $request->id_pres;
       $appointment_id = '0';
       for($i = 0; $i < $count_medicine; $i++)
       {
@@ -411,12 +419,20 @@ class Doctorcontroller extends Controller
           'diagnosis' => $diagnosis,
           'advice' => $advice,
           'date' => $date,
+          'recheck' => $recheck,
           'pre_instruction' => $instruction[$i],
+          'pre_quantity' => $quantity[$i],
+          'total_days' => $total_days[$i],
+          'morning' => $morning[$i],
+          'noon' => $noon[$i],
+          'afternoon' => $afternoon[$i],
+          'night' => $night[$i],
           'pre_code' => $pre_code,
           'appointment_id' => $appointment_id
         ];
+        // var_dump($data);
         // dd($data);
-        DB::table('prescriptions')->where('pre_code',$pre_code_medicine_prescription)->update($data);
+        DB::table('prescriptions')->where('pre_code',$pre_code_medicine_prescription)->where('id_pres',$id_pres)->update($data);
       }
 
       $arr = array();

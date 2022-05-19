@@ -26,6 +26,8 @@ Route::get('/dang-xuat',[HomeController::class, 'logout'])->name('logout');
 Route::get('/demo_mail',[HomeController::class, 'demo_mail'])->name('demo_mail');
 Route::get('/download/{result}',[HomeController::class, 'download'])->name('download');
 Route::get('/export_pdf/{pre_code}',[HomeController::class, 'export_pdf'])->name('export_pdf');
+Route::get('/login_facebook',[HomeController::class, 'facebookRedirect'])->name('facebookRedirect');
+Route::get('/login_facebook/callback', [HomeController::class, 'loginWithFacebook'])->name('loginWithFacebook');
 
 Route::group(['middleware' => ['auth']], function() {
 Route::get('/email/verify', 'VerificationController@show')->name('verification.notice');

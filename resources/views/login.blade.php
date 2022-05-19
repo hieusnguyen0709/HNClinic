@@ -60,14 +60,8 @@
 
               <span class="d-block text-left my-4 text-muted">&mdash; Bạn có thể đăng nhập với &mdash;</span>
               <div class="social-login">
-                <a href="#" class="facebook">
+                <a href="{{URL::to('/login_facebook')}}" class="facebook">
                   <span class="icon-facebook mr-3"></span> 
-                </a>
-                <a href="#" class="twitter">
-                  <span class="icon-twitter mr-3"></span> 
-                </a>
-                <a href="#" class="google">
-                  <span class="icon-google mr-3"></span> 
                 </a>
               </div>
               <center><span class="ml-auto"><a href="{{URL::to('dang-ky')}}" class="forgot-pass">Tạo tài khoản ngay</a></span></center>

@@ -41,7 +41,7 @@
                           <label class="col-sm-3 col-form-label">Bệnh nhân</label>
                           <div class="col-sm-9">
                           <select class="form-control" name="patient_id">
-                              <option value="{{$pres->doctor_id}}" selected>{{App\Models\User::where('id',$pres->patient_id)->value('last_name')}}</option>
+                              <option value="{{$pres->patient_id}}" selected>{{App\Models\User::where('id',$pres->patient_id)->value('last_name')}}</option>
                               @foreach($patient as $key => $pt)
                                 <option value="{{$pt->id}}" >{{$pt->last_name}}</option>
                               @endforeach
@@ -113,7 +113,7 @@
                               <div class="col-sm-9">
                                 <select class="form-control" name="medicine_id[]">
                                   @foreach($medicine as $key => $md)
-                                    <option value="{{$md->id}}" >{{$md->name}}</option>
+                                    <option value="{{$md->id}}" >{{$md->name}} ({{$md->unit}})</option>
                                   @endforeach
                                 </select>
                               </div>
