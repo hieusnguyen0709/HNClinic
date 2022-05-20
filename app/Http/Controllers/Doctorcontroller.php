@@ -15,14 +15,29 @@ session_start();
 
 class Doctorcontroller extends Controller
 {
+  public function AuthLogin()
+  {
+      $doctor_id = Session::get('doctor_id');
+      if($doctor_id)
+      {
+          return Redirect::to('/bac-si');
+      }
+      else
+      {
+          return Redirect::to('/dang-nhap')->send();
+      }
+  }
+
     public function index()
     {
+      $this->AuthLogin();
        return view('doctor.index');
     }
 
     //Manage Appointment
     public function show_list_appointment()
     {
+      $this->AuthLogin();
       $doctor_id = Session::get('doctor_id');
       $show_list_appointment= DB::table('appointments')
       ->join('users','users.id','=','appointments.doctor_id')->where('users.id',$doctor_id)
@@ -33,6 +48,7 @@ class Doctorcontroller extends Controller
 
     public function show_list_checked_appointment()
     {
+      $this->AuthLogin();
       $doctor_id = Session::get('doctor_id');
       $show_list_appointment= DB::table('appointments')
       ->join('users','users.id','=','appointments.doctor_id')->where('users.id',$doctor_id)
@@ -43,6 +59,7 @@ class Doctorcontroller extends Controller
 
     public function add_check_result($schedule_id, Request $request)
     {
+      $this->AuthLogin();
       $show_detail_appointment = DB::table('appointments')->where('schedule_id',$schedule_id)->get();
       $medicine = DB::table('medicines')->orderby('id','desc')->get();
       return view('doctor.mn_appointment.add_check_result')
@@ -52,6 +69,7 @@ class Doctorcontroller extends Controller
 
     public function check_add_check_result($schedule_id, Request $request)
     {
+      $this->AuthLogin();
       $recheck = $request->recheck;
       $total_days = $request->total_days;
       $morning = $request->morning;
@@ -131,6 +149,7 @@ class Doctorcontroller extends Controller
       $message_quantity = Session::get('message_quantity');
       if(isset($message_quantity))
       {
+        $this->AuthLogin();
         return Redirect::back();
       }
       else
@@ -155,6 +174,7 @@ class Doctorcontroller extends Controller
     //Manage_Schedule
     public function add_schedule()
     {
+      $this->AuthLogin();
       $doctor_id = Session::get('doctor_id');
       $time_frame = DB::table('time_frame')->orderby('id','desc')->get();
       return view('doctor.mn_schedule.add_schedule')->with('time_frame',$time_frame)->with('doctor_id',$doctor_id);
@@ -162,6 +182,7 @@ class Doctorcontroller extends Controller
 
     public function check_add_schedule(Request $request)
     {
+      $this->AuthLogin();
       $query_date = DB::table('time_schedules')
       ->where('user_id',$request->type)
       ->where('date',$request->date)
@@ -198,6 +219,7 @@ class Doctorcontroller extends Controller
 
     public function show_list_schedule()
     {
+      $this->AuthLogin();
        $doctor_id = Session::get('doctor_id');
        $show_doctor = DB::table('time_schedules')
       //  ->join('time_frame','time_frame.frame_name','=','time_schedules.frame_name')
@@ -210,6 +232,7 @@ class Doctorcontroller extends Controller
 
     public function edit_schedule($id_time)
     {
+      $this->AuthLogin();
       $time_frame = DB::table('time_frame')->orderby('id','desc')->get();
       $edit_schedule = DB::table('time_schedules')
       ->join('users','time_schedules.user_id','=','users.id')
@@ -221,6 +244,7 @@ class Doctorcontroller extends Controller
 
     public function check_edit_schedule(Request $request, $id_time)
     {
+      $this->AuthLogin();
       $data = array();
       $data['date'] = $request->date;
       $data['frame_name'] = $request->frame_name;
@@ -231,6 +255,7 @@ class Doctorcontroller extends Controller
 
     public function delete_schedule($id_time)
     {
+      $this->AuthLogin();
       DB::table('time_schedules')->where('id_time',$id_time)->delete();
       Session::put('message','Xóa lịch làm thành công');
       return Redirect::back();
@@ -240,6 +265,7 @@ class Doctorcontroller extends Controller
     //Manage Prescription
     public function add_pres()
     {
+      $this->AuthLogin();
       $doctor_id = Session::get('doctor_id');
       $doctor = DB::table('users')->where('id',$doctor_id)->orderby('id','desc')->get();
       $patient = DB::table('users')->where('type','0')->orderby('id','desc')->get();
@@ -249,6 +275,7 @@ class Doctorcontroller extends Controller
 
     public function check_add_pres(Request $request)
     {
+      $this->AuthLogin();
       $recheck = $request->recheck;
       $total_days = $request->total_days;
       $morning = $request->morning;
@@ -344,15 +371,29 @@ class Doctorcontroller extends Controller
       }
     }
 
-    public function show_list_pres()
+    public function show_list_pres(Request $request)
     {
+      $this->AuthLogin();
       $doctor_id = Session::get('doctor_id');
+      $search = $request->timkiem;
+      if(isset($search))
+      {
+        $medicine_prescription = DB::table('medicine_prescription')
+        ->join('users','medicine_prescription.patient_id_medicine_prescription','=','users.id')
+        ->where('doctor_id_medicine_prescription',$doctor_id)
+        ->where('pre_code_medicine_prescription','like','%'.$search.'%')
+        ->orWhere('first_name','like','%'.$search.'%')->where('doctor_id_medicine_prescription',$doctor_id)
+        ->orWhere('last_name','like','%'.$search.'%')->where('doctor_id_medicine_prescription',$doctor_id)
+        ->get();
+        return view('doctor.mn_prescription.list_pres')->with('medicine_prescription',$medicine_prescription);
+      }
       $medicine_prescription = DB::table('medicine_prescription')->where('doctor_id_medicine_prescription',$doctor_id)->get();
       return view('doctor.mn_prescription.list_pres')->with('medicine_prescription',$medicine_prescription);
     }
 
     public function delete_pres($pre_code_medicine_prescription)
     {
+      $this->AuthLogin();
       DB::table('medicine_prescription')->where('pre_code_medicine_prescription',$pre_code_medicine_prescription)->delete();
       DB::table('prescriptions')->where('pre_code',$pre_code_medicine_prescription)->delete();
       Session::put('message','Xóa đơn thuốc thành công');
@@ -361,6 +402,7 @@ class Doctorcontroller extends Controller
 
     public function edit_pres($pre_code_medicine_prescription)
     {
+      $this->AuthLogin();
       $doctor = DB::table('users')->where('type','4')->orderby('id','desc')->get();
       $patient = DB::table('users')->where('type','0')->orderby('id','desc')->get();
       $medicine = DB::table('medicines')->orderby('id','desc')->get();
@@ -389,6 +431,7 @@ class Doctorcontroller extends Controller
 
     public function check_edit_pres(Request $request, $pre_code_medicine_prescription)
     {
+      $this->AuthLogin();
       $medicine_id = $request->medicine_id;
       $doctor_id = $request->doctor_id;
       $patient_id = $request->patient_id;
@@ -448,6 +491,7 @@ class Doctorcontroller extends Controller
 
     public function detail_pres($schedule_id)
     {
+      $this->AuthLogin();
       $info_patient = DB::table('users')
       ->join('appointments','appointments.patient_id','=','users.id')
       ->where('schedule_id',$schedule_id)
@@ -472,6 +516,7 @@ class Doctorcontroller extends Controller
 
     public function detail_pres_by_pres_code($pre_code_medicine_prescription)
     {
+      $this->AuthLogin();
       $detail_pres_by_pres_code = DB::table('prescriptions')
       ->join('medicine_prescription','medicine_prescription.pre_code_medicine_prescription','=','prescriptions.pre_code')
       ->where('pre_code_medicine_prescription',$pre_code_medicine_prescription)
@@ -491,6 +536,7 @@ class Doctorcontroller extends Controller
     //Manage Require testing
     public function require_testing($schedule_id)
     {
+        $this->AuthLogin();
         $info_appointment= DB::table('appointments')->where('schedule_id',$schedule_id)->get();
         $test_type= DB::table('test_type')->orderby('id_test_type','desc')->get();
         return view('doctor.mn_test.require_testing')
@@ -500,6 +546,7 @@ class Doctorcontroller extends Controller
 
     public function check_require_testing($schedule_id,Request $request)
     {
+      $this->AuthLogin();
       $id_doctor = Session::get('doctor_id');
       $schedule_id = $request->schedule_id;
       $id_patient = $request->id_patient;
@@ -532,19 +579,56 @@ class Doctorcontroller extends Controller
       return Redirect::to('/bac-si/nhap-ket-qua-kham/'.$schedule_id);
     }
 
-    public function test_result()
+    public function test_result(Request $request)
     {
-      $id_doctor = Session::get('doctor_id');
+       $this->AuthLogin();
+       $id_doctor = Session::get('doctor_id');
+       $show_all_test_type = DB::table('test_type')->get();
+       if($request->ajax())
+       {
+          $option = $request->get('option');
+          if(isset($option) && !empty($option))
+          {
+             $show_require_testing = DB::table('test')
+             ->join('users','test.id_patient','=','users.id')
+             ->join('appointments','appointments.schedule_id','=','test.id_appointment')
+             ->join('test_type','test_type.id_test_type','=','test.id_test_type')
+             ->where('test.id_test_type',$option)
+             ->where('doctor_id',$id_doctor)
+             ->get();
+             return view('doctor.mn_test.filter_list_test_result')->with('show_require_testing',$show_require_testing);
+          }
+       }
+       $search = $request->timkiem;
+        if(isset($search))
+        {
+          $show_require_testing = DB::table('test')
+          ->join('users','test.id_patient','=','users.id')
+          ->join('appointments','appointments.schedule_id','=','test.id_appointment')
+          ->join('test_type','test_type.id_test_type','=','test.id_test_type')
+          ->where('doctor_id',$id_doctor)
+          ->where('first_name','like','%'.$search.'%')
+          ->orWhere('last_name','like','%'.$search.'%')->where('doctor_id',$id_doctor)
+          ->orWhere('appointment_code','like','%'.$search.'%')->where('doctor_id',$id_doctor)
+          ->get();
+          $manager_show_require_testing = view('doctor.mn_test.list_test_result')
+          ->with('show_require_testing',$show_require_testing)
+          ->with('show_all_test_type',$show_all_test_type);
+          return view('doctor.index')->with('doctor.mn_test.list_test_result',$manager_show_require_testing);
+        }
       $show_require_testing = DB::table('test')
       ->join('users','test.id_patient','=','users.id')
       ->join('appointments','appointments.schedule_id','=','test.id_appointment')
       ->join('test_type','test_type.id_test_type','=','test.id_test_type')->where('doctor_id',$id_doctor)->get();
-      $manager_show_require_testing = view('doctor.mn_test.list_test_result')->with('show_require_testing',$show_require_testing);
+      $manager_show_require_testing = view('doctor.mn_test.list_test_result')
+      ->with('show_require_testing',$show_require_testing)
+      ->with('show_all_test_type',$show_all_test_type);
       return view('doctor.index')->with('doctor.mn_test.list_test_result',$manager_show_require_testing);
     }
 
     public function require_testing_pres($schedule_id)
     {
+        $this->AuthLogin();
         $info_appointment= DB::table('appointments')->where('schedule_id',$schedule_id)->get();
         $test_type= DB::table('test_type')->orderby('id_test_type','desc')->get();
         return view('doctor.mn_test.require_testing_pres')
@@ -554,6 +638,7 @@ class Doctorcontroller extends Controller
     
         public function check_require_testing_pres($schedule_id,Request $request)
         {
+          $this->AuthLogin();
           $id_doctor = $request->id_doctor;
           $schedule_id = $request->schedule_id;
           $id_patient = $request->id_patient;

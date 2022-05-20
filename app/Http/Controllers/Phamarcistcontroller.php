@@ -51,9 +51,28 @@ class Phamarcistcontroller extends Controller
       return Redirect::to('/duoc-si/them-thuoc');
     }
 
-    public function show_list_medicine()
+    public function show_list_medicine(Request $request)
     {
       $this->AuthLogin();
+      if($request->ajax())
+      {
+         $option = $request->get('option');
+         if(isset($option) && !empty($option))
+         {
+              $show_list_medicine = DB::table('medicines')->where('category',$option)->orderby('id','asc')->get();
+              return view('phamarcist.mn_medicine.filter_list_medicine')->with('show_list_medicine',$show_list_medicine);
+         }
+      }
+      $search = $request->timkiem;
+      if(isset($search))
+      {
+        $show_list_medicine = DB::table('medicines')
+        ->where('name', 'like', '%'.$search.'%')
+        ->orderby('id','asc')
+        ->get();
+        $manager_list_medicine = view('phamarcist.mn_medicine.list_medicine')->with('show_list_medicine',$show_list_medicine);
+        return view('phamarcist.index')->with('phamarcist.mn_medicine.list_medicine',$manager_list_medicine);
+      }
       $show_list_medicine = DB::table('medicines')->orderby('id','asc')->get();
       $manager_list_medicine = view('phamarcist.mn_medicine.list_medicine')->with('show_list_medicine',$show_list_medicine);
       return view('phamarcist.index')->with('phamarcist.mn_medicine.list_medicine',$manager_list_medicine);

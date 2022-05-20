@@ -30,12 +30,6 @@
               <input type="text" class="form-control">
             </div>
           </li>
-          <li class="nav-item">
-            <form class="search-form" action="#">
-              <i class="icon-search"></i>
-              <input type="search" class="form-control" placeholder="Nhập từ khóa" title="Search here">
-            </form>
-          </li>
           <li class="nav-item dropdown d-none d-lg-block user-dropdown">
             <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
               <img class="img-xs rounded-circle" src="<?php echo url('/'); ?>/images_user/admin.jpg" alt="Profile image"> </a>
@@ -45,12 +39,7 @@
                 <p class="mb-1 mt-3 font-weight-semibold"><?php $admin_name = Session::get('admin_last_name'); echo $admin_name ?></p>
                 <p class="fw-light text-muted mb-0"><?php $admin_email = Session::get('admin_email'); echo $admin_email ?></p>
               </div>
-              <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> Thông tin tài khoản <span class="badge badge-pill badge-danger">1</span></a>
-
               <a class="dropdown-item" href="{{URL::to('/dang-xuat')}}"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Đăng xuất</a>
-              <?php
-                  
-              ?>
             </div>
           </li>
         </ul>

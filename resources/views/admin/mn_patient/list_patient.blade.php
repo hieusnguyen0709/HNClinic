@@ -3,10 +3,11 @@
 <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Danh sách người dùng</h4>
-                  <p class="card-description">
-                    Thông tin người dùng
-                  </p>
+                  <h4 class="card-title">Danh sách bệnh nhân</h4>
+                  <form action="{{URL::to('admin/danh-sach-benh-nhan')}}" style="display:inline; float:right">
+                      <input type="search" class="form-control" name="timkiem" placeholder="Nhập từ khóa" style="width:150px;display:inline">
+                      <input type="submit" value="Tìm kiếm" class="btn btn-primary" style="margin-bottom:7px">
+                  </form>
                   <div class="table-responsive">
                     <table class="table table-striped">
                       <thead>
@@ -18,6 +19,9 @@
                             Ảnh đại diện
                           </th>
                           <th>
+                            Email
+                          </th>
+                          <th>
                             Họ tên
                           </th>
                           <th>
@@ -26,9 +30,7 @@
                           <th>
                             Số điện thoại
                           </th>
-                          <th>
-                            Địa chỉ
-                          </th>
+
                           <th>
                             Thao tác
                           </th>
@@ -40,6 +42,9 @@
                           <td>PT-{{$patient->id}}</td>
                           <td class="py-1">
                           <img src="<?php echo url('/'); ?>/upload_images/{{$patient->picture }}" width="50px" height="50">
+                          </td>
+                          <td>
+                            {{$patient->email }}
                           </td>
                           <td>
                             {{$patient->first_name }} {{$patient->last_name }}
@@ -61,9 +66,7 @@
                           <td>
                           {{$patient->phone }}
                           </td>
-                          <td>
-                          {{$patient->address }}
-                          </td>
+
                           <td>
                             <a href="{{URL::to('/admin/chi-tiet-benh-nhan/'.$patient->id)}}">Xem</a> |
                             <a href="{{URL::to('/admin/sua-benh-nhan/'.$patient->id)}}">Sửa</a> |

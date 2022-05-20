@@ -6,6 +6,9 @@
                             Ảnh đại diện
                           </th>
                           <th>
+                            Email
+                          </th>
+                          <th>
                             Họ tên
                           </th>
                           <th>
@@ -18,9 +21,6 @@
                             Số điện thoại
                           </th>
                           <th>
-                            Địa chỉ
-                          </th>
-                          <th>
                             Thao tác
                           </th>
                         </tr>
@@ -29,7 +29,10 @@
                       @foreach($show_list_user as $key => $user)
                         <tr>
                           <td class="py-1">
-                          <img src="<?php echo url('/'); ?>/upload_images/{{ $user->picture }}" width="50px" height="50">
+                            <img src="<?php echo url('/'); ?>/upload_images/{{ $user->picture }}" width="50px" height="50">
+                          </td>
+                          <td>
+                            {{ $user->email }}
                           </td>
                           <td>
                             {{ $user->first_name }}
@@ -79,9 +82,6 @@
                           </td>
                           <td>
                           {{ $user->phone }}
-                          </td>
-                          <td>
-                          {{ $user->address }}
                           </td>
                           <td>
                             <a href="{{URL::to('/admin/chi-tiet-nguoi-dung/'.$user->id)}}">Xem</a> |

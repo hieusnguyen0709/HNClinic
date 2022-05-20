@@ -13,85 +13,45 @@
                          }
                       ?>
                     </p>
-                  <div class="table-responsive">
-                    <table class="table table-striped">
-                      <thead>
-                        <tr>
-                        <th>
-                            Mã cuộc hẹn
-                        </th>
-                        <th>
-                            Bệnh nhân
-                        </th>
-                          <th>
-                            Số điện thoại
-                          </th>
-                          <th>
-                            Bác sĩ
-                          </th>
-                          <th>
-                            Ngày khám
-                          </th>
-                          <th>
-                            Thời gian
-                          </th>
-                          <th>
-                            Trạng thái
-                          </th>
-                          <th>
-                            Thao tác
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        @foreach($show_list_appointment as $key => $appointment)
-                          <tr>
-                              <td>{{$appointment->appointment_code}}</td>
-                              @if($appointment->full_name)
-                                <td>{{$appointment->full_name}}</td>
-                              @else
-                                <td>{{App\Models\User::where('id',$appointment->patient_id)->value('last_name')}}</td>
-                              @endif
-                              <td>{{$appointment->phone}}</td>
-                              <td>{{App\Models\User::where('id',$appointment->doctor_id)->value('last_name')}}</td>
-                              <td>{{$appointment->date}}</td>
-                              <td>{{$appointment->time}}</td>
-                              @if($appointment->status == 0)
-                              <td>
-                                  <input type="button" value="Chờ duyệt" class="btn btn-primary" style="width:100px;"/>
-                              </td>
-                              @endif
-                              @if($appointment->status == 1)
-                              <td>
-                                  <input type="button" value="Đã duyệt" class="btn btn-success" style="width:100px;"/>
-                              </td>
-                              @endif
-                              @if($appointment->status == 2)
-                              <td>
-                                  <input type="button" value="Đã khám" class="btn btn-secondary" style="width:100px;color:white"/>
-                              </td>
-                              @endif
-                              @if($appointment->status == 3)
-                              <td>
-                                  <input type="button" value="Đã hủy" class="btn btn-danger" style="width:100px;"/>
-                              </td>
-                              @endif
-                              <td>
-                                <a href="{{URL::to('/nhan-vien-y-te/chi-tiet-lich-hen/'.$appointment->schedule_id)}}">Xem</a>
-                                @if($appointment->status == 2)
-
-                                @else
-                                  | <a href="{{URL::to('/admin/sua-lich-hen/'.$appointment->schedule_id)}}">Sửa</a> |
-                                  <a href="{{URL::to('/admin/xoa-lich-hen/'.$appointment->schedule_id)}}">Xóa</a>
-                                @endif
-                              </td>
-                          </tr>
-                        @endforeach
-                      </tbody>
-                    </table>
-                  </div>
+                    <select class="form-control" style="width:150px;display:inline;" name="filter" id="filter" onchange="filterFunction()">
+                      <option disabled selected hidden>Trạng thái</option>
+                      <option value="Chờ duyệt">Chờ duyệt</option>
+                      <option value="1">Đã duyệt</option>
+                      <option value="2">Đã khám</option>
+                      <option value="3">Đã hủy</option>
+                    </select>
+                    <!-- <input type="date" style="width:150px;display:inline; margin-left:10px" name="date" id="date" class="form-control" onchange="dateFunction()"> -->
+                    <form action="{{URL::to('nhan-vien-y-te/danh-sach-lich-hen')}}" style="display:inline; float:right">
+                      <input type="search" class="form-control" name="timkiem" placeholder="Nhập từ khóa" style="width:150px;display:inline">
+                      <input type="submit" value="Tìm kiếm" class="btn btn-primary" style="margin-bottom:7px">
+                    </form>
+                    <div id="show_filter">
+                         @include('receptionist.mn_appointment.filter_list_appointment')
+                    </div>
                 </div>
               </div>
             </div>
+<script>
+      function filterFunction()
+      {
+        var select = document.getElementById('filter');
+        var value = select.options[select.selectedIndex].value;
+        $.ajaxSetup({
+          headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+          });
+        $.ajax({
+          url:"{{URL::to('/nhan-vien-y-te/danh-sach-lich-hen')}}",
+          type:"GET",
+          data:{option:value},
+          success:function(data)
+          {
+            console.log(value);
+            $("#show_filter").html(data);
+          }
+          });
 
+      }
+</script>
 @endsection

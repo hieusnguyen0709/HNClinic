@@ -14,7 +14,7 @@
                       ?>
                     </p>
                     <select class="form-control" style="width:150px;display:inline" name="filter" id="filter" onchange="filterFunction()">
-                      <option disabled selected hidden>Toàn bộ</option>
+                      <option disabled selected hidden>Bác sĩ</option>
                       @foreach($show_list_doctor as $key => $doctor)
                         <option value="{{$doctor->id}}">{{$doctor->last_name}}</option>
                       @endforeach

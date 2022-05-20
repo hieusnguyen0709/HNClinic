@@ -131,9 +131,39 @@ class Receptionistcontroller extends Controller
       }
     }
 
-    public function show_list_appointment()
+    public function show_list_appointment(Request $request)
     {
       $this->AuthLogin();
+      if($request->ajax())
+      {
+         $option = $request->get('option');
+         if(isset($option) && !empty($option))
+         {
+          if($option == 'Chờ duyệt')
+          {
+            $show_list_appointment= DB::table('appointments')->where('status', '0')->get();
+            return view('receptionist.mn_appointment.filter_list_appointment')->with('show_list_appointment',$show_list_appointment);
+          }
+          else
+          {
+            $show_list_appointment= DB::table('appointments')->where('status', $request->get('option'))->get();
+            return view('receptionist.mn_appointment.filter_list_appointment')->with('show_list_appointment',$show_list_appointment);
+          }
+         }
+      }
+      $search = $request->timkiem;
+      if(isset($search))
+      {
+        $show_list_appointment= DB::table('appointments')
+        ->join('users','appointments.patient_id','=','users.id')
+        ->where('appointment_code','like','%'.$search.'%')
+        ->orWhere('first_name','like','%'.$search.'%')
+        ->orWhere('last_name','like','%'.$search.'%')
+        ->orderby('schedule_id','desc')
+        ->get();
+        $manager_show_list_appointment = view('receptionist.mn_appointment.list_appointment')->with('show_list_appointment',$show_list_appointment);
+        return view('receptionist.index')->with('receptionist.mn_appointment.list_appointment',$manager_show_list_appointment);
+      }
       $show_list_appointment= DB::table('appointments')->orderby('schedule_id','desc')->get();
       $manager_show_list_appointment = view('receptionist.mn_appointment.list_appointment')->with('show_list_appointment',$show_list_appointment);
       return view('receptionist.index')->with('receptionist.mn_appointment.list_appointment',$manager_show_list_appointment);
@@ -292,9 +322,23 @@ class Receptionistcontroller extends Controller
       return Redirect::to('/nhan-vien-y-te/them-benh-nhan');;
     }
 
-    public function show_list_patient()
+    public function show_list_patient(Request $request)
     {
       $this->AuthLogin();
+      $search = $request->timkiem;
+      if(isset($search))
+      {
+       $show_list_patient = DB::table('users')
+       ->where('type','0')
+       ->where('last_name','like','%'.$search.'%')
+       ->orWhere('first_name','like','%'.$search.'%')->where('type','0')
+       ->orWhere('phone','like','%'.$search.'%')->where('type','0')
+       ->orWhere('email','like','%'.$search.'%')->where('type','0')
+       ->orWhere('id','like','%'.$search.'%')->where('type','0')
+       ->get();
+       $manager_list_patient = view('receptionist.mn_patient.list_patient')->with('show_list_patient',$show_list_patient);
+       return view('receptionist.index')->with('receptionist.mn_patient.list_patient',$manager_list_patient);
+      }
       $show_list_patient= DB::table('users')->where('type','0')->get();
       $manager_list_patient = view('receptionist.mn_patient.list_patient')->with('show_list_patient',$show_list_patient);
       return view('receptionist.index')->with('receptionist.mn_patient.list_patient',$manager_list_patient);

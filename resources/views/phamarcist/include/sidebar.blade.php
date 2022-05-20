@@ -17,7 +17,7 @@
            <!-- Quản lý xét nghiệm -->
            <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
-              <i class="menu-icon mdi mdi-card-text-outline"></i>
+              <i class="mdi mdi-football-australian" style="font-size: 22px;line-height: 1;margin-right: 1rem;"></i>
               <span class="menu-title">Quản lý thuốc</span>
               <i class="menu-arrow"></i>
             </a>

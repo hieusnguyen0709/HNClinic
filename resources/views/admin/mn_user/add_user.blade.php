@@ -3,7 +3,7 @@
 <div class="col-12 grid-margin">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Thêm người dùng</h4>
+                  <h4 class="card-title">Thêm tài khoản</h4>
                   <form method="post" role="form" action="{{URL::to('/admin/kt-them-nguoi-dung')}}" enctype="multipart/form-data" class="form-sample">
                   {{ csrf_field() }}
                     <p class="card-description">

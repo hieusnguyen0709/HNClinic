@@ -14,10 +14,14 @@
                       ?>
                     </p>
                     <select class="form-control" style="width:150px;display:inline" name="filter" id="filter" onchange="filterFunction()">
-                      <option disabled selected hidden>Toàn bộ</option>
+                      <option disabled selected hidden>Loại thuốc</option>
                       <option value="Bôi">Bôi</option>
                       <option value="Uống">Uống</option>
                     </select>
+                    <form action="{{URL::to('admin/danh-sach-thuoc')}}" style="display:inline; float:right">
+                      <input type="search" class="form-control" name="timkiem" placeholder="Nhập từ khóa" style="width:150px;display:inline">
+                      <input type="submit" value="Tìm kiếm" class="btn btn-primary" style="margin-bottom:7px">
+                    </form>
                     <div id="show_filter">
                          @include('admin.mn_medicine.filter_list_medicine')
                     </div>

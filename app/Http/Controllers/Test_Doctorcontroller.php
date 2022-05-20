@@ -87,14 +87,47 @@ class Test_Doctorcontroller extends Controller
     //Manage Test type
 
     //Manage Test
-    public function require_testing()
+    public function require_testing(Request $request)
     {
         $this->AuthLogin();
+        $show_all_test_type = DB::table('test_type')->get();
+        if($request->ajax())
+        {
+           $option = $request->get('option');
+           if(isset($option) && !empty($option))
+           {
+              $show_require_testing = DB::table('test')
+              ->join('users','test.id_patient','=','users.id')
+              ->join('appointments','appointments.schedule_id','=','test.id_appointment')
+              ->join('test_type','test_type.id_test_type','=','test.id_test_type')
+              ->where('test.id_test_type',$option)
+              ->get();
+              return view('test_doctor.mn_test.filter_require_testing')->with('show_require_testing',$show_require_testing);
+           }
+        }
+        $search = $request->timkiem;
+        if(isset($search))
+        {
+          $show_require_testing = DB::table('test')
+          ->join('users','test.id_patient','=','users.id')
+          ->join('appointments','appointments.schedule_id','=','test.id_appointment')
+          ->join('test_type','test_type.id_test_type','=','test.id_test_type')
+          ->where('first_name','like','%'.$search.'%')
+          ->orWhere('last_name','like','%'.$search.'%')
+          ->orWhere('appointment_code','like','%'.$search.'%')
+          ->get();
+          $manager_show_require_testing = view('test_doctor.mn_test.require_testing')
+          ->with('show_require_testing',$show_require_testing)
+          ->with('show_all_test_type',$show_all_test_type);
+          return view('test_doctor.index')->with('test_doctor.mn_test.require_testing',$manager_show_require_testing);
+        }
         $show_require_testing = DB::table('test')
         ->join('users','test.id_patient','=','users.id')
         ->join('appointments','appointments.schedule_id','=','test.id_appointment')
         ->join('test_type','test_type.id_test_type','=','test.id_test_type')->get();
-        $manager_show_require_testing = view('test_doctor.mn_test.require_testing')->with('show_require_testing',$show_require_testing);
+        $manager_show_require_testing = view('test_doctor.mn_test.require_testing')
+        ->with('show_require_testing',$show_require_testing)
+        ->with('show_all_test_type',$show_all_test_type);
         return view('test_doctor.index')->with('test_doctor.mn_test.require_testing',$manager_show_require_testing);
     }
 

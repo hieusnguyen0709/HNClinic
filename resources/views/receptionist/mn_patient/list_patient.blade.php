@@ -3,14 +3,18 @@
 <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Danh sách người dùng</h4>
-                  <p class="card-description">
-                    Thông tin người dùng
-                  </p>
+                  <h4 class="card-title">Danh sách bệnh nhân</h4>
+                  <form action="{{URL::to('nhan-vien-y-te/danh-sach-benh-nhan')}}" style="display:inline; float:right">
+                      <input type="search" class="form-control" name="timkiem" placeholder="Nhập từ khóa" style="width:150px;display:inline">
+                      <input type="submit" value="Tìm kiếm" class="btn btn-primary" style="margin-bottom:7px">
+                  </form>
                   <div class="table-responsive">
                     <table class="table table-striped">
                       <thead>
                         <tr>
+                          <th>
+                            Mã bệnh nhân
+                          </th>
                           <th>
                             Ảnh đại diện
                           </th>
@@ -34,6 +38,9 @@
                       <tbody>
                      @foreach($show_list_patient as $key => $patient)
                         <tr>
+                          <td>
+                            PT-{{$patient->id }}
+                          </td>
                           <td class="py-1">
                           <img src="<?php echo url('/'); ?>/upload_images/{{$patient->picture }}" width="50px" height="50">
                           </td>

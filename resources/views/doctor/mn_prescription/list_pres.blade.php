@@ -13,43 +13,13 @@
                          }
                       ?>
                     </p>
-                  <div class="table-responsive">
-                    <table class="table table-striped">
-                      <thead>
-                        <tr>
-                        <th>
-                            Mã đơn thuốc
-                        </th>
-                        <th>
-                            Ngày
-                        </th>
-                          <th>
-                            Bác sĩ
-                          </th>
-                          <th>
-                            Bệnh nhân
-                          </th>
-                          <th>
-                            Thao tác
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                      @foreach($medicine_prescription as $key => $m_p)
-                        <tr>
-                          <td>{{$m_p->pre_code_medicine_prescription}}</td>
-                          <td>{{$m_p->date_medicine_prescription}}</td>
-                          <td>{{App\Models\User::where('id',$m_p->doctor_id_medicine_prescription)->value('last_name')}}</td>
-                          <td>{{App\Models\User::where('id',$m_p->patient_id_medicine_prescription)->value('last_name')}}</td>
-                          <td>
-                              <a href="{{URL::to('/bac-si/chi-tiet-don-thuoc/'.$m_p->pre_code_medicine_prescription)}}">Xem</a> |
-                              <a href="{{URL::to('/bac-si/sua-don-thuoc/'.$m_p->pre_code_medicine_prescription)}}">Sửa</a> |
-                              <a href="{{URL::to('/bac-si/xoa-don-thuoc/'.$m_p->pre_code_medicine_prescription)}}">Xóa</a>
-                          </td>
-                        </tr>
-                      @endforeach
-                      </tbody>
-                    </table>
+                  <!-- <input type="date" style="width:150px;display:inline; margin-left:10px" name="date" id="date" class="form-control" onchange="dateFunction()"> -->
+                  <form action="{{URL::to('bac-si/danh-sach-don-thuoc')}}" style="display:inline; float:right">
+                      <input type="search" class="form-control" name="timkiem" placeholder="Nhập từ khóa" style="width:150px;display:inline">
+                      <input type="submit" value="Tìm kiếm" class="btn btn-primary" style="margin-bottom:7px">
+                  </form>
+                  <div id="show_filter">
+                      @include('doctor.mn_prescription.filter_list_pres')
                   </div>
                 </div>
               </div>

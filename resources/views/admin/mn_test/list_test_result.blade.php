@@ -19,6 +19,10 @@
                         <option value="{{$test_type->id_test_type}}">{{$test_type->name_type}}</option>
                        @endforeach
                     </select>
+                    <form action="{{URL::to('admin/yeu-cau-xet-nghiem')}}" style="display:inline; float:right">
+                      <input type="search" class="form-control" name="timkiem" placeholder="Nhập từ khóa" style="width:150px;display:inline">
+                      <input type="submit" value="Tìm kiếm" class="btn btn-primary" style="margin-bottom:7px">
+                    </form>
                     <div id="show_filter">
                          @include('admin.mn_test.filter_list_test_result')
                     </div>

@@ -91,10 +91,19 @@ class Admincontroller extends Controller
               return view('admin.mn_user.filter_list_user')->with('show_list_user',$show_list_user);
           }
        }
-       else
+       $search = $request->timkiem;
+       if(isset($search))
        {
-        $show_list_user = DB::table('users')->get();
+        $show_list_user = DB::table('users')
+        ->where('last_name','like','%'.$search.'%')
+        ->orWhere('first_name','like','%'.$search.'%')
+        ->orWhere('phone','like','%'.$search.'%')
+        ->orWhere('email','like','%'.$search.'%')
+        ->get();
+        $manager_list_user = view('admin.mn_user.list_user')->with('show_list_user',$show_list_user);
+        return view('admin.index')->with('admin.mn_user.list_user',$manager_list_user);
        }
+       $show_list_user = DB::table('users')->get();
        $manager_list_user = view('admin.mn_user.list_user')->with('show_list_user',$show_list_user);
        return view('admin.index')->with('admin.mn_user.list_user',$manager_list_user);
     }
@@ -296,6 +305,16 @@ class Admincontroller extends Controller
               return view('admin.mn_medicine.filter_list_medicine')->with('show_list_medicine',$show_list_medicine);
          }
       }
+      $search = $request->timkiem;
+      if(isset($search))
+      {
+        $show_list_medicine = DB::table('medicines')
+        ->where('name', 'like', '%'.$search.'%')
+        ->orderby('id','asc')
+        ->get();
+        $manager_list_medicine = view('admin.mn_medicine.list_medicine')->with('show_list_medicine',$show_list_medicine);
+        return view('admin.index')->with('admin.mn_medicine.list_medicine',$manager_list_medicine);
+      }
       $show_list_medicine = DB::table('medicines')->orderby('id','asc')->get();
       $manager_list_medicine = view('admin.mn_medicine.list_medicine')->with('show_list_medicine',$show_list_medicine);
       return view('admin.index')->with('admin.mn_medicine.list_medicine',$manager_list_medicine);
@@ -440,9 +459,20 @@ class Admincontroller extends Controller
       }
     }
 
-    public function show_list_pres()
+    public function show_list_pres(Request $request)
     {
       $this->AuthLogin();
+      $search = $request->timkiem;
+      if(isset($search))
+      {
+        $medicine_prescription = DB::table('medicine_prescription')
+        ->join('users','medicine_prescription.patient_id_medicine_prescription','=','users.id')
+        ->where('pre_code_medicine_prescription','like','%'.$search.'%')
+        ->orWhere('first_name','like','%'.$search.'%')
+        ->orWhere('last_name','like','%'.$search.'%')
+        ->get();
+        return view('admin.mn_prescription.list_pres')->with('medicine_prescription',$medicine_prescription);
+      }
       $medicine_prescription = DB::table('medicine_prescription')->get();
       return view('admin.mn_prescription.list_pres')->with('medicine_prescription',$medicine_prescription);
     }
@@ -718,9 +748,23 @@ class Admincontroller extends Controller
       return Redirect::to('/admin/them-benh-nhan');;
     }
 
-    public function show_list_patient()
+    public function show_list_patient(Request $request)
     {
       $this->AuthLogin();
+      $search = $request->timkiem;
+      if(isset($search))
+      {
+       $show_list_patient = DB::table('users')
+       ->where('type','0')
+       ->where('last_name','like','%'.$search.'%')
+       ->orWhere('first_name','like','%'.$search.'%')->where('type','0')
+       ->orWhere('phone','like','%'.$search.'%')->where('type','0')
+       ->orWhere('email','like','%'.$search.'%')->where('type','0')
+       ->orWhere('id','like','%'.$search.'%')->where('type','0')
+       ->get();
+       $manager_list_patient = view('admin.mn_patient.list_patient')->with('show_list_patient',$show_list_patient);
+       return view('admin.index')->with('admin.mn_patient.list_patient',$manager_list_patient);
+      }
       $show_list_patient= DB::table('users')->where('type','0')->get();
       $manager_list_patient = view('admin.mn_patient.list_patient')->with('show_list_patient',$show_list_patient);
       return view('admin.index')->with('admin.mn_patient.list_patient',$manager_list_patient);
@@ -931,10 +975,52 @@ class Admincontroller extends Controller
 
     }
 
-    public function show_list_appointment()
+    public function show_list_appointment(Request $request)
     {
       $this->AuthLogin();
-      $show_list_appointment= DB::table('appointments')->orderby('schedule_id','desc')->get();
+      if($request->ajax())
+      {
+         $option = $request->get('option');
+         if(isset($option) && !empty($option))
+         {
+          if($option == 'Chờ duyệt')
+          {
+            $show_list_appointment= DB::table('appointments')->where('status', '0')->get();
+            return view('admin.mn_appointment.filter.filter_list_appointment')->with('show_list_appointment',$show_list_appointment);
+          }
+          else
+          {
+            $show_list_appointment= DB::table('appointments')->where('status', $request->get('option'))->get();
+            return view('admin.mn_appointment.filter.filter_list_appointment')->with('show_list_appointment',$show_list_appointment);
+          }
+         }
+      }
+      // if($request->ajax())
+      // {
+      //    $date = $request->get('date');
+      //    if(isset($date) && !empty($date))
+      //    {
+      //      echo 'hello';
+      //      $show_list_appointment= DB::table('appointments')->where('date', $request->get('date'))->get();
+      //      return view('admin.mn_appointment.filter.filter_list_appointment')->with('show_list_appointment',$show_list_appointment);
+      //    }
+      // }
+      $search = $request->timkiem;
+      if(isset($search))
+      {
+        $show_list_appointment= DB::table('appointments')
+        ->join('users','appointments.patient_id','=','users.id')
+        ->where('appointment_code','like','%'.$search.'%')
+        ->orWhere('first_name','like','%'.$search.'%')
+        ->orWhere('last_name','like','%'.$search.'%')
+        ->orderby('schedule_id','desc')
+        ->get();
+        $manager_show_list_appointment = view('admin.mn_appointment.list_appointment')->with('show_list_appointment',$show_list_appointment);
+        return view('admin.index')->with('admin.mn_appointment.list_appointment',$manager_show_list_appointment);
+      }
+      $show_list_appointment= DB::table('appointments')
+      ->join('users','appointments.patient_id','=','users.id')
+      ->orderby('schedule_id','desc')->get();
       $manager_show_list_appointment = view('admin.mn_appointment.list_appointment')->with('show_list_appointment',$show_list_appointment);
       return view('admin.index')->with('admin.mn_appointment.list_appointment',$manager_show_list_appointment);
     }
@@ -1224,7 +1310,7 @@ class Admincontroller extends Controller
 
         public function require_testing_pres($schedule_id)
         {
-          $this->AuthLogin();
+            $this->AuthLogin();
             $info_appointment= DB::table('appointments')->where('schedule_id',$schedule_id)->get();
             $test_type= DB::table('test_type')->orderby('id_test_type','desc')->get();
             return view('admin.mn_test.require_testing_pres')
@@ -1232,8 +1318,8 @@ class Admincontroller extends Controller
             ->with('test_type',$test_type);
         }
         
-            public function check_require_testing_pres($schedule_id,Request $request)
-            {
+        public function check_require_testing_pres($schedule_id,Request $request)
+        {
               $this->AuthLogin();
               $id_doctor = $request->id_doctor;
               $schedule_id = $request->schedule_id;
@@ -1265,7 +1351,7 @@ class Admincontroller extends Controller
         
               Session::put('message','Yêu cầu xét nghiệm thành công');
               return Redirect::to('/admin/xem-don-thuoc/'.$schedule_id);
-            }
+        }
     
         public function test_result(Request $request)
         {
@@ -1284,6 +1370,22 @@ class Admincontroller extends Controller
                 ->get();
                 return view('admin.mn_test.filter_list_test_result')->with('show_require_testing',$show_require_testing);
              }
+          }
+          $search = $request->timkiem;
+          if(isset($search))
+          {
+            $show_require_testing = DB::table('test')
+            ->join('users','test.id_patient','=','users.id')
+            ->join('appointments','appointments.schedule_id','=','test.id_appointment')
+            ->join('test_type','test_type.id_test_type','=','test.id_test_type')
+            ->where('first_name','like','%'.$search.'%')
+            ->orWhere('last_name','like','%'.$search.'%')
+            ->orWhere('appointment_code','like','%'.$search.'%')
+            ->get();
+            $manager_show_require_testing = view('admin.mn_test.list_test_result')
+            ->with('show_require_testing',$show_require_testing)
+            ->with('show_all_test_type',$show_all_test_type);
+            return view('admin.index')->with('admin.mn_test.list_test_result',$manager_show_require_testing);
           }
           $show_require_testing = DB::table('test')
           ->join('users','test.id_patient','=','users.id')
