@@ -43,7 +43,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Mã bệnh nhân</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control timepicker" value="PT-1999" readonly/>
+                            <input type="text" class="form-control timepicker" value="PT-{{$patient->id}}" readonly/>
                           </div>
                         </div>
                       </div>
