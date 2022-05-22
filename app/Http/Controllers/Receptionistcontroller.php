@@ -290,36 +290,45 @@ class Receptionistcontroller extends Controller
     public function check_add_patient(request $request)
     {
       $this->AuthLogin();
-      $data = array();
-      $data['email'] = $request->email;
-      $data['password'] = $request->password;
-      $data['first_name'] = $request->first_name;
-      $data['last_name'] = $request->last_name;
-      $data['address'] = $request->address;
-      $data['birth_date'] = $request->birth_date;
-      $data['gender'] = $request->gender;
-      $data['phone'] = $request->phone;
-      $data['emergency'] = '0';
-      $data['type'] = '0';
-      $data['specialist'] = '0';
-      $data['blood_group'] = '0';
-
-    	$get_image = $request->file('image');
-    	if($get_image)
-    	{
-    		$get_name_image = $get_image->getClientOriginalName();
-    		$name_image = current(explode('.',$get_name_image));
-    		$new_image = $name_image.rand(0,99).'.'.$get_image->getClientOriginalExtension();
-    		$get_image->move('upload_images',$new_image);
-    		$data['picture'] = $new_image;
-    		DB::table('users')->insert($data);
-	    	Session::put('message','Thêm bệnh nhân thành công');
-	    	return Redirect::to('/admin/them-benh-nhan');
-    	}
-      $data['picture'] = '0';
-      DB::table('users')->insert($data);
-      Session::put('message','Thêm bệnh nhân thành công');
-      return Redirect::to('/nhan-vien-y-te/them-benh-nhan');;
+      $query_email = DB::table('users')->where('email',$request->email)->first();
+      if(isset($query_email))
+      {
+          Session::put('check_email_message','Tên đăng nhập bị trùng, vui lòng chọn tên khác !');
+          return Redirect::back();
+      }
+      else
+      {
+        $data = array();
+        $data['email'] = $request->email;
+        $data['password'] = $request->password;
+        $data['first_name'] = $request->first_name;
+        $data['last_name'] = $request->last_name;
+        $data['address'] = $request->address;
+        $data['birth_date'] = $request->birth_date;
+        $data['gender'] = $request->gender;
+        $data['phone'] = $request->phone;
+        $data['emergency'] = '0';
+        $data['type'] = '0';
+        $data['specialist'] = '0';
+        $data['blood_group'] = '0';
+  
+        $get_image = $request->file('image');
+        if($get_image)
+        {
+          $get_name_image = $get_image->getClientOriginalName();
+          $name_image = current(explode('.',$get_name_image));
+          $new_image = $name_image.rand(0,99).'.'.$get_image->getClientOriginalExtension();
+          $get_image->move('upload_images',$new_image);
+          $data['picture'] = $new_image;
+          DB::table('users')->insert($data);
+          Session::put('message','Thêm bệnh nhân thành công');
+          return Redirect::to('/admin/them-benh-nhan');
+        }
+        $data['picture'] = '0';
+        DB::table('users')->insert($data);
+        Session::put('message','Thêm bệnh nhân thành công');
+        return Redirect::to('/nhan-vien-y-te/them-benh-nhan');;
+      }
     }
 
     public function show_list_patient(Request $request)
@@ -400,6 +409,46 @@ class Receptionistcontroller extends Controller
       DB::table('users')->where('id',$id)->delete();
       Session::put('message','Xóa bệnh nhân thành công');
       return Redirect::back();
+    }
+
+    public function patient_test_result($id)
+    {
+      $query_patient = DB::table('users')->where('id',$id)->get();
+      $show_require_testing = DB::table('test')
+      ->join('users','test.id_patient','=','users.id')
+      ->join('appointments','appointments.schedule_id','=','test.id_appointment')
+      ->join('test_type','test_type.id_test_type','=','test.id_test_type')->where('users.id',$id)->get();
+      $manager_show_require_testing = view('receptionist.mn_patient.test_result')
+      ->with('show_require_testing',$show_require_testing)
+      ->with('query_patient',$query_patient);
+      return view('receptionist.index')->with('receptionist.mn_patient.test_result',$manager_show_require_testing);
+
+    }
+
+    public function patient_case_histories($id)
+    {
+      $query_patient = DB::table('users')->where('id',$id)->get();
+      $medicine_prescription = DB::table('medicine_prescription')->where('patient_id_medicine_prescription',$id)->get();
+      return view('receptionist.mn_patient.case_histories')
+      ->with('query_patient',$query_patient)
+      ->with('medicine_prescription',$medicine_prescription);
+    }
+
+    public function detail_pres_by_pres_code($pre_code_medicine_prescription)
+    {
+      $this->AuthLogin();
+      $detail_pres_by_pres_code = DB::table('prescriptions')
+      ->join('medicine_prescription','medicine_prescription.pre_code_medicine_prescription','=','prescriptions.pre_code')
+      ->where('pre_code_medicine_prescription',$pre_code_medicine_prescription)
+      ->limit(1)->get();
+      $medicine_instruction =DB::table('prescriptions')
+      ->join('medicine_prescription','medicine_prescription.pre_code_medicine_prescription','=','prescriptions.pre_code')
+      ->join('medicines','medicines.id','=','prescriptions.medicine_id')
+      ->where('pre_code_medicine_prescription',$pre_code_medicine_prescription)
+      ->get();
+      return view('receptionist.mn_patient.detail_pres_by_pres_code')
+      ->with('detail_pres_by_pres_code',$detail_pres_by_pres_code)
+      ->with('medicine_instruction',$medicine_instruction);
     }
     //Manage Patient
 }

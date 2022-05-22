@@ -5,7 +5,7 @@
             <a class="nav-link" href="{{URL::to('/duoc-si')}}">
               <i class="mdi mdi-grid-large menu-icon"></i>
               <!-- Trang chủ -->
-              <span class="menu-title">Trang chủ</span>
+              <span class="menu-title">Tổng quan</span>
               <!-- Trang chủ -->
             </a>
           </li>

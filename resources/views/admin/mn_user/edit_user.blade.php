@@ -3,7 +3,7 @@
 <div class="col-12 grid-margin">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Sửa thông tin người dùng</h4>
+                  <h4 class="card-title">Sửa thông tin tài khoản</h4>
                   @foreach($edit_user as $key => $edit_value)
                   <form method="post" role="form" action="{{URL::to('/admin/kt-sua-nguoi-dung/'.$edit_value->id)}}" enctype="multipart/form-data" class="form-sample">
                   {{ csrf_field() }}
@@ -15,6 +15,12 @@
                              echo '<center><span class="text-success">'.$message.'</span></center>';
                              Session::put('message',null);
                          }
+                         $check_email_message = Session::get('check_email_message');
+                         if($check_email_message)
+                         {
+                             echo '<center><span class="text-danger">'.$check_email_message.'</span></center>';
+                             Session::put('check_email_message',null);
+                         }
                       ?>
                     </p>
                     <div class="row">
@@ -22,7 +28,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Họ đệm</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" name="first_name" value="{{ $edit_value->first_name }}"/>
+                            <input type="text" class="form-control" name="first_name" value="{{ $edit_value->first_name }}" required/>
                           </div>
                         </div>
                       </div>
@@ -30,7 +36,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Tên</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" name="last_name" value="{{ $edit_value->last_name }}"/>
+                            <input type="text" class="form-control" name="last_name" value="{{ $edit_value->last_name }}" required/>
                           </div>
                         </div>
                       </div>
@@ -41,7 +47,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Tên đăng nhập</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" name="email" value="{{ $edit_value->email }}"/>
+                            <input type="text" class="form-control" name="email" value="{{ $edit_value->email }}" required/>
                           </div>
                         </div>
                       </div>
@@ -49,7 +55,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Mật khẩu</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" name="password" value="{{ $edit_value->password }}" />
+                            <input type="text" class="form-control" name="password" value="{{ $edit_value->password }}" required/>
                           </div>
                         </div>
                       </div>
@@ -60,7 +66,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Địa chỉ</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" name="address" value="{{ $edit_value->address }}"/>
+                            <input type="text" class="form-control" name="address" value="{{ $edit_value->address }}" required/>
                           </div>
                         </div>
                       </div>
@@ -68,7 +74,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Ngày sinh</label>
                           <div class="col-sm-9">
-                            <input type="date" class="form-control" name="birth_date" value="{{ $edit_value->birth_date }}"/>
+                            <input type="date" class="form-control" name="birth_date" value="{{ $edit_value->birth_date }}" required/>
                           </div>
                         </div>
                       </div>
@@ -183,7 +189,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Số điện thoại</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" name="phone" value="{{ $edit_value->phone }}"/>
+                            <input type="text" class="form-control" name="phone" value="{{ $edit_value->phone }}" required/>
                           </div>
                         </div>
                       </div>
@@ -197,7 +203,7 @@
                         </div>
                       </div>
                     </div>
-                    <center><button type="submit" name="submit" class="btn btn-primary me-2">Sửa người dùng</button></center>
+                    <center><button type="submit" name="submit" class="btn btn-primary me-2">Sửa tài khoản</button></center>
                   </form>
                   @endforeach
                 </div>

@@ -2,7 +2,7 @@
 @section('user_content')
 <section class="ftco-section contact-section ftco-degree-bg">
       <div class="container">
-        <h1>Thông tin cá nhân</h1>
+        <h1>Thông tin cá nhân</h1><br>
         <div class="row block-9">
           <div class="col-md-6 pr-md-5">
             <form action="#">
@@ -11,6 +11,18 @@
             <label class="col-sm-3 col-form-label">Ảnh đại diện</label>
                 <div class="col-sm-9">
                 <img src="<?php echo url('/'); ?>/upload_images/{{ $pro->picture }}" width="50px" height="50">
+                </div>
+            </div>
+            <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Email</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" placeholder="{{$pro->email}}" readonly/>
+                </div>
+            </div>
+            <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Mật khẩu</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" placeholder="********" readonly/>
                 </div>
             </div>
             <div class="form-group row">
@@ -61,6 +73,6 @@
             @endforeach
             </form>
           </div>
-    </div>
+        </div>
 </section>
 @endsection

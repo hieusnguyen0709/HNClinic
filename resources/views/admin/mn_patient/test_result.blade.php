@@ -1,4 +1,20 @@
-                  <div class="table-responsive">
+@extends('admin.index')
+@section('admin_content')
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Kết quả xét nghiệm - @foreach($query_patient as $key => $patient) {{$patient->last_name}} @endforeach</h4>
+                  <?php
+                         $message = Session::get('message');
+                         if($message)
+                         {
+                             echo '<center><span class="text-success">'.$message.'</span></center>';
+                             Session::put('message',null);
+                         }
+                      ?>
+                    </p>
+                    <div id="show_filter">
+                    <div class="table-responsive">
                     <table class="table table-striped">
                       <thead>
                         <tr>
@@ -38,8 +54,7 @@
                                   <input type="button" value="Chờ xét nghiệm" class="btn btn-primary" style="width:150px;"/>
                               </td>
                               <td>
-                                <a href="{{URL::to('/admin/nhap-ket-qua-xet-nghiem/'.$require_testing->id_test)}}" class="btn btn-dark" style="width:150px;">Nhập kết quả</a>
-                              </td>
+                              <input type="button" value="Chưa có kết quả" class="btn btn-danger" style="width:150px;"/>
                             @endif
                             @if($require_testing->test_status == 1)
                               <td>
@@ -52,3 +67,8 @@
                       </tbody>
                     </table>
                   </div>
+                </div>
+                </div>
+              </div>
+            </div>
+@endsection

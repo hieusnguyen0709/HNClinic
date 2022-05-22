@@ -22,7 +22,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Tên thuốc</label>
                           <div class="col-sm-9">
-                          <input type="text" class="form-control" name="name" value="{{$medicine->name}}">
+                          <input type="text" class="form-control" name="name" value="{{$medicine->name}}" required>
                           </div>
                         </div>
                       </div>
@@ -30,7 +30,12 @@
                       <div class="form-group row">
                       <label class="col-sm-3 col-form-label">Đơn vị</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" name="unit" value="{{$medicine->unit}}">
+                            <!-- <input type="text" class="form-control" name="unit" value="{{$medicine->unit}}"> -->
+                            <select class="form-control" name="unit" value="{{$medicine->unit}}">
+                              <option value="Tuýp">Tuýp</option>
+                              <option value="Lọ">Lọ</option>
+                              <option value="Viên">Viên</option>
+                          </select>
                           </div>
                         </div>
                       </div>
@@ -40,7 +45,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Số lượng</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control timepicker" name="quantity" value="{{$medicine->quantity}}">
+                            <input type="text" class="form-control timepicker" name="quantity" value="{{$medicine->quantity}}" required>
                           </div>
                         </div>
                       </div>

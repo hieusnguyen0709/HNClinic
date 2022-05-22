@@ -8,6 +8,15 @@
                       <input type="search" class="form-control" name="timkiem" placeholder="Nhập từ khóa" style="width:150px;display:inline">
                       <input type="submit" value="Tìm kiếm" class="btn btn-primary" style="margin-bottom:7px">
                   </form>
+                  <?php
+                         $message = Session::get('message');
+                         if($message)
+                         {
+                             echo '<center><span class="text-success">'.$message.'</span></center>';
+                             Session::put('message',null);
+                         }
+                      ?>
+                    </p>
                   <div class="table-responsive">
                     <table class="table table-striped">
                       <thead>
@@ -19,6 +28,9 @@
                             Ảnh đại diện
                           </th>
                           <th>
+                            Email
+                          </th>
+                          <th>
                             Họ tên
                           </th>
                           <th>
@@ -26,9 +38,6 @@
                           </th>
                           <th>
                             Số điện thoại
-                          </th>
-                          <th>
-                            Địa chỉ
                           </th>
                           <th>
                             Thao tác
@@ -43,6 +52,9 @@
                           </td>
                           <td class="py-1">
                           <img src="<?php echo url('/'); ?>/upload_images/{{$patient->picture }}" width="50px" height="50">
+                          </td>
+                          <td>
+                          {{$patient->email }}
                           </td>
                           <td>
                             {{$patient->first_name }} {{$patient->last_name }}
@@ -64,9 +76,7 @@
                           <td>
                           {{$patient->phone }}
                           </td>
-                          <td>
-                          {{$patient->address }}
-                          </td>
+
                           <td>
                             <a href="{{URL::to('/nhan-vien-y-te/chi-tiet-benh-nhan/'.$patient->id)}}">Xem</a> |
                             <a href="{{URL::to('/nhan-vien-y-te/sua-benh-nhan/'.$patient->id)}}">Sửa</a> |

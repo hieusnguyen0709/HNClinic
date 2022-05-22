@@ -81,8 +81,8 @@
                       </div>
                     </div>
                     <center>
-                          <a class="btn btn-success me-2" href="{{URL::to('/admin/xoa-benh-nhan/')}}">Kết quả xét nghiệm</a>
-                          <a class="btn btn-primary me-2" href="{{URL::to('/admin/xoa-benh-nhan/')}}">Hồ sơ bệnh án</a>
+                          <a class="btn btn-success me-2" href="{{URL::to('/admin/bn-ket-qua-xet-nghiem/'.$patient->id)}}">Kết quả xét nghiệm</a>
+                          <a class="btn btn-primary me-2" href="{{URL::to('/admin/bn-ho-so-benh-an/'.$patient->id)}}">Hồ sơ bệnh án</a>
                     </center>
                   </form>
                   @endforeach

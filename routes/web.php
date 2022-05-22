@@ -99,6 +99,8 @@ Route::get('/admin/chi-tiet-benh-nhan/{id}',[AdminController::class, 'detail_pat
 Route::get('/admin/sua-benh-nhan/{id}',[AdminController::class, 'edit_patient'])->name('edit_patient');
 Route::post('/admin/kt-sua-benh-nhan/{id}',[AdminController::class, 'check_edit_patient'])->name('check_edit_patient');
 Route::get('/admin/xoa-benh-nhan/{id}',[AdminController::class, 'delete_patient'])->name('delete_patient');
+Route::get('/admin/bn-ket-qua-xet-nghiem/{id}',[AdminController::class, 'patient_test_result'])->name('patient_test_result');
+Route::get('/admin/bn-ho-so-benh-an/{id}',[AdminController::class, 'patient_case_histories'])->name('patient_case_histories');
 //Admin - Manage Test Type
 Route::get('/admin/them-loai-xet-nghiem',[AdminController::class, 'add_test_type'])->name('add_test_type');
 Route::post('/admin/kt-them-loai-xet-nghiem',[AdminController::class, 'check_add_test_type'])->name('check_add_test_type');
@@ -181,7 +183,9 @@ Route::get('/nhan-vien-y-te/chi-tiet-benh-nhan/{id}',[Receptionistcontroller::cl
 Route::get('/nhan-vien-y-te/sua-benh-nhan/{id}',[Receptionistcontroller::class, 'edit_patient'])->name('edit_patient');
 Route::post('/nhan-vien-y-te/kt-sua-benh-nhan/{id}',[Receptionistcontroller::class, 'check_edit_patient'])->name('check_edit_patient');
 Route::get('/nhan-vien-y-te/xoa-benh-nhan/{id}',[Receptionistcontroller::class, 'delete_patient'])->name('delete_patient');
-
+Route::get('/nhan-vien-y-te/bn-ket-qua-xet-nghiem/{id}',[Receptionistcontroller::class, 'patient_test_result'])->name('patient_test_result_receptionist');
+Route::get('/nhan-vien-y-te/bn-ho-so-benh-an/{id}',[Receptionistcontroller::class, 'patient_case_histories'])->name('patient_case_histories_receptionist');
+Route::get('/nhan-vien-y-te/chi-tiet-don-thuoc/{pre_code_medicine_prescription}',[Receptionistcontroller::class, 'detail_pres_by_pres_code'])->name('detail_pres_by_pres_code_receptionist');
 //Test Doctor
 Route::get('/bac-si-xet-nghiem',[Test_Doctorcontroller::class, 'index'])->name('test_doctor');
 //Test Doctor - Manage Test Type

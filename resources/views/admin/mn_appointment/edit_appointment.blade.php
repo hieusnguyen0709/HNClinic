@@ -45,7 +45,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Email</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" name="email" value="{{$appointment->email}}"/>
+                            <input type="text" class="form-control" name="email" value="{{$appointment->email}}" required/>
                           </div>
                         </div>
                       </div>
@@ -56,7 +56,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Ngày sinh</label>
                           <div class="col-sm-9">
-                            <input type="date" class="form-control" name="birth_date" value="{{$appointment->birth_date}}"/>
+                            <input type="date" class="form-control" name="birth_date" value="{{$appointment->birth_date}}" required/>
                           </div>
                         </div>
                       </div>
@@ -64,7 +64,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Số điện thoại</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" name="phone" value="{{$appointment->phone}}"/>
+                            <input type="text" class="form-control" name="phone" value="{{$appointment->phone}}" required/>
                           </div>
                         </div>
                       </div>
@@ -91,7 +91,7 @@
                       <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Triệu chứng</label>
                           <div class="col-sm-9">
-                            <textarea name="symptoms" class="form-control">{{$appointment->symptoms}} </textarea>
+                            <textarea name="symptoms" class="form-control" required>{{$appointment->symptoms}} </textarea>
                           </div>
                        </div>
                       </div>
@@ -121,7 +121,7 @@
                           <div class="form-group">
                             <label class="text-black">Ngày<span id="show_day"><input type="text" date="{{$appointment->date}}" value="{{$appointment->date}}" name="date" readonly required style="border:1px solid white;font-size:17px;font-weight:bold; margin-left:108px"></span></label><br>
                               @include('admin.mn_appointment.schedule')
-                              
+
                           </div>
                         </div>
                       </div>

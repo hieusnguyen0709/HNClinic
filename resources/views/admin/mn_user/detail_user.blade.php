@@ -3,7 +3,7 @@
 <div class="col-md-6 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Chi tiết người dùng</h4>
+                  <h4 class="card-title">Thông tin tài khoản</h4>
                   @foreach($detail_user as $key => $detail_value)
                   <form class="forms-sample">
                   <div class="form-group row">

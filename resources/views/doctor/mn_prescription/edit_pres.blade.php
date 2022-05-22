@@ -67,7 +67,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Ngày</label>
                           <div class="col-sm-9">
-                            <input type="date" class="form-control timepicker" name="date" value="{{$pres->date}}"/>
+                            <input type="date" class="form-control timepicker" name="date" value="{{$pres->date}}" required/>
                           </div>
                         </div>
                       </div>
@@ -75,7 +75,7 @@
                       <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Triệu chứng</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control timepicker" name="symptoms" value="{{$pres->symptoms}}"/>
+                            <input type="text" class="form-control timepicker" name="symptoms" value="{{$pres->symptoms}}" required/>
                           </div>
                         </div>
                       </div>
@@ -85,7 +85,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Lời khuyên</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control timepicker" name="advice" value="{{$pres->advice}}"/>
+                            <input type="text" class="form-control timepicker" name="advice" value="{{$pres->advice}}" required/>
                           </div>
                         </div>
                       </div>
@@ -93,7 +93,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Chẩn đoán</label>
                           <div class="col-sm-9">
-                          <input type="text" class="form-control timepicker"  name="diagnosis" value="{{$pres->diagnosis}}"/>
+                          <input type="text" class="form-control timepicker"  name="diagnosis" value="{{$pres->diagnosis}}" required/>
                           </div>
                         </div>
                       </div>
@@ -123,7 +123,7 @@
                             <div class="form-group row">
                               <label class="col-sm-3 col-form-label">Cách dùng</label>
                               <div class="col-sm-9">
-                                <input type="text" class="form-control timepicker" name="instruction[]" value="{{$m_i->pre_instruction}}"/>
+                                <input type="text" class="form-control timepicker" name="instruction[]" required value="{{$m_i->pre_instruction}}"/>
                               </div>
                             </div>
                         </div>
@@ -133,7 +133,7 @@
                           <div class="form-group row" >
                               <label class="col-sm-3 col-form-label">Số lượng</label>
                               <div class="col-sm-9">
-                                <input type="number" class="form-control timepicker" name="quantity[]" value="{{$m_i->pre_quantity}}"/>
+                                <input type="number" class="form-control timepicker" name="quantity[]" required value="{{$m_i->pre_quantity}}"/>
                               </div>
                           </div>
                         </div>
@@ -141,7 +141,7 @@
                             <div class="form-group row">
                               <label class="col-sm-3 col-form-label">Số ngày uống</label>
                               <div class="col-sm-9">
-                              <input type="number" class="form-control timepicker" name="total_days[]" value="{{$m_i->total_days}}"/>
+                              <input type="number" class="form-control timepicker" name="total_days[]" required value="{{$m_i->total_days}}"/>
                               </div>
                             </div>
                         </div>

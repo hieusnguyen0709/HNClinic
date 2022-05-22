@@ -52,7 +52,7 @@
                             @php
                               $date = date('y/m/d');
                             @endphp
-                            <input type="date" class="form-control timepicker" name="date"/>
+                              <input type="text" class="form-control timepicker" name="date" value="{{$date}}" readonly/>
                           </div>
                         </div>
                       </div>
@@ -60,7 +60,7 @@
                       <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Triệu chứng</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control timepicker" name="symptoms"/>
+                            <input type="text" class="form-control timepicker" name="symptoms" required/>
                           </div>
                         </div>
                       </div>
@@ -70,7 +70,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Lời khuyên</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control timepicker" name="advice"/>
+                            <input type="text" class="form-control timepicker" name="advice" required/>
                           </div>
                         </div>
                       </div>
@@ -78,7 +78,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Chẩn đoán</label>
                           <div class="col-sm-9">
-                          <input type="text" class="form-control timepicker" name="diagnosis"/>
+                          <input type="text" class="form-control timepicker" name="diagnosis" required/>
                           </div>
                         </div>
                       </div>
@@ -117,7 +117,7 @@
                             <div class="form-group row">
                               <label class="col-sm-3 col-form-label">Cách dùng</label>
                               <div class="col-sm-9">
-                                <input type="text" class="form-control timepicker" name="instruction[]"/>
+                                <input type="text" class="form-control timepicker" name="instruction[]" required/>
                               </div>
                             </div>
                         </div>
@@ -127,7 +127,7 @@
                           <div class="form-group row" >
                               <label class="col-sm-3 col-form-label">Số lượng</label>
                               <div class="col-sm-9">
-                                <input type="number" class="form-control timepicker" name="quantity[]" id="quantity"/>
+                                <input type="number" class="form-control timepicker" name="quantity[]" id="quantity" required/>
                               </div>
                           </div>
                         </div>
@@ -135,7 +135,7 @@
                             <div class="form-group row">
                               <label class="col-sm-3 col-form-label">Số ngày uống</label>
                               <div class="col-sm-9">
-                              <input type="number" class="form-control timepicker" name="total_days[]" id="total_days"/>
+                              <input type="number" class="form-control timepicker" name="total_days[]" id="total_days" required/>
                               </div>
                             </div>
                         </div>
@@ -181,7 +181,7 @@
               function recheckFunction()
               {
                 // console.log('hello');
-                text='<input type="date" class="form-control timepicker" name="recheck"/>';
+                text='<input type="date" class="form-control timepicker" name="recheck" required/>';
                 $('#show_recheck').html(text);
               }
             </script>

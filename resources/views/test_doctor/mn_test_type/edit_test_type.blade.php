@@ -23,7 +23,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Tên loại</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control timepicker" name="name_type" value="{{$test_type->name_type}}"/>
+                            <input type="text" class="form-control timepicker" name="name_type" value="{{$test_type->name_type}}" required/>
                           </div>
                         </div>
                       </div>

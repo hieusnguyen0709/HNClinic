@@ -40,15 +40,24 @@ class Phamarcistcontroller extends Controller
     public function check_add_medicine(Request $request)
     {
       $this->AuthLogin();
-      $data = array();
-      $data['name'] = $request->name;
-      $data['instruction'] = $request->instruction;
-      $data['unit'] = $request->unit;
-      $data['quantity'] = $request->quantity;
-      $data['category'] = $request->category;
-      DB::table('medicines')->insert($data);
-      Session::put('message','Thêm thuốc thành công');
-      return Redirect::to('/duoc-si/them-thuoc');
+      $query_medicine = DB::table('medicines')->where('name',$request->name)->first();
+      if(isset($query_medicine))
+      {
+          Session::put('check_medicine_message','Tên thuốc bị trùng, vui lòng nhập tên khác !');
+          return Redirect::back();
+      }
+      else
+      {
+        $data = array();
+        $data['name'] = $request->name;
+        $data['instruction'] = $request->instruction;
+        $data['unit'] = $request->unit;
+        $data['quantity'] = $request->quantity;
+        $data['category'] = $request->category;
+        DB::table('medicines')->insert($data);
+        Session::put('message','Thêm thuốc thành công');
+        return Redirect::to('/duoc-si/them-thuoc');
+      }
     }
 
     public function show_list_medicine(Request $request)

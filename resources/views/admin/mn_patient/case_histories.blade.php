@@ -1,4 +1,19 @@
-                  <div class="table-responsive">
+@extends('admin.index')
+@section('admin_content')
+<div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Danh sách đơn thuốc - @foreach($query_patient as $key => $patient) {{$patient->last_name}} @endforeach</h4>
+                  <?php
+                         $message = Session::get('message');
+                         if($message)
+                         {
+                             echo '<center><span class="text-success">'.$message.'</span></center>';
+                             Session::put('message',null);
+                         }
+                      ?>
+                    </p>
+                    <div class="table-responsive">
                     <table class="table table-striped">
                       <thead>
                         <tr>
@@ -27,12 +42,14 @@
                           <td>{{App\Models\User::where('id',$m_p->doctor_id_medicine_prescription)->value('last_name')}}</td>
                           <td>{{App\Models\User::where('id',$m_p->patient_id_medicine_prescription)->value('last_name')}}</td>
                           <td>
-                              <a href="{{URL::to('/admin/chi-tiet-don-thuoc/'.$m_p->pre_code_medicine_prescription)}}">Xem</a> |
-                              <a href="{{URL::to('/admin/sua-don-thuoc/'.$m_p->pre_code_medicine_prescription)}}">Sửa</a> |
-                              <a href="{{URL::to('/admin/xoa-don-thuoc/'.$m_p->pre_code_medicine_prescription)}}">Xóa</a>
+                              <a href="{{URL::to('/admin/chi-tiet-don-thuoc/'.$m_p->pre_code_medicine_prescription)}}">Xem</a>
                           </td>
                         </tr>
                       @endforeach
                       </tbody>
                     </table>
                   </div>
+                </div>
+              </div>
+            </div>
+@endsection

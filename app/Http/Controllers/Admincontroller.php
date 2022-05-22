@@ -46,37 +46,45 @@ class Admincontroller extends Controller
     public function check_add_user(Request $request)
     {
       $this->AuthLogin();
-      $data = array();
-      $data['email'] = $request->email;
-      $data['password'] = $request->password;
-      $data['first_name'] = $request->first_name;
-      $data['last_name'] = $request->last_name;
-      $data['address'] = $request->address;
-      $data['birth_date'] = $request->birth_date;
-      $data['gender'] = $request->gender;
-      $data['phone'] = $request->phone;
-      $data['emergency'] = '0';
-      $data['type'] = $request->type;
-      $data['specialist'] = '0';
-      $data['blood_group'] = '0';
-
-    	$get_image = $request->file('image');
-    	if($get_image)
-    	{
-    		$get_name_image = $get_image->getClientOriginalName();
-    		$name_image = current(explode('.',$get_name_image));
-    		$new_image = $name_image.rand(0,99).'.'.$get_image->getClientOriginalExtension();
-    		$get_image->move('upload_images',$new_image);
-    		$data['picture'] = $new_image;
-    		DB::table('users')->insert($data);
-	    	Session::put('message','Thêm người dùng thành công');
-	    	return Redirect::to('/admin/them-nguoi-dung');
-    	}
-       $data['picture'] = '0';
-       DB::table('users')->insert($data);
-       Session::put('message','Thêm người dùng thành công');
-       return Redirect::to('/admin/them-nguoi-dung');
-
+      $query_email = DB::table('users')->where('email',$request->email)->first();
+      if(isset($query_email))
+      {
+          Session::put('check_email_message','Tên đăng nhập bị trùng, vui lòng chọn tên khác !');
+          return Redirect::back();
+      }
+      else
+      {
+        $data = array();
+        $data['email'] = $request->email;
+        $data['password'] = $request->password;
+        $data['first_name'] = $request->first_name;
+        $data['last_name'] = $request->last_name;
+        $data['address'] = $request->address;
+        $data['birth_date'] = $request->birth_date;
+        $data['gender'] = $request->gender;
+        $data['phone'] = $request->phone;
+        $data['emergency'] = '0';
+        $data['type'] = $request->type;
+        $data['specialist'] = '0';
+        $data['blood_group'] = '0';
+  
+        $get_image = $request->file('image');
+        if($get_image)
+        {
+          $get_name_image = $get_image->getClientOriginalName();
+          $name_image = current(explode('.',$get_name_image));
+          $new_image = $name_image.rand(0,99).'.'.$get_image->getClientOriginalExtension();
+          $get_image->move('upload_images',$new_image);
+          $data['picture'] = $new_image;
+          DB::table('users')->insert($data);
+          Session::put('message','Thêm người dùng thành công');
+          return Redirect::to('/admin/them-nguoi-dung');
+        }
+         $data['picture'] = '0';
+         DB::table('users')->insert($data);
+         Session::put('message','Thêm người dùng thành công');
+         return Redirect::to('/admin/them-nguoi-dung');
+      }
     }
 
     public function show_list_user(Request $request)
@@ -127,35 +135,44 @@ class Admincontroller extends Controller
     public function check_edit_user(Request $request, $id)
     {
       $this->AuthLogin();
-      $data = array();
-      $data['email'] = $request->email;
-      $data['password'] = $request->password;
-      $data['first_name'] = $request->first_name;
-      $data['last_name'] = $request->last_name;
-      $data['address'] = $request->address;
-      $data['birth_date'] = $request->birth_date;
-      $data['gender'] = $request->gender;
-      $data['phone'] = $request->phone;
-      $data['emergency'] = '0';
-      $data['type'] = $request->type;
-      $data['specialist'] = '0';
-      $data['blood_group'] = '0';
-
-      $get_image = $request->file('image');
-      if($get_image)
+      $query_email = DB::table('users')->where('email',$request->email)->first();
+      if(isset($query_email))
       {
-         $get_name_image = $get_image->getClientOriginalName();
-         $name_image = current(explode('.',$get_name_image));
-         $new_image = $name_image.rand(0,99).'.'.$get_image->getClientOriginalExtension();
-         $get_image->move('upload_images',$new_image);
-         $data['picture'] = $new_image;
-         DB::table('users')->where('id',$id)->update($data);
-         Session::put('message','Sửa người dùng thành công');
-         return Redirect::back();
+          Session::put('check_email_message','Tên đăng nhập bị trùng, vui lòng chọn tên khác !');
+          return Redirect::back();
       }
-      DB::table('users')->where('id',$id)->update($data);
-      Session::put('message','Sửa người dùng thành công');
-      return Redirect::back();
+      else
+      {
+        $data = array();
+        $data['email'] = $request->email;
+        $data['password'] = $request->password;
+        $data['first_name'] = $request->first_name;
+        $data['last_name'] = $request->last_name;
+        $data['address'] = $request->address;
+        $data['birth_date'] = $request->birth_date;
+        $data['gender'] = $request->gender;
+        $data['phone'] = $request->phone;
+        $data['emergency'] = '0';
+        $data['type'] = $request->type;
+        $data['specialist'] = '0';
+        $data['blood_group'] = '0';
+  
+        $get_image = $request->file('image');
+        if($get_image)
+        {
+           $get_name_image = $get_image->getClientOriginalName();
+           $name_image = current(explode('.',$get_name_image));
+           $new_image = $name_image.rand(0,99).'.'.$get_image->getClientOriginalExtension();
+           $get_image->move('upload_images',$new_image);
+           $data['picture'] = $new_image;
+           DB::table('users')->where('id',$id)->update($data);
+           Session::put('message','Sửa người dùng thành công');
+           return Redirect::back();
+        }
+        DB::table('users')->where('id',$id)->update($data);
+        Session::put('message','Sửa người dùng thành công');
+        return Redirect::back();
+      }
     }
 
     public function delete_user($id)
@@ -282,15 +299,24 @@ class Admincontroller extends Controller
     public function check_add_medicine(Request $request)
     {
       $this->AuthLogin();
-      $data = array();
-      $data['name'] = $request->name;
-      $data['instruction'] = $request->instruction;
-      $data['unit'] = $request->unit;
-      $data['quantity'] = $request->quantity;
-      $data['category'] = $request->category;
-      DB::table('medicines')->insert($data);
-      Session::put('message','Thêm thuốc thành công');
-      return Redirect::to('/admin/them-thuoc');
+      $query_medicine = DB::table('medicines')->where('name',$request->name)->first();
+      if(isset($query_medicine))
+      {
+          Session::put('check_medicine_message','Tên thuốc bị trùng, vui lòng nhập tên khác !');
+          return Redirect::back();
+      }
+      else
+      {
+        $data = array();
+        $data['name'] = $request->name;
+        $data['instruction'] = $request->instruction;
+        $data['unit'] = $request->unit;
+        $data['quantity'] = $request->quantity;
+        $data['category'] = $request->category;
+        DB::table('medicines')->insert($data);
+        Session::put('message','Thêm thuốc thành công');
+        return Redirect::to('/admin/them-thuoc');
+      }
     }
 
     public function show_list_medicine(Request $request)
@@ -716,36 +742,45 @@ class Admincontroller extends Controller
     public function check_add_patient(request $request)
     {
       $this->AuthLogin();
-      $data = array();
-      $data['email'] = $request->email;
-      $data['password'] = $request->password;
-      $data['first_name'] = $request->first_name;
-      $data['last_name'] = $request->last_name;
-      $data['address'] = $request->address;
-      $data['birth_date'] = $request->birth_date;
-      $data['gender'] = $request->gender;
-      $data['phone'] = $request->phone;
-      $data['emergency'] = '0';
-      $data['type'] = '0';
-      $data['specialist'] = '0';
-      $data['blood_group'] = '0';
-
-    	$get_image = $request->file('image');
-    	if($get_image)
-    	{
-    		$get_name_image = $get_image->getClientOriginalName();
-    		$name_image = current(explode('.',$get_name_image));
-    		$new_image = $name_image.rand(0,99).'.'.$get_image->getClientOriginalExtension();
-    		$get_image->move('upload_images',$new_image);
-    		$data['picture'] = $new_image;
-    		DB::table('users')->insert($data);
-	    	Session::put('message','Thêm bệnh nhân thành công');
-	    	return Redirect::to('/admin/them-benh-nhan');
-    	}
-      $data['picture'] = '0';
-      DB::table('users')->insert($data);
-      Session::put('message','Thêm bệnh nhân thành công');
-      return Redirect::to('/admin/them-benh-nhan');;
+      $query_email = DB::table('users')->where('email',$request->email)->first();
+      if(isset($query_email))
+      {
+          Session::put('check_email_message','Tên đăng nhập bị trùng, vui lòng chọn tên khác !');
+          return Redirect::back();
+      }
+      else
+      {
+        $data = array();
+        $data['email'] = $request->email;
+        $data['password'] = $request->password;
+        $data['first_name'] = $request->first_name;
+        $data['last_name'] = $request->last_name;
+        $data['address'] = $request->address;
+        $data['birth_date'] = $request->birth_date;
+        $data['gender'] = $request->gender;
+        $data['phone'] = $request->phone;
+        $data['emergency'] = '0';
+        $data['type'] = '0';
+        $data['specialist'] = '0';
+        $data['blood_group'] = '0';
+  
+        $get_image = $request->file('image');
+        if($get_image)
+        {
+          $get_name_image = $get_image->getClientOriginalName();
+          $name_image = current(explode('.',$get_name_image));
+          $new_image = $name_image.rand(0,99).'.'.$get_image->getClientOriginalExtension();
+          $get_image->move('upload_images',$new_image);
+          $data['picture'] = $new_image;
+          DB::table('users')->insert($data);
+          Session::put('message','Thêm bệnh nhân thành công');
+          return Redirect::to('/admin/them-benh-nhan');
+        }
+        $data['picture'] = '0';
+        DB::table('users')->insert($data);
+        Session::put('message','Thêm bệnh nhân thành công');
+        return Redirect::to('/admin/them-benh-nhan');;
+      }
     }
 
     public function show_list_patient(Request $request)
@@ -826,6 +861,29 @@ class Admincontroller extends Controller
       DB::table('users')->where('id',$id)->delete();
       Session::put('message','Xóa bệnh nhân thành công');
       return Redirect::back();
+    }
+
+    public function patient_test_result($id)
+    {
+      $query_patient = DB::table('users')->where('id',$id)->get();
+      $show_require_testing = DB::table('test')
+      ->join('users','test.id_patient','=','users.id')
+      ->join('appointments','appointments.schedule_id','=','test.id_appointment')
+      ->join('test_type','test_type.id_test_type','=','test.id_test_type')->where('users.id',$id)->get();
+      $manager_show_require_testing = view('admin.mn_patient.test_result')
+      ->with('show_require_testing',$show_require_testing)
+      ->with('query_patient',$query_patient);
+      return view('admin.index')->with('admin.mn_patient.test_result',$manager_show_require_testing);
+
+    }
+
+    public function patient_case_histories($id)
+    {
+      $query_patient = DB::table('users')->where('id',$id)->get();
+      $medicine_prescription = DB::table('medicine_prescription')->where('patient_id_medicine_prescription',$id)->get();
+      return view('admin.mn_patient.case_histories')
+      ->with('query_patient',$query_patient)
+      ->with('medicine_prescription',$medicine_prescription);
     }
     //Manage Patient
 

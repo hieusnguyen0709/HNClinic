@@ -370,13 +370,13 @@ class Homecontroller extends Controller
       $this->AuthLogin();
       $email = Session::get('email');
 
-      $query_patient = DB::table('users')->where('email',$email)->get('password');
-      $json_encode = json_decode($query_patient,true);
-      $password = $json_encode['0']['password'];
+    //   $query_patient = DB::table('users')->where('email',$email)->get('password');
+    //   $json_encode = json_decode($query_patient,true);
+    //   $password = $json_encode['0']['password'];
 
       $data = array();
       $data['email'] = $email;
-      $data['password'] = $password;
+      $data['password'] = $request->password;
       $data['first_name'] = $request->first_name;
       $data['last_name'] = $request->last_name;
       $data['address'] = $request->address;

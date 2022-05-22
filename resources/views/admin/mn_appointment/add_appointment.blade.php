@@ -34,7 +34,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Email</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" name="email"/>
+                            <input type="text" class="form-control" name="email" required/>
                           </div>
                         </div>
                       </div>
@@ -45,7 +45,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Ngày sinh</label>
                           <div class="col-sm-9">
-                            <input type="date" class="form-control" name="birth_date"/>
+                            <input type="date" class="form-control" name="birth_date" required/>
                           </div>
                         </div>
                       </div>
@@ -53,7 +53,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Số điện thoại</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" name="phone" />
+                            <input type="text" class="form-control" name="phone" required/>
                           </div>
                         </div>
                       </div>
@@ -77,7 +77,7 @@
                       <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Triệu chứng</label>
                           <div class="col-sm-9">
-                            <textarea name="symptoms" class="form-control"> </textarea>
+                            <textarea name="symptoms" class="form-control" required> </textarea>
                           </div>
                        </div>
                       </div>

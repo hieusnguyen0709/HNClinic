@@ -1,6 +1,6 @@
 @extends('admin.index')
 @section('admin_content')
-<div class="col-12 grid-margin">
+            <div class="col-12 grid-margin">
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Thêm bệnh nhân</h4>
@@ -14,15 +14,20 @@
                              echo '<center><span class="text-success">'.$message.'</span></center>';
                              Session::put('message',null);
                          }
+                         $check_email_message = Session::get('check_email_message');
+                         if($check_email_message)
+                         {
+                             echo '<center><span class="text-danger">'.$check_email_message.'</span></center>';
+                             Session::put('check_email_message',null);
+                         }
                       ?>
                     </p>
-
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Họ đệm</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" name="first_name"/>
+                            <input type="text" class="form-control" name="first_name" required/>
                           </div>
                         </div>
                       </div>
@@ -30,7 +35,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Tên</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" name="last_name"/>
+                            <input type="text" class="form-control" name="last_name" required/>
                           </div>
                         </div>
                       </div>
@@ -41,7 +46,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Tên đăng nhập</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" name="email"/>
+                            <input type="text" class="form-control" name="email" required/>
                           </div>
                         </div>
                       </div>
@@ -49,7 +54,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Mật khẩu</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" name="password" />
+                            <input type="text" class="form-control" name="password" required/>
                           </div>
                         </div>
                       </div>
@@ -60,7 +65,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Địa chỉ</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" name="address"/>
+                            <input type="text" class="form-control" name="address" required/>
                           </div>
                         </div>
                       </div>
@@ -68,7 +73,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Ngày sinh</label>
                           <div class="col-sm-9">
-                            <input type="date" class="form-control" placeholder="dd/mm/yyyy" name="birth_date"/>
+                            <input type="date" class="form-control" placeholder="dd/mm/yyyy" name="birth_date" required/>
                           </div>
                         </div>
                       </div>
@@ -100,7 +105,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Số điện thoại</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" name="phone"/>
+                            <input type="text" class="form-control" name="phone" required/>
                           </div>
                         </div>
                       </div>
